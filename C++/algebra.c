@@ -2,23 +2,23 @@
 #include <stdlib.h>
 #include "algebra.h"
 
-int **buildV(int **pMatriz, int x, int y){
+int **buildV(struct MatrixM Matrix){
 	int showPosX=0,showPosY=0;
-	pMatriz = popMatrix(pMatriz,x,y);
+	Matrix.Matriz = instMatrix(Matrix.Matriz,Matrix.x,Matrix.y);
 	printf("\n \n \t Bem vindo ao MatrixBuilder! \t \n\n\n");
-	for(int i = 0; i < x; ++i)
+	for(int i = 0; i < Matrix.x; ++i)
 	{
-		for(int j=0; j < y; j++){
-			if(showPosX>=x){
+		for(int j=0; j < Matrix.y; j++){
+			if(showPosX>=Matrix.x){
 				showPosX = 0;
 				showPosY++;
 			}
 			printf("\n\nDigite o valor M[%d][%d]: ",showPosX,showPosY);
-			scanf("%d",&pMatriz[i][j]);
+			scanf("%d",&Matrix.Matriz[i][j]);
 			showPosX++;
 		}
 	}	
-	return pMatriz;
+	return Matrix.Matriz;
 }
 void showV(int **pMatrizS, int x, int y){
 	printf("\n\n\n\n \t\t\t ***  Mostrando Matriz *** \n\n");
@@ -45,27 +45,33 @@ void soma(int **pMatriz,int x,int y){
 	}
 	printf("\n\n Resultado: %d",aux);
 }
-int **sumMatrix(int **pMatrizResult,int **pMatriz, int **pMatriz2, int x,int y){
-	pMatrizResult = popMatrix(pMatrizResult,x,y);
-	for (int i = 0; i < x; ++i)
+struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, struct MatrixM pMatriz2){
+	pMatrizResult.Matriz = instMatrix(pMatrizResult.Matriz,pMatriz.x,pMatriz.y);
+	setbuf(stdin,NULL);
+	printf("\n\n Digite o nome para a matriz de soma: ");
+	gets(pMatrizResult.nome);
+	for (int i = 0; i <pMatriz.x; ++i)
 	{
-		for(int j =0; j<y; j++){
-			pMatrizResult[i][j] = (int)pMatriz2[i][j] + (int)pMatriz[i][j];
+		for(int j =0; j<pMatriz.y; j++){
+			pMatrizResult.Matriz[i][j] = (int)pMatriz2.Matriz[i][j] + (int)pMatriz.Matriz[i][j];
 		}
 	}
+	pMatrizResult.x = pMatriz.x;
+	pMatrizResult.y = pMatriz.y;
+	printf("\n\n\t O resultado da matriz \"%s\" e: ",pMatrizResult.nome );
 	return pMatrizResult;
 }
 int **transpose(int **pMatriz,int x,int y){
 	int **MTransp;
-	MTransp	= popMatrix(MTransp,y,x);
-	for(int i =0;i<y;i++){
-		for(int j =0;j<x;j++){
+	MTransp	= instMatrix(MTransp,y,x);
+	for(int i =0;i<x;i++){
+		for(int j =0;j<y;j++){
 			MTransp[j][i]=pMatriz[i][j];
 		}
 	}
 	return MTransp;
 }
-int **popMatrix(int **pMatriz, int x, int y){
+int **instMatrix(int **pMatriz, int x, int y){
 	pMatriz = (int **) malloc (x *sizeof(int *));
 	
 	for(int i = 0; i < x; ++i)
@@ -81,14 +87,53 @@ void liberaM(int **pMatriz,int x){
 	}
 		free(pMatriz);
 }
-/*
-int **multMatrix(int **pMatriz,int x,int y, int **pMatriz2, int x2, int y2){
-	int **matrixResult = popMatrix(matrixResult,x,y2),auxX,auxY,auxX2,,auxY2;
-	for(int i =0;i<(x*y2);i++){
-		while(;){
-			
+
+int **multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
+	printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Entrou <<<<<<<<<<<<<<<<");
+	int **matrixResult = instMatrix(matrixResult,pMatriz.x,pMatriz2.y),auxX=0,auxXf=0, auxY=0,resultM=0;
+	printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Primeira instancia <<<<<<<<<<<<<<<<");
+	showV(pMatriz.Matriz,pMatriz.x,pMatriz.y);
+	int **pMatrizTransp = instMatrix(pMatrizTransp,pMatriz.y,pMatriz.x);
+	pMatrizTransp = transpose(pMatriz.Matriz,pMatriz.x,pMatriz.y);
+	printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Segunda instancia <<<<<<<<<<<<<<<<");
+	// pMatrizTransp = transpose(pMatriz,x,y);
+	printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  transposta feita <<<<<<<<<<<<<<<<");
+	showV(pMatrizTransp,pMatriz.y,pMatriz.x);
+	showV(pMatriz2.Matriz,pMatriz2.x,pMatriz2.y);
+	if(pMatriz.y==pMatriz2.x)
+	{
+		printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Entrou no IF <<<<<<<<<<<<<<<<");
+		for(int k =0;k<pMatriz.x;k++)
+		{
+			for(int i =0;i<pMatriz2.x;i++)
+			{
+				for(int j =0;j<pMatriz2.y;j++)
+				{
+					if( !(auxX%pMatriz2.y) ){
+						auxX=0;
+					}
+					printf(" \n\n >> %d * %d ",pMatriz2.Matriz[j][i],pMatrizTransp[auxX][k]);
+					resultM+=pMatriz2.Matriz[j][i] * pMatrizTransp[auxX][k];
+					auxX++;
+				}
+				if( !(auxX%pMatriz.y) ){
+						auxX=0;
+				}
+				if( !(auxXf%pMatriz.y) ){
+						auxXf=0;
+				}
+				printf(" %d \n \t ---",resultM);
+				matrixResult[auxY][auxXf] = resultM;
+				printf("\n \t  matrixResult: auxY [%d] auxXf [%d]  = value [%d]",auxY,auxXf,matrixResult[auxY][auxXf]);
+				auxXf++;
+				resultM=0;
+			}
+			auxY++;
+			printf("\n\n");
 		}
-		matrixResult[i]=aux;
+	}else{
+		printf("\n\n \t **** >>>> Error: Invalid Matrix Dimensions <<<< **** ");		
 	}
+	showV(matrixResult,pMatriz.x,pMatriz2.y);
+	return 0;
 }
-*/

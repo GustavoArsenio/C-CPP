@@ -1,17 +1,19 @@
 #ifndef ALGEBRA_H
 #define ALGEBRA_H
 struct MatrixM{
-	char nome[10];
+	char nome[15];
+	int **matrizTransp;
 	int **Matriz;
 	int x;
 	int y;
-}
+};
 
-int **buildV(int **pMatriz, int x, int y);
+int **buildV(struct MatrixM Matrix);
 void showV(int **pMatrizS, int x, int y);
 void soma(int **pMatriz,int x,int y);
-int **sumMatrix(int **pMatrizResult,int **pMatriz, int **pMatriz2, int x,int y);
-int **popMatrix(int **pMatriz, int x, int y);
+struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, struct MatrixM pMatriz2);
+int **multMatrix(struct MatrixM Matriz, struct MatrixM pMatriz2);
+int **instMatrix(int **pMatriz, int x, int y);
 int **transpose(int **pMatriz,int x,int y);
 void liberaM(int **pMatriz,int x);
 // int det(int **pMatriz, int l, int c);
