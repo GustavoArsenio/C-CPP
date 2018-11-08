@@ -8,7 +8,7 @@ struct MatrixM{
 	int y;
 };
 
-int **buildV(struct MatrixM Matrix);
+struct MatrixM buildV(struct MatrixM Matrix);
 void showV(int **pMatrizS, int x, int y);
 void soma(int **pMatriz,int x,int y);
 struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, struct MatrixM pMatriz2);
