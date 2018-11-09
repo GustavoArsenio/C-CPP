@@ -1,7 +1,19 @@
+
+/*
+
+###################################
+# Construido por: Gustavo Arsenio #
+# Curso: Engenharia da computação #
+# RA: 0074830                     #
+# UNASP Campus São Paulo          #
+###################################
+
+*/
+
 #include<stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "algebra.h"
-
 struct MatrixM buildV(struct MatrixM Matrix){
 	int showPosX=0,showPosY=0;
 	setbuf(stdin,NULL);
@@ -29,17 +41,26 @@ struct MatrixM buildV(struct MatrixM Matrix){
 	}	
 	return Matrix;
 }
-void showV(int **pMatrizS, int x, int y){
+void showV(struct MatrixM Matrix){
 	printf("\n\n\n\n \t\t\t ***  Mostrando Matriz *** \n\n");
-	for(int i = 0; i < x; i++)
+	for(int i = 0; i < Matrix.x; i++)
 	{	
 	
-		for(int j =0; j<y; j++){
-			printf(" | %i | ",pMatrizS[i][j]);
+		for(int j =0; j<Matrix.y; j++){
+			printf(" | %i | ",Matrix.Matriz[i][j]);
 		}
 				printf("\n");
 	}
 	printf("\n\n\n\n \t\t *** Fim mostrar Matriz*** ");
+}
+void showM(struct MatrixM Matrix){
+	printf("\n\n **************************** ");
+	printf("\n\n| >>> \t **** Matriz: %s *****",Matrix.nome);
+	printf("\n| >>> \tde dimensao x:[%d] e y:[%d] ",Matrix.x,Matrix.y);
+	printf("\n| >>>\t  Possui os valores de: ");
+	showV(Matrix);
+	printf("\n\n **************************** ");
+	
 }
 void soma(int **pMatriz,int x,int y){
 	printf(" \n>>>>>>>>> Entrou na soma");
@@ -67,15 +88,15 @@ struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, st
 	}
 	pMatrizResult.x = pMatriz.x;
 	pMatrizResult.y = pMatriz.y;
-	printf("\n\n\t O resultado da matriz \"%s\" e: ",pMatrizResult->nome );
+	printf("\n\n\t O resultado da matriz %s e: ",pMatrizResult.nome );
 	return pMatrizResult;
 }
-int **transpose(int **pMatriz,int x,int y){
+int **transpose(struct MatrixM pMatriz){
 	int **MTransp;
-	MTransp	= instMatrix(MTransp,y,x);
-	for(int i =0;i<x;i++){
-		for(int j =0;j<y;j++){
-			MTransp[j][i]=pMatriz[i][j];
+	MTransp	= instMatrix(MTransp,pMatriz.y,pMatriz.x);
+	for(int i =0;i<pMatriz.x;i++){
+		for(int j =0;j<pMatriz.y;j++){
+			MTransp[j][i]=pMatriz.Matriz[i][j];
 		}
 	}
 	return MTransp;
@@ -97,21 +118,19 @@ void liberaM(int **pMatriz,int x){
 		free(pMatriz);
 }
 
-int **multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
-	//printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Entrou <<<<<<<<<<<<<<<<");
-	int **matrixResult = instMatrix(matrixResult,pMatriz.x,pMatriz2.y),auxX=0,auxXf=0, auxY=0,resultM=0;
-	//printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Primeira instancia <<<<<<<<<<<<<<<<");
-	//showV(pMatriz.Matriz,pMatriz.x,pMatriz.y);
+struct MatrixM multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
+	printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Entrou <<<<<<<<<<<<<<<<");
+	struct MatrixM matrixResult;
+	matrixResult.Matriz = instMatrix(matrixResult.Matriz,pMatriz.x,pMatriz2.y);
+	int auxX=0,auxXf=0, auxY=0,resultM=0;
 	int **pMatrizTransp = instMatrix(pMatrizTransp,pMatriz.y,pMatriz.x);
-	//pMatrizTransp = transpose(pMatriz.Matriz,pMatriz.x,pMatriz.y);
-	//printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Segunda instancia <<<<<<<<<<<<<<<<");
-	// pMatrizTransp = transpose(pMatriz,x,y);
-	//printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  transposta feita <<<<<<<<<<<<<<<<");
-	showV(pMatrizTransp,pMatriz.y,pMatriz.x);
-	showV(pMatriz2.Matriz,pMatriz2.x,pMatriz2.y);
+	pMatrizTransp = transpose(pMatriz);
+	strcpy(matrixResult.nome,"Matriz_Multip");
+	matrixResult.x = pMatriz.x;
+	matrixResult.y = pMatriz2.y;
 	if(pMatriz.y==pMatriz2.x)
 	{
-		//printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Entrou no IF <<<<<<<<<<<<<<<<");
+	
 		for(int k =0;k<pMatriz.x;k++)
 		{
 			for(int i =0;i<pMatriz2.x;i++)
@@ -121,7 +140,6 @@ int **multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
 					if( !(auxX%pMatriz2.y) ){
 						auxX=0;
 					}
-					//printf(" \n\n >> %d * %d ",pMatriz2.Matriz[j][i],pMatrizTransp[auxX][k]);
 					resultM+=pMatriz2.Matriz[j][i] * pMatrizTransp[auxX][k];
 					auxX++;
 				}
@@ -131,18 +149,15 @@ int **multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
 				if( !(auxXf%pMatriz.y) ){
 						auxXf=0;
 				}
-				//printf(" %d \n \t ---",resultM);
-				matrixResult[auxY][auxXf] = resultM;
-				//printf("\n \t  matrixResult: auxY [%d] auxXf [%d]  = value [%d]",auxY,auxXf,matrixResult[auxY][auxXf]);
+				matrixResult.Matriz[auxY][auxXf] = resultM;
 				auxXf++;
 				resultM=0;
 			}
 			auxY++;
-			//printf("\n\n");
 		}
 	}else{
 		printf("\n\n \t **** >>>> Error: Invalid Matrix Dimensions <<<< **** ");		
+		strcpy(matrixResult.nome,"**** >>>> Error: Invalid Matrix Dimensions <<<< ****");
 	}
-	showV(matrixResult,pMatriz.x,pMatriz2.y);
-	return 0;
+	return matrixResult;
 }
