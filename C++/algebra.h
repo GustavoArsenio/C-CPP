@@ -21,6 +21,7 @@ struct MatrixM{
 };
 
 struct MatrixM buildV(struct MatrixM Matrix);
+void red(struct MatrixM Matrix, int x, int y);
 void showM(struct MatrixM Matrix);
 void soma(int **pMatriz,int x,int y);
 struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, struct MatrixM pMatriz2);

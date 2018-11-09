@@ -117,6 +117,27 @@ void liberaM(int **pMatriz,int x){
 	}
 		free(pMatriz);
 }
+void red(struct MatrixM Matrix, int x, int y){
+	printf("\n\n\n\n \t\t\t ***  Mostrando Matriz *** \n\n");
+	for(int i = 0; i < Matrix.x; i++)
+	{	
+		for(int j =0; j<Matrix.y; j++){
+			if(i==x){
+				i++;
+				if(i==Matrix.x){
+					break;
+				}
+			}			
+			if(j==y){
+				j++;
+				if(j==Matrix.y){
+					break;
+				}
+			}
+			printf(" \n >>>>>>>>>>>>>>>>>> | %i | ",Matrix.Matriz[i][j]);
+		}
+	}
+}
 
 struct MatrixM multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
 	printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Entrou <<<<<<<<<<<<<<<<");

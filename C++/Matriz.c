@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
 	Matriz=buildV(Matriz);
 	Matriz.matrizTransp = transpose(Matriz);
 	showM(Matriz);
-	setbuf(stdin,NULL);
+	printf("\n\n *** Entrando ** ");
 	Matriz2 = buildV(Matriz2);
 	pMatrizResult=sumMatrix(pMatrizResult,Matriz,Matriz2);
 	showM(pMatrizResult);
