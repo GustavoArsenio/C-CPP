@@ -14,14 +14,16 @@
 #define ALGEBRA_H
 struct MatrixM{
 	char nome[100];
+	int description;
 	int **matrizTransp;
 	int **Matriz;
 	int x;
 	int y;
 };
-
+int fatorial(int i);
+int determinante(struct MatrixM Matrix);
 struct MatrixM buildV(struct MatrixM Matrix);
-void red(struct MatrixM Matrix, int x, int y);
+struct MatrixM red(struct MatrixM Matrix, int x, int y);
 void showM(struct MatrixM Matrix);
 void soma(int **pMatriz,int x,int y);
 struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, struct MatrixM pMatriz2);

@@ -27,6 +27,10 @@ int main(int argc, char const *argv[])
 	showM(pMatrizResult);
 	pMultip = multMatrix(Matriz,Matriz2);
 	showM(pMultip);
+	showM(Matriz);
+	red(Matriz,2,2);
+	determinante(Matriz);
+	printf("\n\n >>>>> Fatorial de %d e %d",Matriz.x,fatorial(Matriz.x));
 	printf("\n\n >>> Terminando Program Matrix: ");
 	liberaM(Matriz.Matriz,Matriz.x);
 	printf("\n | 1- OK ");
@@ -36,5 +40,7 @@ int main(int argc, char const *argv[])
 	printf("\n | 3- OK ");
 	liberaM(Matriz.matrizTransp,Matriz.y);
 	printf("\n | 4- OK ");
+	liberaM(pMultip.Matriz,pMultip.x);
+	printf("\n | 5- OK ");
 	return 0;
 }

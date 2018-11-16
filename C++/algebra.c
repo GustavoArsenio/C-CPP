@@ -14,6 +14,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include "algebra.h"
+
+int determinante(struct MatrixM Matrix){
+	if(Matrix.x==Matrix.y){
+		printf("\n ***** >>>>> Matriz Valida <<<<< ****");
+		
+	}
+	return 0;
+}
+int fatorial(int i){
+	if(i<=1){
+		return 1;
+	}
+	return	i*(fatorial(i-1));	
+}
 struct MatrixM buildV(struct MatrixM Matrix){
 	int showPosX=0,showPosY=0;
 	setbuf(stdin,NULL);
@@ -117,8 +131,16 @@ void liberaM(int **pMatriz,int x){
 	}
 		free(pMatriz);
 }
-void red(struct MatrixM Matrix, int x, int y){
+struct MatrixM red(struct MatrixM Matrix, int x, int y){
 	printf("\n\n\n\n \t\t\t ***  Mostrando Matriz *** \n\n");
+	struct MatrixM mRed;
+	int k=0,l=0;
+	mRed.Matriz = instMatrix(mRed.Matriz,((Matrix.x) -1),((Matrix.y) -1));
+	mRed.x = ((Matrix.x) -1);
+	mRed.y = ((Matrix.y) -1);
+	mRed.matrizTransp = transpose(mRed);
+	strcpy(mRed.nome," ** e uma Matriz reduzida ** ");
+	mRed.description = sprintf(mRed.nome," Tamanho [%d][%d] \n",mRed.x,mRed.y);
 	for(int i = 0; i < Matrix.x; i++)
 	{	
 		for(int j =0; j<Matrix.y; j++){
@@ -134,11 +156,16 @@ void red(struct MatrixM Matrix, int x, int y){
 					break;
 				}
 			}
-			printf(" \n >>>>>>>>>>>>>>>>>> | %i | ",Matrix.Matriz[i][j]);
+			mRed.Matriz[k][l] = Matrix.Matriz[i][j];
+			printf(" \n [%d][%d]>>>>>>>>>>>>>>>>>> | %i | [%d][%d] ",k,l,Matrix.Matriz[i][j],i,j);
+			l++;
 		}
+		l=0;
+		k++;
 	}
+	showM(mRed);
+	return mRed;
 }
-
 struct MatrixM multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
 	printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Entrou <<<<<<<<<<<<<<<<");
 	struct MatrixM matrixResult;
