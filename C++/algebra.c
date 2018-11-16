@@ -14,13 +14,48 @@
 #include <stdlib.h>
 #include <string.h>
 #include "algebra.h"
+/*
 
-int determinante(struct MatrixM Matrix){
-	if(Matrix.x==Matrix.y){
-		printf("\n ***** >>>>> Matriz Valida <<<<< ****");
-		
+	Para a função "determinate" se deve passar a matriz como parametro
+
+*/
+int exponencial(int i, int j){
+	int aux=1;
+	if(j>0)
+	{
+		for(int k=0;k<j;k++){
+			aux*=i;
+		}
+	}else if(j=0)
+	{
+		aux=1;
+	}else if(j<0)
+	{
+		for(int k=0;k>j;k--){
+			aux*=1/i;
+		}
 	}
-	return 0;
+	return aux;	
+}
+int determinante(struct MatrixM Matrix)
+{	int det=0,sColuna=0;
+	if(Matrix.x==Matrix.y)
+	{
+		if(Matrix.x==2 && Matrix.y==2)
+		{
+			return (Matrix.Matriz[0][0]*Matrix.Matriz[1][1]) - (Matrix.Matriz[0][1]*Matrix.Matriz[1][0]);
+			
+		}else if(Matrix.x==1 && Matrix.y==1)
+		{
+			return Matrix.Matriz[0][0];
+		}
+		for(int i=0;i<Matrix.x;i++){
+			det +=( determinante(red(Matrix,0,i)))*Matrix.Matriz[0][i]*(exponencial(-1,i));
+		}
+		return (det);
+	}
+	printf("\n\n \t **** >>>> Error: Invalid Matrix Dimensions <<<< **** ");		
+	return -1;
 }
 int fatorial(int i){
 	if(i<=1){
@@ -132,7 +167,6 @@ void liberaM(int **pMatriz,int x){
 		free(pMatriz);
 }
 struct MatrixM red(struct MatrixM Matrix, int x, int y){
-	printf("\n\n\n\n \t\t\t ***  Mostrando Matriz *** \n\n");
 	struct MatrixM mRed;
 	int k=0,l=0;
 	mRed.Matriz = instMatrix(mRed.Matriz,((Matrix.x) -1),((Matrix.y) -1));
@@ -157,13 +191,11 @@ struct MatrixM red(struct MatrixM Matrix, int x, int y){
 				}
 			}
 			mRed.Matriz[k][l] = Matrix.Matriz[i][j];
-			printf(" \n [%d][%d]>>>>>>>>>>>>>>>>>> | %i | [%d][%d] ",k,l,Matrix.Matriz[i][j],i,j);
 			l++;
 		}
 		l=0;
 		k++;
 	}
-	showM(mRed);
 	return mRed;
 }
 struct MatrixM multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){

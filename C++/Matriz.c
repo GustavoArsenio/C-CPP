@@ -28,9 +28,8 @@ int main(int argc, char const *argv[])
 	pMultip = multMatrix(Matriz,Matriz2);
 	showM(pMultip);
 	showM(Matriz);
-	red(Matriz,2,2);
-	determinante(Matriz);
-	printf("\n\n >>>>> Fatorial de %d e %d",Matriz.x,fatorial(Matriz.x));
+	red(Matriz,1,0);
+	printf("\n\n \t >>> A determinante da Matriz e: %d <<<<<<",determinante(Matriz));
 	printf("\n\n >>> Terminando Program Matrix: ");
 	liberaM(Matriz.Matriz,Matriz.x);
 	printf("\n | 1- OK ");
