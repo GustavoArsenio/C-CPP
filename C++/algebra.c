@@ -15,9 +15,9 @@
 #include <string.h>
 #include "algebra.h"
 /*
-
-	Para a função "determinate" se deve passar a matriz como parametro
-
+Função: Exponencial
+Descrição: Precisa se passar de parametro a base e o valor do esponencial, respectivamente!
+OBS: Pode ser positivo ou negativo
 */
 int exponencial(int i, int j){
 	int aux=1;
@@ -37,8 +37,18 @@ int exponencial(int i, int j){
 	}
 	return aux;	
 }
-int determinante(struct MatrixM Matrix)
-{	int det=0,sColuna=0;
+
+
+/*
+Função: Determinante
+Descrição: Precisa se passar de parametro a Matriz, no formato "struct MatrixM", para se realizar o feito, está sendo ultilizado como 
+função recursiva ( O encadeamento se dá para calcular as determinantes da matrizes reduzidas).
+
+Cálculo: Realizado por Laplace
+
+*/
+int determinante(struct MatrixM Matrix){
+	int det=0,sColuna=0;
 	if(Matrix.x==Matrix.y)
 	{
 		if(Matrix.x==2 && Matrix.y==2)
@@ -57,12 +67,26 @@ int determinante(struct MatrixM Matrix)
 	printf("\n\n \t **** >>>> Error: Invalid Matrix Dimensions <<<< **** ");		
 	return -1;
 }
+/*
+	Função: Fatorial
+
+	Descrição: Recebe um número inteiro. Para se calcula o fatorial por função recursiva
+
+*/
 int fatorial(int i){
 	if(i<=1){
 		return 1;
 	}
 	return	i*(fatorial(i-1));	
 }
+/*
+	Função: BuildV
+
+	Descrição: Precisa se passar de parametro uma Matriz, no formato "struct MatrixM", para solicitar o nome ele solicita para o usuario que escreva no "buffer"
+	para que não venha lixo de memória limpamos o buffer e após isso solicitamos o nome.
+	Depois solicita as dimensões da matriz em X e Y.
+	Instancia a matriz, assim preenchendo todos os campos da "struct MatrixM", do "algebra.h".
+*/
 struct MatrixM buildV(struct MatrixM Matrix){
 	int showPosX=0,showPosY=0;
 	setbuf(stdin,NULL);
@@ -90,6 +114,12 @@ struct MatrixM buildV(struct MatrixM Matrix){
 	}	
 	return Matrix;
 }
+/*
+	Função: ShowV
+
+	Descrição: Precisa se passar de parametro uma Matriz, no formato "struct MatrixM", mostra todos os valores da matriz,
+	para se aplicar a delimitação, é aplicado um "\n" quando vai para a próxima linha
+*/
 void showV(struct MatrixM Matrix){
 	printf("\n\n\n\n \t\t\t ***  Mostrando Matriz *** \n\n");
 	for(int i = 0; i < Matrix.x; i++)
@@ -102,6 +132,11 @@ void showV(struct MatrixM Matrix){
 	}
 	printf("\n\n\n\n \t\t *** Fim mostrar Matriz*** ");
 }
+/*
+	Função: ShowM
+
+	Descrição: Precisa se passar de parametro uma Matriz, no formato "struct MatrixM", mostra o nome salvo na struct, dimensões e por fim chama a matriz ShowV.
+*/
 void showM(struct MatrixM Matrix){
 	printf("\n\n **************************** ");
 	printf("\n\n| >>> \t **** Matriz: %s *****",Matrix.nome);
@@ -111,6 +146,11 @@ void showM(struct MatrixM Matrix){
 	printf("\n\n **************************** ");
 	
 }
+/*
+	Função: Soma
+
+	Descrição: Precisa se passar de parametro uma Matriz, do tipo inteiro e soma todos os valores dentro da matriz;
+*/
 void soma(int **pMatriz,int x,int y){
 	printf(" \n>>>>>>>>> Entrou na soma");
 	int aux=0;
@@ -124,6 +164,12 @@ void soma(int **pMatriz,int x,int y){
 	}
 	printf("\n\n Resultado: %d",aux);
 }
+/*
+	Função: SumMatrix
+
+		Descrição: Precisa se passar de parametro duas Matrizes, no formato "struct MatrixM", devolve uma matriz com cada posição preenchida soma dos 
+		valores daquela respectiva posição (Nas matrizes recebidas de parametro)
+*/
 struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, struct MatrixM pMatriz2){
 	pMatrizResult.Matriz = instMatrix(pMatrizResult.Matriz,pMatriz.x,pMatriz.y);
 	setbuf(stdin,NULL);
@@ -140,6 +186,11 @@ struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, st
 	printf("\n\n\t O resultado da matriz %s e: ",pMatrizResult.nome );
 	return pMatrizResult;
 }
+/*
+	Função: transpose
+
+		Descrição: Precisa se passar de parametro uma Matriz, no formato "struct MatrixM", devolve a matriz transposta
+*/
 int **transpose(struct MatrixM pMatriz){
 	int **MTransp;
 	MTransp	= instMatrix(MTransp,pMatriz.y,pMatriz.x);
@@ -150,6 +201,12 @@ int **transpose(struct MatrixM pMatriz){
 	}
 	return MTransp;
 }
+/*
+	Função: instMatrix
+
+	Descrição: Precisa se passar de parametro uma Matriz (ponteiro de ponteiro), do tipo inteiro, tamnaho em X e tamanho em Y, aloca um espaço de memória equivalente a X*Y
+	
+*/
 int **instMatrix(int **pMatriz, int x, int y){
 	pMatriz = (int **) malloc (x *sizeof(int *));
 	
@@ -159,6 +216,12 @@ int **instMatrix(int **pMatriz, int x, int y){
 	} 
 	return pMatriz;
 }
+/*
+	Função: liberaM
+
+	Descrição: Precisa se passar de parametro uma Matriz (ponteiro de ponteiro), do tipo inteiro, tamnaho em X, para liberar os ponteiros em X e depois o último ponteiro.
+	
+*/
 void liberaM(int **pMatriz,int x){
 	for(int i = 0; i < x; i++)
 	{
@@ -166,6 +229,11 @@ void liberaM(int **pMatriz,int x){
 	}
 		free(pMatriz);
 }
+/*
+	Função: red
+
+	Descrição: Precisa se passar de parametro uma Matriz, no formato "struct MatrixM", e qual a coluna em X e Y para ser ignorada e devolve a matriz sem a coluna e linha especificada.
+*/
 struct MatrixM red(struct MatrixM Matrix, int x, int y){
 	struct MatrixM mRed;
 	int k=0,l=0;
@@ -198,6 +266,11 @@ struct MatrixM red(struct MatrixM Matrix, int x, int y){
 	}
 	return mRed;
 }
+/*
+	Função: SumMatrix
+
+	Descrição: Precisa se passar de parametro duas Matrizes, no formato "struct MatrixM", devolve a matriz resultado da multiplicação das matrizes de parametro
+*/
 struct MatrixM multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
 	printf("\n\n\n \t\t\t  >>>>>>>>>>>>>  Entrou <<<<<<<<<<<<<<<<");
 	struct MatrixM matrixResult;
