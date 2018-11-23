@@ -17,7 +17,27 @@
 
 int main(int argc, char const *argv[])
 {
-	struct MatrixM Matriz,Matriz2,pMatrizResult,pMultip;
+printf("\n________________      _____    ___________________ ");
+printf("\n|    |   \\      \\    /  _  \\  /   _____/\\______   \\");
+printf("\n|    |   /   |   \\  /  /_\\  \\ \\_____  \\  |     ___/");
+printf("\n|    |  /    |    \\/    |    \\/        \\ |    |    ");
+printf("\n|______/\\____|____/\\____|____/_________/ |____|    ");
+printf("\n\n\n\n\n");
+printf("\n_______________________________ ");
+printf("\n| 1) Instanciar matriz        |");
+printf("\n| 2) Somar Matriz             |");
+printf("\n| 3) Multiplicar Matriz       |");
+printf("\n| 4) Fatorial                 |");
+printf("\n| 5) Determinante             |");
+printf("\n| 6) Transposta               |");
+printf("\n| 7) Exibir Matriz            |");
+printf("\n|_____________________________|");
+
+
+	return 0;
+}
+/*
+struct MatrixM Matriz,Matriz2,pMatrizResult,pMultip;
 	Matriz=buildV(Matriz);
 	Matriz.matrizTransp = transpose(Matriz);
 	showM(Matriz);
@@ -41,5 +61,4 @@ int main(int argc, char const *argv[])
 	printf("\n | 4- OK ");
 	liberaM(pMultip.Matriz,pMultip.x);
 	printf("\n | 5- OK ");
-	return 0;
-}
+*/
