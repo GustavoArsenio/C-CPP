@@ -17,23 +17,46 @@
 
 int main(int argc, char const *argv[])
 {
-printf("\n________________      _____    ___________________ ");
-printf("\n|    |   \\      \\    /  _  \\  /   _____/\\______   \\");
-printf("\n|    |   /   |   \\  /  /_\\  \\ \\_____  \\  |     ___/");
-printf("\n|    |  /    |    \\/    |    \\/        \\ |    |    ");
-printf("\n|______/\\____|____/\\____|____/_________/ |____|    ");
-printf("\n\n\n\n\n");
-printf("\n_______________________________ ");
-printf("\n| 1) Instanciar matriz        |");
-printf("\n| 2) Somar Matriz             |");
-printf("\n| 3) Multiplicar Matriz       |");
-printf("\n| 4) Fatorial                 |");
-printf("\n| 5) Determinante             |");
-printf("\n| 6) Transposta               |");
-printf("\n| 7) Exibir Matriz            |");
-printf("\n|_____________________________|");
-
-
+	struct conjuntoMatrizes matrizes;
+	matrizes.tamanho =0;
+	int selecionado, mSelected=0;
+	while(1)
+	{
+		printf("\t\t\n________________      _____    ___________________ ");
+		printf("\t\t\n|    |   \\      \\    /  _  \\  /   _____/\\______   \\");
+		printf("\t\t\n|    |   /   |   \\  /  /_\\  \\ \\_____  \\  |     ___/");
+		printf("\t\t\n|    |  /    |    \\/    |    \\/        \\ |    |    ");
+		printf("\t\t\n|______/\\____|____/\\____|____/_________/ |____|    ");
+		printf("\n\n\n\n\n");
+		printf("\t\t\n_______________________________ ");
+		printf("\t\t\n| 0) Sair                     |");
+		printf("\t\t\n| 1) Add matriz               |");
+		printf("\t\t\n| 2) Somar Matriz             |");
+		printf("\t\t\n| 3) Multiplicar Matriz       |");
+		printf("\t\t\n| 4) Fatorial                 |");
+		printf("\t\t\n| 5) Determinante             |");
+		printf("\t\t\n| 6) Transposta               |");
+		printf("\t\t\n| 7) Exibir Matriz            |");
+		printf("\t\t\n|_____________________________|\n\n");
+		scanf("%d",&selecionado);
+			printf(" \n\n \t >>>>>>>>>>> Opcao: %d",selecionado);
+			if(selecionado==0){
+				liberaAllM(matrizes);
+				return 0;
+			}else if(selecionado==1){
+				matrizes = addMatriz(matrizes);
+				printf(" \n\n \t >>>>>>>>>>>OK");
+			}else if(matrizes.tamanho !=0 &&selecionado==7){
+				printf("\n\n \t \t >>> Qual o número da sua matriz? <<<");
+				scanf("%d",&mSelected);
+				showMatriz(matrizes,mSelected);
+				printf(" \n\n \t >>>>>>>>>>>OK");
+			}else{
+				printf(" \n\n \t >>>>>>>>>>> Error: Invalid Option ");
+				return 0;
+			}
+		
+	}
 	return 0;
 }
 /*

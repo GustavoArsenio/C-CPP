@@ -37,8 +37,6 @@ int exponencial(int i, int j){
 	}
 	return aux;	
 }
-
-
 /*
 Função: Determinante
 Descrição: Precisa se passar de parametro a Matriz, no formato "struct MatrixM", para se realizar o feito, está sendo ultilizado como 
@@ -88,6 +86,7 @@ int fatorial(int i){
 	Instancia a matriz, assim preenchendo todos os campos da "struct MatrixM", do "algebra.h".
 */
 struct MatrixM buildV(struct MatrixM Matrix){
+	printf("\n\n Entrou: ");
 	int showPosX=0,showPosY=0;
 	setbuf(stdin,NULL);
 	printf("\n\n Digite o nome: ");
@@ -126,7 +125,7 @@ void showV(struct MatrixM Matrix){
 	{	
 	
 		for(int j =0; j<Matrix.y; j++){
-			printf(" | %i | ",Matrix.Matriz[i][j]);
+			printf(" | x[%d]y[%d] %d | ",i,j,Matrix.Matriz[i][j]);
 		}
 				printf("\n");
 	}
@@ -219,7 +218,7 @@ int **instMatrix(int **pMatriz, int x, int y){
 /*
 	Função: liberaM
 
-	Descrição: Precisa se passar de parametro uma Matriz (ponteiro de ponteiro), do tipo inteiro, tamnaho em X, para liberar os ponteiros em X e depois o último ponteiro.
+	Descrição: Precisa se passar de parametro uma Matriz (ponteiro de ponteiro), do tipo inteiro, tamnaho em X, para liberar os ponteiros em X e depois o último poeiro.
 	
 */
 void liberaM(int **pMatriz,int x){
@@ -313,4 +312,38 @@ struct MatrixM multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
 		strcpy(matrixResult.nome,"**** >>>> Error: Invalid Matrix Dimensions <<<< ****");
 	}
 	return matrixResult;
+}
+
+
+void showMatriz(struct conjuntoMatrizes matrizes,int mSelected){
+	showM(matrizes.Matriz[mSelected]);
+}
+void liberaAllM(struct conjuntoMatrizes matrizes){
+	for(int i =0; i < matrizes.tamanho; i++){
+		liberaM(matrizes.Matriz[i].Matriz,matrizes.Matriz[i].x);
+	}
+	free(matrizes.auxMatriz);
+	free(matrizes.Matriz);
+}
+struct conjuntoMatrizes addMatriz(struct conjuntoMatrizes Matrizes){
+	struct MatrixM temp;
+	Matrizes.auxMatriz =(struct MatrixM *) malloc (Matrizes.tamanho * sizeof(struct MatrixM));
+	for(int i=0;i< Matrizes.tamanho;i++){
+		Matrizes.auxMatriz[i].Matriz = Matrizes.Matriz[i].Matriz;
+		strcpy(Matrizes.auxMatriz[i].nome,Matrizes.Matriz[i].nome);
+		Matrizes.auxMatriz[i].x = Matrizes.Matriz[i].x;
+		Matrizes.auxMatriz[i].y = Matrizes.Matriz[i].y;
+	}
+	liberaAllM(Matrizes);
+	Matrizes.tamanho++;
+	Matrizes.Matriz = (struct MatrixM *) realloc (Matrizes.Matriz,Matrizes.tamanho * sizeof(struct MatrixM));
+	for(int i=0;i<(Matrizes.tamanho);i++){
+		Matrizes.Matriz[i] = Matrizes.auxMatriz[i];
+	}
+	temp = buildV(Matrizes.Matriz[Matrizes.tamanho]);
+	Matrizes.Matriz[Matrizes.tamanho].Matriz=temp.Matriz;
+	strcpy(Matrizes.Matriz[Matrizes.tamanho].nome,temp.nome);
+	Matrizes.Matriz[Matrizes.tamanho].x=temp.x;
+	Matrizes.Matriz[Matrizes.tamanho].y=temp.y;
+	return (Matrizes);
 }
