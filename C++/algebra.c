@@ -14,6 +14,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "algebra.h"
+
+
+extern struct conjuntoMatrizes *filaMatrizes;
+extern int tamanho;
 /*
 Função: Exponencial
 Descrição: Precisa se passar de parametro a base e o valor do esponencial, respectivamente!
@@ -26,7 +30,8 @@ int exponencial(int i, int j){
 		for(int k=0;k<j;k++){
 			aux*=i;
 		}
-	}else if(j=0)
+	}else 
+		if( (j=0) )
 	{
 		aux=1;
 	}else if(j<0)
@@ -46,7 +51,7 @@ Cálculo: Realizado por Laplace
 
 */
 int determinante(struct MatrixM Matrix){
-	int det=0,sColuna=0;
+	int det=0;
 	if(Matrix.x==Matrix.y)
 	{
 		if(Matrix.x==2 && Matrix.y==2)
@@ -86,7 +91,6 @@ int fatorial(int i){
 	Instancia a matriz, assim preenchendo todos os campos da "struct MatrixM", do "algebra.h".
 */
 struct MatrixM buildV(struct MatrixM Matrix){
-	printf("\n\n Entrou: ");
 	int showPosX=0,showPosY=0;
 	setbuf(stdin,NULL);
 	printf("\n\n Digite o nome: ");
@@ -131,18 +135,30 @@ void showV(struct MatrixM Matrix){
 	}
 	printf("\n\n\n\n \t\t *** Fim mostrar Matriz*** ");
 }
+void showVT(struct MatrixM Matrix){
+	printf("\n\n\n\n \t\t\t ***  Mostrando Matriz *** \n\n");
+	for(int i = 0; i < Matrix.y; i++)
+	{	
+	
+		for(int j =0; j<Matrix.x; j++){
+			printf(" | x[%d]y[%d] %d | ",i,j,Matrix.matrizTransp[i][j]);
+		}
+				printf("\n");
+	}
+	printf("\n\n\n\n \t\t *** Fim mostrar Matriz*** ");
+}
 /*
 	Função: ShowM
 
 	Descrição: Precisa se passar de parametro uma Matriz, no formato "struct MatrixM", mostra o nome salvo na struct, dimensões e por fim chama a matriz ShowV.
 */
 void showM(struct MatrixM Matrix){
-	printf("\n\n **************************** ");
+	printf("\n\n ----------------------------- ");
 	printf("\n\n| >>> \t **** Matriz: %s *****",Matrix.nome);
 	printf("\n| >>> \tde dimensao x:[%d] e y:[%d] ",Matrix.x,Matrix.y);
 	printf("\n| >>>\t  Possui os valores de: ");
 	showV(Matrix);
-	printf("\n\n **************************** ");
+	printf("\n\n ----------------------------- ");
 	
 }
 /*
@@ -182,7 +198,6 @@ struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, st
 	}
 	pMatrizResult.x = pMatriz.x;
 	pMatrizResult.y = pMatriz.y;
-	printf("\n\n\t O resultado da matriz %s e: ",pMatrizResult.nome );
 	return pMatrizResult;
 }
 /*
@@ -191,7 +206,7 @@ struct MatrixM sumMatrix(struct MatrixM pMatrizResult,struct MatrixM pMatriz, st
 		Descrição: Precisa se passar de parametro uma Matriz, no formato "struct MatrixM", devolve a matriz transposta
 */
 int **transpose(struct MatrixM pMatriz){
-	int **MTransp;
+	int **MTransp=NULL;
 	MTransp	= instMatrix(MTransp,pMatriz.y,pMatriz.x);
 	for(int i =0;i<pMatriz.x;i++){
 		for(int j =0;j<pMatriz.y;j++){
@@ -236,6 +251,7 @@ void liberaM(int **pMatriz,int x){
 struct MatrixM red(struct MatrixM Matrix, int x, int y){
 	struct MatrixM mRed;
 	int k=0,l=0;
+	mRed.Matriz = NULL;
 	mRed.Matriz = instMatrix(mRed.Matriz,((Matrix.x) -1),((Matrix.y) -1));
 	mRed.x = ((Matrix.x) -1);
 	mRed.y = ((Matrix.y) -1);
@@ -275,7 +291,8 @@ struct MatrixM multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
 	struct MatrixM matrixResult;
 	matrixResult.Matriz = instMatrix(matrixResult.Matriz,pMatriz.x,pMatriz2.y);
 	int auxX=0,auxXf=0, auxY=0,resultM=0;
-	int **pMatrizTransp = instMatrix(pMatrizTransp,pMatriz.y,pMatriz.x);
+	int **pMatrizTransp = NULL;
+	pMatrizTransp = instMatrix(pMatrizTransp,pMatriz.y,pMatriz.x);
 	pMatrizTransp = transpose(pMatriz);
 	strcpy(matrixResult.nome,"Matriz_Multip");
 	matrixResult.x = pMatriz.x;
@@ -313,37 +330,178 @@ struct MatrixM multMatrix(struct MatrixM pMatriz, struct MatrixM pMatriz2){
 	}
 	return matrixResult;
 }
-
+/*
 
 void showMatriz(struct conjuntoMatrizes matrizes,int mSelected){
-	showM(matrizes.Matriz[mSelected]);
+	showM(matrizes[mSelected].Matriz);
 }
-void liberaAllM(struct conjuntoMatrizes matrizes){
-	for(int i =0; i < matrizes.tamanho; i++){
-		liberaM(matrizes.Matriz[i].Matriz,matrizes.Matriz[i].x);
-	}
+void liberaAllM(struct conjuntoMatrizes *matrizes){
 	free(matrizes.auxMatriz);
-	free(matrizes.Matriz);
+	liberaM(matrizes.Matriz);
 }
-struct conjuntoMatrizes addMatriz(struct conjuntoMatrizes Matrizes){
-	struct MatrixM temp;
-	Matrizes.auxMatriz =(struct MatrixM *) malloc (Matrizes.tamanho * sizeof(struct MatrixM));
-	for(int i=0;i< Matrizes.tamanho;i++){
-		Matrizes.auxMatriz[i].Matriz = Matrizes.Matriz[i].Matriz;
-		strcpy(Matrizes.auxMatriz[i].nome,Matrizes.Matriz[i].nome);
-		Matrizes.auxMatriz[i].x = Matrizes.Matriz[i].x;
-		Matrizes.auxMatriz[i].y = Matrizes.Matriz[i].y;
+*/
+struct conjuntoMatrizes *aloca(){
+	 struct conjuntoMatrizes *novo=(struct conjuntoMatrizes *) malloc(sizeof(struct conjuntoMatrizes));
+	 if(!novo){
+		  printf("Sem memoria disponivel!\n");
+		  exit(1);
+	 }else{
+		  printf("\n Nova matriz: ");
+		  novo->Matriz = buildV(novo->Matriz);
+		  return novo;
+	 }
+ 
+}
+int vazia(struct conjuntoMatrizes *FILA)
+{
+	if(FILA == NULL){
+		return 1;
 	}
-	liberaAllM(Matrizes);
-	Matrizes.tamanho++;
-	Matrizes.Matriz = (struct MatrixM *) realloc (Matrizes.Matriz,Matrizes.tamanho * sizeof(struct MatrixM));
-	for(int i=0;i<(Matrizes.tamanho);i++){
-		Matrizes.Matriz[i] = Matrizes.auxMatriz[i];
+	else{
+		  return 0;
 	}
-	temp = buildV(Matrizes.Matriz[Matrizes.tamanho]);
-	Matrizes.Matriz[Matrizes.tamanho].Matriz=temp.Matriz;
-	strcpy(Matrizes.Matriz[Matrizes.tamanho].nome,temp.nome);
-	Matrizes.Matriz[Matrizes.tamanho].x=temp.x;
-	Matrizes.Matriz[Matrizes.tamanho].y=temp.y;
-	return (Matrizes);
+}
+void addMatriz(){
+	struct conjuntoMatrizes *novaMatriz=aloca();
+	novaMatriz->proxItem= NULL;
+	 if(vazia(filaMatrizes)){
+		filaMatrizes = novaMatriz;
+	 }else{
+		struct conjuntoMatrizes *temp = filaMatrizes;
+		while(temp->proxItem != NULL){
+			temp = temp->proxItem;
+		}
+		temp->proxItem = novaMatriz;
+	 }
+	 tamanho++;
+}
+void somarMatriz(int indicador1, int indicador2){
+	struct conjuntoMatrizes *temp = filaMatrizes,*temp2 = filaMatrizes;
+	if(vazia(filaMatrizes)){
+		printf("\n\n \t\t Error: Nenhuma Matriz Cadastrada");
+	}else{
+		if(indicador1>tamanho || indicador2>tamanho){
+			printf("\n\n \t\t Error: Posicao invalida ");
+			return;
+		}
+		for(int i=0;i<tamanho;i++){
+			if(i==indicador1-1){
+				temp = temp->proxItem;
+				break;
+			}
+		}
+		for(int i=0;i<tamanho;i++){
+			if(i==indicador2-1){
+				temp2 = temp2->proxItem;
+				break;
+			}
+		}
+		struct conjuntoMatrizes *novaMatriz=(struct conjuntoMatrizes *) malloc(sizeof(struct conjuntoMatrizes));
+		novaMatriz->Matriz=sumMatrix(novaMatriz->Matriz,temp->Matriz,temp2->Matriz);
+		novaMatriz->proxItem=NULL;
+		struct conjuntoMatrizes *temp = filaMatrizes;
+		while(temp->proxItem != NULL){
+			temp = temp->proxItem;
+		}
+		temp->proxItem = novaMatriz;
+		showM(novaMatriz->Matriz);
+		tamanho++;
+	}
+}
+void exibir(int indicador){
+	if(vazia(filaMatrizes)){
+		printf("\n\n \t\t Error: Nenhuma Matriz Cadastrada");
+	}else{
+	struct conjuntoMatrizes *temp = filaMatrizes;
+	if(indicador<0){
+		while(temp->proxItem != NULL){
+			showM(temp->Matriz);
+			temp = temp->proxItem;
+		}
+			showM(temp->Matriz);
+		return;
+	}
+	if(indicador>tamanho){
+		printf("\n\n \t\t Error: Posicao invalida ");
+		return;
+	}
+	for(int i=0;i<tamanho;i++){
+		if(i==indicador-1){
+			temp = temp->proxItem;
+				break;
+		}
+	}
+			showM(temp->Matriz);
+	}
+}
+void multpMatriz(int indicador1, int indicador2){
+	struct conjuntoMatrizes *temp = filaMatrizes,*temp2 = filaMatrizes;
+	if(vazia(filaMatrizes)){
+		printf("\n\n \t\t Error: Nenhuma Matriz Cadastrada");
+	}else{
+		if(indicador1>tamanho || indicador2>tamanho){
+			printf("\n\n \t\t Error: Posicao invalida ");
+			return;
+		}
+		for(int i=0;i<tamanho;i++){
+			if(i==indicador1-1){
+				temp = temp->proxItem;
+				break;
+			}
+		}
+		for(int i=0;i<tamanho;i++){
+			if(i==indicador2-1){
+				temp2 = temp2->proxItem;
+				break;
+			}
+		}
+		struct conjuntoMatrizes *novaMatriz=(struct conjuntoMatrizes *) malloc(sizeof(struct conjuntoMatrizes));
+		novaMatriz->Matriz=multMatrix(temp->Matriz,temp2->Matriz);
+		novaMatriz->proxItem=NULL;
+		struct conjuntoMatrizes *temp = filaMatrizes;
+		while(temp->proxItem != NULL){
+			temp = temp->proxItem;
+		}
+		temp->proxItem = novaMatriz;
+		showM(novaMatriz->Matriz);
+		tamanho++;
+	}
+}
+int detMatriz(int indicador){
+	struct conjuntoMatrizes *temp = filaMatrizes;
+	if(vazia(filaMatrizes)){
+		printf("\n\n \t\t Error: Nenhuma Matriz Cadastrada");
+	}else{
+		if(indicador>tamanho){
+			printf("\n\n \t\t Error: Posicao invalida ");
+			return -1;
+		}
+		for(int i=0;i<tamanho;i++){
+			if(i==indicador-1){
+				temp = temp->proxItem;
+				break;
+			}
+	}
+		return determinante(temp->Matriz);
+	}
+	return 0;
+}
+void transpMatriz(int indicador){
+		struct conjuntoMatrizes *temp = filaMatrizes;
+	if(vazia(filaMatrizes)){
+		printf("\n\n \t\t Error: Nenhuma Matriz Cadastrada");
+	}else{
+		if(indicador>tamanho){
+			printf("\n\n \t\t Error: Posicao invalida ");
+			return;
+		}
+		for(int i=0;i<tamanho;i++){
+			if(i==indicador-1){
+				temp = temp->proxItem;
+				break;
+			}
+		}
+		printf("\n\n \t\t A transposta eh: \n ");
+		showVT(temp->Matriz);
+	}
 }

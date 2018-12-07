@@ -1,0 +1,1 @@
+Se tiver o GCC, executar o "start.bat"
