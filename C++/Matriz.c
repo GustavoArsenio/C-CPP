@@ -9,13 +9,13 @@
 	###################################
 
 */
-	struct conjuntoMatrizes *filaMatrizes;
-	int tamanho=0;
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "algebra.h"
+
+struct conjuntoMatrizes *filaMatrizes;
+int tamanho=0;
 
 int main(int argc, char const *argv[])
 {

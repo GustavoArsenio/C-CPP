@@ -10,7 +10,7 @@
 
 */
 
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "algebra.h"
@@ -487,7 +487,7 @@ int detMatriz(int indicador){
 	return 0;
 }
 void transpMatriz(int indicador){
-		struct conjuntoMatrizes *temp = filaMatrizes;
+	struct conjuntoMatrizes *temp = filaMatrizes;
 	if(vazia(filaMatrizes)){
 		printf("\n\n \t\t Error: Nenhuma Matriz Cadastrada");
 	}else{
