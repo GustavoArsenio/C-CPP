@@ -6,21 +6,22 @@ struct topoLista *p,*q,*r;
 
 int main(int argc, char const *argv[])
 {
-	// Ex1
-	p = initTopo(p);
-	printf("\n Digite o valor do novo item: " );
-	int valor;
-	scanf("%d",&valor);
-	empilha(valor,p);
-	show(p->inicio);
-	empilha(topo(p)->valor,p);
-	printf("\n Digite o valor do novo item: " );
-	scanf("%d",&valor);
-	empilha(valor,p);
-	show(p->inicio);
-	printf(">>> desempilha %d\n ",desempilha(p)->valor);
-	show(p->inicio);
-	finalizarLista(p->inicio);
+	/* Ex1
+		p = initTopo(p);
+		printf("\n Digite o valor do novo item: " );
+		int valor;
+		scanf("%d",&valor);
+		empilha(valor,p);
+		show(p->inicio);
+		empilha(topo(p)->valor,p);
+		printf("\n Digite o valor do novo item: " );
+		scanf("%d",&valor);
+		empilha(valor,p);
+		show(p->inicio);
+		printf(">>> desempilha %d\n ",desempilha(p)->valor);
+		show(p->inicio);
+		finalizarLista(p->inicio);
+	*/
 	/*
 	Ex2
 		p = initTopo(p);
@@ -42,4 +43,17 @@ int main(int argc, char const *argv[])
 		finalizarLista(q->inicio);
 		finalizarLista(r->inicio);
 	*/
+	/* Ex 3/4
+		int base,valor;
+		p = initTopo(p);
+		printf("\n Digite o valor de base: ");
+		scanf("%d",&base);
+		printf("\n\n Digite o valor numerico de calculo: ");
+		scanf("%d",&valor);
+		calcBin(valor,base,p);
+		printf("\n Abacou o calculo --- \n");
+		show(p->inicio);
+	*/
+	//Ex5
+
 }

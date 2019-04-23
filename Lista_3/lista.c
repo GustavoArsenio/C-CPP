@@ -14,7 +14,6 @@ void show(struct LISTA *lista){
 		show(lista->proximo);
 		printf("\n\n");
 	}
-	
 };
 struct LISTA *alocar(int tamanho){
 	return ( (struct LISTA *) malloc(sizeof(struct LISTA) * tamanho) );
@@ -59,15 +58,16 @@ void finalizarLista(struct LISTA *lista){
 		free(lista);
 	}
 }
-void calcBin(int valor,int base,struct LISTA *lista){
+void calcBin(int valor,int base,struct topoLista *topo){
 	if (valor==0)
 	{
-		return;
+			return;
 	}else if (valor>0)
 	{
-		empilha(valor%base,lista);
-		calcBin((valor-(valor%base)/base),lista)
+		printf("\n%d",valor%base);
+		empilha(valor%base,topo);
+		calcBin(((valor-(valor%base))/base),base,topo);
 	}else{
-		printf("\n >>> Valor: não é válido %d\n", );
+		printf("\n >>> Valor: não é válido %d\n", valor);
 	}
 }
