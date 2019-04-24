@@ -72,7 +72,6 @@ int main(int argc, char const *argv[])
 		}
 		show_CHAR(p_CHAR->inicio);
 	*/
-	/*
 	//Ex6
 		p_CHAR = initTopo_CHAR(p_CHAR);
 		char entrada ='a';
@@ -92,5 +91,4 @@ int main(int argc, char const *argv[])
 		}else{
 			printf("\n *** Nao e um palindromo *** \n");
 		}
-	*/
 }

@@ -128,7 +128,6 @@ void finalizarLista_CHAR(struct LISTA_CHAR *lista){
 	}
 };
 int comparar_CHAR(struct LISTA_CHAR *lista1,struct LISTA_CHAR *lista2){
-	printf(" \n >>>> Os valores sao %c %c \n",lista1->valor,lista2->valor);
 	if (lista1->valor == lista2->valor)
 	{
 		if (lista1->proximo == NULL && lista2->anterior == NULL)
