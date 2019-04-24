@@ -22,6 +22,7 @@ int main(int argc, char const *argv[])
 		printf(">>> desempilha %d\n ",desempilha(p)->valor);
 		show(p->inicio);
 		finalizarLista(p->inicio);
+	//Fim EX 1
 	*/
 	/*
 	Ex2
@@ -43,6 +44,7 @@ int main(int argc, char const *argv[])
 		finalizarLista(p->inicio);
 		finalizarLista(q->inicio);
 		finalizarLista(r->inicio);
+	//Fim EX 2
 	*/
 	/* Ex 3/4
 		int base,valor;
@@ -54,6 +56,7 @@ int main(int argc, char const *argv[])
 		calcBin(valor,base,p);
 		printf("\n Abacou o calculo --- \n");
 		show(p->inicio);
+	//Fim EX 3/4
 	*/
 	/*
 	//Ex5
@@ -71,6 +74,7 @@ int main(int argc, char const *argv[])
 			}
 		}
 		show_CHAR(p_CHAR->inicio);
+	//Fim Ex5
 	*/
 	//Ex6
 		p_CHAR = initTopo_CHAR(p_CHAR);
@@ -91,4 +95,5 @@ int main(int argc, char const *argv[])
 		}else{
 			printf("\n *** Nao e um palindromo *** \n");
 		}
+	// Fim Ex6
 }
