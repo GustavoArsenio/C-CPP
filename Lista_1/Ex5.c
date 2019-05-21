@@ -19,6 +19,6 @@ int main(int argc, char const *argv[])
 	}
 	for (int i = 0; i < 50; ++i)
 	{
-		printf("\n >>> A media de (%d + %d)/2 = %d",A[i],B[i],C[i]);
+		printf("\n >>> A media de (%.2f + %.2f)/2 = %.2f",A[i],B[i],C[i]);
 	}
 }
