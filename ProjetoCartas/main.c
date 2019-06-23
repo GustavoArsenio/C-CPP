@@ -1,28 +1,43 @@
 #include <stdio.h>
 #include "deck.h"
 
+
+int main(int argc, char const *argv[])
+{
+
 // ================================== //
 //                                    //
 //     Setando Variaveis Globais      //
 //                                    //
 // ================================== //
-struct carta vira;
-int numeroDeCartas, numeroDeNipes, numeroDePlayers;
-struct mao *players;
 
-int main(int argc, char const *argv[])
-{
+    struct carta vira;
+    int numeroDeCartas, numeroDeNipes = 0, numeroDePlayers = 0;
+    struct mao *players;
+
+    printf("\n>>> def Numero de players");
     numeroDePlayers = askPlayers();
-    players = alocarMaos(numeroDePlayers);
+    printf("\n>>> def contar 1");
     numeroDeCartas = contar(1);
+    printf("\n>>> def contar 2");
     numeroDeNipes = contar(2);
-
-    printf(' >>> Numero de nipes : %d', numeroDeNipes);
-    printf('\n >>> Numero de cartas : %d', numeroDeCartas);
-
-    for (int i = 0; i < numeroDePlayers; i++)
-    {
-        printf('\n\n>>>> Player [%d]', i + 1);
-        mostrarMao(players[i]);
+    printf("\n>>> def alocarMaos ");
+    players = alocarMaos(1);
+    if(numeroDeNipes*numeroDeCartas < numeroDePlayers*3){
+        printf("\n Numeros de usuarios invalido, valor muito alto");
+        return 1;
     }
+    printf("\n>>> distribuindo ");
+    players = distribuir(numeroDeCartas,numeroDeNipes,players,vira,numeroDePlayers);
+    printf("\n>>> Mostrando ---------- ");
+    showPlayers(players,numeroDePlayers);
+
+
+
+
+    // for (int i = 0; i < numeroDePlayers; i++)
+    // {
+    //     printf("\n\n>>>> Player [%d] \n\n", i + 1);
+    //     mostrarMao(players);
+    // }
 }

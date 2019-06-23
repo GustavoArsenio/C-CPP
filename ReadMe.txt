@@ -1,1 +1,1 @@
-Lista do Curtinhas é a "lista 3".
+﻿Lista Academicas - Solicitadas pela UNASP - Universidade Adventista de São Paulo
