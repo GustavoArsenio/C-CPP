@@ -1,43 +1,28 @@
 #include <stdio.h>
-#include <string.h>
-#include "lista.h"
-#include "carta.h"
-#include "util.h"
+#include "deck.h"
 
-int main(int argc, char *argv[]) {
-  Carta *C;
-  FILE *p;
-  Lista *L;
-  char nome[20];
-  int id=0;
-  char num;
-  char naipe[10];
-  if(argc != 2)
-  {
-    printf("Digite o nome do arquivo: ");
-    scanf("%s",nome);
-  }else
-  {
-    strcpy(nome,argv[1]);
-  }
+// ================================== //
+//                                    //
+//     Setando Variaveis Globais      //
+//                                    //
+// ================================== //
+struct carta vira;
+int numeroDeCartas, numeroDeNipes, numeroDePlayers;
+struct mao *players;
 
-  p= util_abre_arq(nome);
-  L = lst_cria();
-  do{
-    id++;
-    fgets(nome,20,p);
-    if(!feof(p))
-    nome[strlen(nome)-1]='\0';
-    else
-    nome[strlen(nome)]='\0';
-    sscanf(nome,"%c%s",&num,naipe);
-    C = carta_cria( id,  num, naipe);
-    lst_insere_fim(L, C);
+int main(int argc, char const *argv[])
+{
+    numeroDePlayers = askPlayers();
+    players = alocarMaos(numeroDePlayers);
+    numeroDeCartas = contar(1);
+    numeroDeNipes = contar(2);
 
-  }while(id<40 && !feof(p));
-  
-  lst_exibe_elementos(L);
-  lst_libera(L);
+    printf(' >>> Numero de nipes : %d', numeroDeNipes);
+    printf('\n >>> Numero de cartas : %d', numeroDeCartas);
 
-  return 0;
+    for (int i = 0; i < numeroDePlayers; i++)
+    {
+        printf('\n\n>>>> Player [%d]', i + 1);
+        mostrarMao(players[i]);
+    }
 }
