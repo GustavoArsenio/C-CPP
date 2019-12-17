@@ -46,7 +46,4 @@ void addMatriz();
 int vazia(struct conjuntoMatrizes *FILA);
 struct conjuntoMatrizes *aloca();
 void transpMatriz(int indicador);
-// int det(int **pMatriz, int l, int c);
-// void sisEqn(int vet[][TAM],int v[][TAM], int l, int c);
-
 #endif

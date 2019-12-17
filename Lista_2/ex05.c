@@ -9,10 +9,11 @@ int main(int argc, char const *argv[])
 	fib = (int *) malloc(sizeof(int) * input);
 	fib[0] = 0;
 	fib[1] = 1;
-	for (int i = 2; i <= input; ++i)
-	{
+
+	for (int i = 2; i <= input; ++i){
 		fib[i]=fib[i-1]+fib[i-2];
 	}
-	(input <1)? printf(" 0 \n") : (input == 1) ? printf(" 1 \n"): printf(" %d \n",fib[input]);
+
+		(input <1)? printf(" 0 \n") : (input == 1) ? printf(" 1 \n"): printf(" %d \n",fib[input]);
 	free(fib);
 }
