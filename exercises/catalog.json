@@ -158,6 +158,102 @@
       "references": []
     },
     {
+      "id": "c-card-ascii-renderer",
+      "title": "Render a Truco card as fixed-width ASCII",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "enums",
+        "arrays",
+        "ASCII output",
+        "input validation"
+      ],
+      "prerequisites": [
+        "c-card-deck-deal"
+      ],
+      "learning_objectives": [
+        "Map validated enum values to symbols without unchecked indexing",
+        "Build fixed-width printable output in a caller-provided buffer",
+        "Reject malformed standard input with a nonzero status"
+      ],
+      "statement": "Render one Truco card from rank and suit enum values as a fixed-width, 12-row ASCII drawing. The library function writes into a caller-provided buffer, while the command-line program reads one rank symbol followed by one suit symbol and prints the rendering.",
+      "examples": [
+        {
+          "input": "A C\n",
+          "output": "+-----------------+\n| A             C |\n|                 |\n|                 |\n|                 |\n|                 |\n|                 |\n|                 |\n|                 |\n|                 |\n| C             A |\n+-----------------+\n"
+        },
+        {
+          "input": "Z C\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "A Z\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "A\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "A C extra\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        }
+      ],
+      "constraints": [
+        "Rank symbols follow enum order: 4, 5, 6, 7, Q, J, K, A, 2, 3.",
+        "Suit symbols follow enum order: D, S, H, C.",
+        "Output has 12 rows of 19 columns, newline after every row, and one terminating NUL; capacity is 241 bytes.",
+        "Output contains printable ASCII only and uses no allocation, locale, or terminal color codes.",
+        "Null output pointers or invalid enum values return false without writing."
+      ],
+      "status": "tested",
+      "source": "projects/card-game-c/render-card.c",
+      "validation": "Build render_card and test_card_renderer; pass CTest unit_card_renderer and smoke_card_renderer, which checks valid, invalid rank/suit, missing, incomplete, and extra input against the catalog.",
+      "acceptance_criteria": [
+        "Golden card output matches exactly, with twelve 19-column rows and a newline after each row.",
+        "All 40 rank/suit enum combinations render with every row byte, spacing, symbol, and newline checked.",
+        "Ranks and suits below and above their valid ranges are rejected without changing output.",
+        "The CLI prints the exact drawing for valid symbols and rejects missing, incomplete, invalid, or extra symbols with exit code 1 and empty stdout.",
+        "The renderer and CLI build as C17 targets linked through the canonical truco library."
+      ],
+      "complexity": "O(1) time and O(1) space.",
+      "references": [
+        "docs/architecture/migration-map.md",
+        "docs/references/fixtures/card-values.txt",
+        "docs/references/fixtures/card-suits.txt",
+        "docs/references/assignments/trabalho-1.pdf#page=1"
+      ]
+    },
+    {
       "id": "c-concurrency-bounded-queue",
       "title": "Bounded producer-consumer queue",
       "language": "C",

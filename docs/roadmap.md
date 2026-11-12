@@ -35,12 +35,7 @@ Priorities are based on the remaining requirements in the refactor brief.
 
 ## P1 — broaden engineering coverage
 
-- Migrate the historical card renderer into a portable C17 example. Use only
-  printable ASCII, format rank/suit through the canonical card enums, and avoid
-  terminal code-page assumptions. Acceptance: deterministic fixed-width card
-  output, exact golden tests for multiple ranks and suits, and rejection of
-  invalid enum values without out-of-bounds lookup. Reconcile the retained
-  `card-values.txt` and `card-suits.txt` fixtures with those tests.
+- The historical card renderer is migrated as a portable C17 library module and CLI. Golden and unit tests verify 12 rows of 19 columns, newline/NUL termination, all 40 enum combinations, and invalid lower/upper enum values with unchanged output. CLI catalog smoke cases cover valid, invalid, and missing input. The byte-preserved `card-values.txt` and `card-suits.txt` remain historical-only fixtures; the renderer uses canonical enums directly.
 - Resolve the remaining legacy input-fixture associations, including
   `Lista_2/Entrada.txt` and `C++/in.txt`: connect each to a named exercise and
   expected result, or document why it is retained as historical-only data.

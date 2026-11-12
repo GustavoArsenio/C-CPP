@@ -40,8 +40,23 @@ def check_example(exercise: dict, number: int, executable: str) -> None:
             f"expected {expected!r}, got {result.stdout!r}"
         )
     for check in example.get("checks", []):
-        if check != "unique_cards_per_player":
+        if check == "stdout_empty":
+            if result.stdout:
+                raise ValueError(
+                    f"Expected empty stdout for {exercise['id']} example "
+                    f"{number}"
+                )
+        elif check == "stderr_nonempty":
+            if not result.stderr.strip():
+                raise ValueError(
+                    f"Expected useful stderr for {exercise['id']} example "
+                    f"{number}"
+                )
+        elif check != "unique_cards_per_player":
             raise ValueError(f"Unknown smoke check {check!r}")
+    for check in example.get("checks", []):
+        if check != "unique_cards_per_player":
+            continue
         dealt_cards = []
         for line in result.stdout.splitlines():
             if ":" not in line:

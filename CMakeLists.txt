@@ -70,7 +70,8 @@ target_link_libraries(bounded_queue PUBLIC Threads::Threads)
 add_library(calendar_date STATIC tracks/c/06-structures/calendar_date.c)
 target_include_directories(calendar_date PUBLIC
                            "${CMAKE_CURRENT_SOURCE_DIR}/tracks/c/06-structures")
-add_library(truco STATIC projects/card-game-c/truco.c)
+add_library(truco STATIC projects/card-game-c/truco.c
+                         projects/card-game-c/card_renderer.c)
 target_include_directories(truco PUBLIC
                            "${CMAKE_CURRENT_SOURCE_DIR}/projects/card-game-c")
 add_library(matrix_operations STATIC
@@ -126,7 +127,8 @@ foreach(source IN LISTS LEARNING_C_SOURCES)
        source MATCHES "/concurrency/bounded_queue.c$" OR
        source MATCHES "/algorithms/statistics/int_min_max.c$" OR
        source MATCHES "/tracks/c/06-structures/calendar_date.c$" OR
-       source MATCHES "/projects/card-game-c/truco.c$")
+       source MATCHES "/projects/card-game-c/(truco|card_renderer)[.]c$" OR
+       source MATCHES "/projects/card-game-c/render-card[.]c$")
         continue()
     endif()
     if(source MATCHES "/networking/")
@@ -206,6 +208,17 @@ foreach(source IN LISTS LEARNING_C_SOURCES)
     endif()
 endforeach()
 
+add_executable(render_card projects/card-game-c/render-card.c)
+target_link_libraries(render_card PRIVATE truco)
+if(MSVC)
+    target_compile_options(render_card PRIVATE /W4)
+else()
+    target_compile_options(render_card PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(render_card PRIVATE -fanalyzer)
+endif()
+
 file(GLOB_RECURSE LEARNING_CXX_SOURCES CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/tracks/cpp/*.cpp"
      "${CMAKE_CURRENT_SOURCE_DIR}/projects/*.cpp")
@@ -247,6 +260,19 @@ if(BUILD_TESTING)
         target_compile_options(test_truco PRIVATE -fanalyzer)
     endif()
     add_test(NAME unit_truco COMMAND test_truco)
+
+    add_executable(test_card_renderer tests/unit/test_card_renderer.c)
+    target_link_libraries(test_card_renderer PRIVATE truco)
+    if(MSVC)
+        target_compile_options(test_card_renderer PRIVATE /W4)
+    else()
+        target_compile_options(test_card_renderer PRIVATE
+                               -Wall -Wextra -Wpedantic)
+    endif()
+    if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        target_compile_options(test_card_renderer PRIVATE -fanalyzer)
+    endif()
+    add_test(NAME unit_card_renderer COMMAND test_card_renderer)
 
     add_executable(test_int_stack tests/unit/test_int_stack.c)
     target_link_libraries(test_int_stack PRIVATE int_stack)
@@ -357,6 +383,11 @@ if(BUILD_TESTING)
         add_test(NAME exercise_catalog
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/catalog.py")
+        add_test(NAME smoke_card_renderer
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/smoke_example.py"
+                         --source projects/card-game-c/render-card.c
+                         --executable "$<TARGET_FILE:render_card>")
         add_test(NAME integration_file_line_count
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_file_line_count.py"
