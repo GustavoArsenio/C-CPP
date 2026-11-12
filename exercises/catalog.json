@@ -3010,13 +3010,31 @@
             "stdout_empty",
             "stderr_nonempty"
           ]
+        },
+        {
+          "input": "3abc\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "1 5abc\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         }
       ],
       "constraints": [
         "The handle is opaque; callers can access elements only through the API.",
         "The caller destroys a successfully created vector exactly once.",
         "Failed append leaves existing elements unchanged.",
-        "The CLI rejects negative counts, out-of-range decimal counts or values, and missing values with status 1, a diagnostic, and no stdout."
+        "The CLI rejects malformed integer tokens, negative counts, out-of-range decimal counts or values, and missing values with status 1, a diagnostic, and no stdout."
       ],
       "acceptance_criteria": [
         "The public header compiles from both the CLI and a separate unit-test translation unit.",
@@ -4519,11 +4537,29 @@
             "stdout_empty",
             "stderr_nonempty"
           ]
+        },
+        {
+          "input": "3abc\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "1 5abc\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         }
       ],
       "constraints": [
         "Use std::vector<int> and push_back; do not manually manage storage.",
-        "Reject negative counts, out-of-range decimals, and incomplete input with status 1, a diagnostic, and no stdout.",
+        "Reject malformed integer tokens, negative counts, out-of-range decimals, and incomplete input with status 1, a diagnostic, and no stdout.",
         "Catch allocation and maximum-size failures from vector growth."
       ],
       "status": "tested",
@@ -4533,7 +4569,7 @@
         "The C++20 target builds with repository warning options.",
         "The nonempty example preserves insertion order and exactly matches the C output.",
         "Zero values produce a valid empty sequence output.",
-        "Negative counts and missing values return status 1 with stderr diagnostics and empty stdout.",
+        "Malformed tokens, negative counts, and missing values return status 1 with stderr diagnostics and empty stdout.",
         "std::vector owns and releases its storage through RAII."
       ],
       "complexity": "Amortized O(1) append and O(n) traversal; O(n) storage.",

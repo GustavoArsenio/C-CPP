@@ -23,9 +23,18 @@ int main() {
 
         std::vector<int> values;
         for (std::size_t index = 0; index < count; ++index) {
-            int value = 0;
-            if (!(std::cin >> value)) {
+            std::string value_token;
+            if (!(std::cin >> value_token)) {
                 std::cerr << "error: expected an integer value\n";
+                return 1;
+            }
+            int value = 0;
+            const auto [value_end, value_error] =
+                std::from_chars(value_token.data(),
+                                value_token.data() + value_token.size(), value);
+            if (value_error != std::errc{} ||
+                value_end != value_token.data() + value_token.size()) {
+                std::cerr << "error: expected a complete integer value\n";
                 return 1;
             }
             values.push_back(value);

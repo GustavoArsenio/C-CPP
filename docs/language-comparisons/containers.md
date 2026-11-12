@@ -19,5 +19,7 @@ counts and elements with range checks before conversion. Its unit tests exercise
 empty state, invalid handles and indices, multiple capacity growths, insertion
 order, removal, and cleanup. Portable tests do not force allocator failure or
 synthetic vector-capacity overflow. Both smoke suites cover normal, empty,
-incomplete, negative-count, and out-of-range decimal input. These lessons compare
-container interfaces and ownership; they contain no performance measurements.
+incomplete, negative-count, out-of-range decimal, and malformed tokens such as
+`5abc` or `3abc`. The C++ example parses each token in full instead of accepting
+a numeric prefix. These lessons compare container interfaces and ownership; they
+contain no performance measurements.
