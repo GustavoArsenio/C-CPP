@@ -60,8 +60,10 @@ Priorities are based on the remaining requirements in the refactor brief.
   random, sorted, reverse, and duplicate-heavy inputs. Run larger workloads
   and collect a fresh result on native (non-WSL) machines; the checked-in WSL
   result predates the balanced schedule.
-- Add sanitizer and static-analysis coverage for optional targets and project
-  code.
+- The GCC analyzer CI job now builds standard and optional POSIX/OpenSSL
+  examples with `-fanalyzer`, including the previously omitted tree/queue
+  libraries and their tests. Extend the sanitizer job to those optional targets
+  and add a Clang-Tidy CI run for C and C++ when its findings can be reviewed.
 - Add contribution and learning documentation in Portuguese and English.
 - The catalog is the authoritative backlog for planned and scaffolded
   exercises; run `python3 tools/validation/catalog.py` for current totals.
