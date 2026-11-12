@@ -243,7 +243,11 @@ int main(void) {
                 continue;
             }
             char determinant[DETERMINANT_TEXT_SIZE];
-            determinant_decimal(record->rows, record->values, determinant);
+            if (!determinant_decimal(record->rows, record->values,
+                                     determinant)) {
+                puts("Invalid matrix dimensions");
+                continue;
+            }
             printf("%s\n", determinant);
         } else if (command == 6) {
             for (int column = 0; column < record->columns; ++column) {

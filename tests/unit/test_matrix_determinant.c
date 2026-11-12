@@ -83,8 +83,8 @@ int main(void) {
     for (int row = 0; row < 8; ++row) {
         for (int column = 0; column < 8; ++column) {
             state = state * UINT32_C(1664525) + UINT32_C(1013904223);
-            matrix[row][column] =
-                (int32_t)((int64_t)state - INT64_C(2147483648));
+            int64_t signed_value = (int64_t)state - INT64_C(2147483648);
+            matrix[row][column] = (int32_t)signed_value;
         }
     }
     expect_determinant(8, matrix,
