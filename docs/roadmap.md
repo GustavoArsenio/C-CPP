@@ -23,7 +23,7 @@ Priorities are based on the remaining requirements in the refactor brief.
   teaches function parameters, return status, output pointers, and separate
   header/source compilation. File line counting covers lifecycle, LF/CRLF/EOF
   path input, and unterminated final lines.
-- The C++ track has 17 tested lesson sources, including a generic maximum
+- The C++ track has 18 tested lesson sources, including a generic maximum
   function template, RAII, classes, overloads, `std::sort`, Rule-of-Zero and
   `std::vector` ownership, and exception-based parsing. Advanced topics remain.
 - The C++ learning path now includes recursive binary-tree node counting with

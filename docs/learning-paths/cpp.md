@@ -11,7 +11,7 @@ explicit curriculum gaps.
 | Functions | Euclidean greatest common divisor, overloads, const string reference, a maximum function template | Callable objects |
 | Types and objects | Point and Vector2D classes, constructor, const method and operator overload | Invariants, destructors, copy/move behavior |
 | Memory and RAII | A `std::vector` member demonstrates Rule-of-Zero ownership; a move-only owner wraps `FILE*` with `std::unique_ptr` and a custom deleter; binary tree children use exclusive `std::unique_ptr` ownership and recursive counting | Ownership composition, move semantics, resource cleanup |
-| Templates and STL | `std::vector`, dynamic append, range traversal, `std::sort` with iterators | Associative containers |
+| Templates and STL | `std::vector`, dynamic append, range traversal, `std::sort` with iterators, `std::map` word counting | Further associative-container use |
 | Modern C++ | C++20 is the default build standard; integer parsing demonstrates standard exceptions and complete-input validation; temporary-file processing demonstrates RAII for a C resource; file line counting demonstrates `std::ifstream` lifetime and checked close | Concepts, ranges, chrono, filesystem, modules where supported |
 | Patterns, concurrency, advanced | No dedicated C++ lessons yet | Idiomatic examples and paired C/C++ comparisons |
 

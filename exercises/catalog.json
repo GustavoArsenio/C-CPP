@@ -4418,21 +4418,50 @@
         "Understand associative containers",
         "Understand strings"
       ],
-      "statement": "Count words in a sequence using std::map and print keys in sorted order.",
-      "examples": [],
+      "statement": "Read whitespace-delimited tokens through end-of-file, count each exact token with std::map<std::string, std::size_t>, and print each token and its count on one line. Preserve case and punctuation; the map determines lexicographic output order.",
+      "examples": [
+        {
+          "input": "pear apple banana apple",
+          "output": "apple 2\nbanana 1\npear 1\n"
+        },
+        {
+          "input": "apple Apple APPLE",
+          "output": "APPLE 1\nApple 1\napple 1\n"
+        },
+        {
+          "input": "word word, word. word,",
+          "output": "word 1\nword, 2\nword. 1\n"
+        },
+        {
+          "input": "\talpha\nalpha  beta\r\n",
+          "output": "alpha 2\nbeta 1\n"
+        },
+        {
+          "input": "",
+          "output": ""
+        },
+        {
+          "input": " \t\n",
+          "output": ""
+        }
+      ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "Read std::string values with std::cin >> word until end-of-file.",
+        "Whitespace separates tokens; preserve each token literally, including case and punctuation.",
+        "Print one `word count` line per distinct token, with a newline after each line.",
+        "Empty or whitespace-only input produces no output."
       ],
       "acceptance_criteria": [
-        "Words are counted case-sensitively.",
-        "Output order is lexicographic."
+        "Use std::map<std::string, std::size_t> for counting; do not sort entries afterward.",
+        "Token matching is exact and case-sensitive, and punctuation remains part of each token.",
+        "Print entries in the map’s lexicographic key order, exactly matching the examples.",
+        "Whitespace tokenization handles tabs, line endings, repeated spaces, and EOF without a final newline."
       ],
       "complexity": "O(n log u) time for n words and u unique words.",
       "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "status": "tested",
+      "source": "tracks/cpp/08-stl/04-map-word-count.cpp",
+      "validation": "cmake --preset default && cmake --build --preset default --target tracks_cpp_08-stl_04-map-word-count && ctest --preset default -R '^smoke_tracks_cpp_08-stl_04-map-word-count$'"
     },
     {
       "id": "cpp-point-class",
