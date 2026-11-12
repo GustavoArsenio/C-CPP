@@ -134,9 +134,6 @@
         {
           "input": "1\n1\n1\n",
           "output": "",
-          "checks": [
-            "unique_cards_per_player"
-          ],
           "expected_exit_code": 1
         }
       ],

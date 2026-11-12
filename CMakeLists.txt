@@ -408,6 +408,9 @@ if(BUILD_TESTING)
         add_test(NAME exercise_catalog_validation_tests
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_catalog.py")
+        add_test(NAME smoke_example_validation_tests
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_smoke_example.py")
         add_test(NAME smoke_card_renderer
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/smoke_example.py"
