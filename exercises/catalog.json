@@ -4384,21 +4384,73 @@
         "Understand std::copy_if",
         "Understand iterators"
       ],
-      "statement": "Copy even values from a vector using a lambda predicate and a standard algorithm.",
-      "examples": [],
+      "statement": "Read a count n followed by n signed integers. Copy the even values to a separate vector using std::copy_if and a capture-free lambda, then print them in input order on one line prefixed by `Even:`. Print `Even:` alone when no values qualify.",
+      "examples": [
+        {
+          "input": "0\n",
+          "output": "Even:\n"
+        },
+        {
+          "input": "6\n-3 -2 0 7 8 8\n",
+          "output": "Even: -2 0 8 8\n"
+        },
+        {
+          "input": "4\n1 3 5 7\n",
+          "output": "Even:\n"
+        },
+        {
+          "input": "3\n2 4 6\n",
+          "output": "Even: 2 4 6\n"
+        },
+        {
+          "input": "-1\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": ["stdout_empty", "stderr_nonempty"]
+        },
+        {
+          "input": "10001\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": ["stdout_empty", "stderr_nonempty"]
+        },
+        {
+          "input": "",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": ["stdout_empty", "stderr_nonempty"]
+        },
+        {
+          "input": "3\n2 4\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": ["stdout_empty", "stderr_nonempty"]
+        },
+        {
+          "input": "2\n1 nope\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": ["stdout_empty", "stderr_nonempty"]
+        }
+      ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "The first input value is n, with 0 <= n <= 10000.",
+        "Exactly n signed int values follow; all values must be representable as int.",
+        "Invalid, missing, or out-of-range input writes an error to stderr and exits with status 1."
       ],
       "acceptance_criteria": [
-        "The source vector remains unchanged.",
-        "The predicate captures no dangling references."
+        "Use std::copy_if with a capture-free lambda that selects values divisible by two.",
+        "Append selected values to a separate vector; do not modify the source vector.",
+        "Preserve input order and duplicate even values, including negative even values.",
+        "Print exactly one `Even:` line, including when the selected vector is empty.",
+        "Reject missing values and counts outside the inclusive range 0 through 10000.",
+        "Return status 0 for valid input and status 1 with a useful stderr message for invalid input."
       ],
-      "complexity": "O(n) time and O(k) output.",
+      "complexity": "O(n) time and O(n + k) storage including the source vector, where k values are even.",
       "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "status": "tested",
+      "source": "tracks/cpp/08-stl/05-lambda-filter.cpp",
+      "validation": "cmake --preset default && cmake --build --preset default --target tracks_cpp_08-stl_05-lambda-filter && ctest --preset default -R '^smoke_tracks_cpp_08-stl_05-lambda-filter$'"
     },
     {
       "id": "cpp-map-word-count",
