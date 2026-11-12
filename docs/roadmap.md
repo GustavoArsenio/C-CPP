@@ -38,12 +38,13 @@ Priorities are based on the remaining requirements in the refactor brief.
 - The historical card renderer is migrated as a portable C17 library module and CLI. Golden and unit tests verify 12 rows of 19 columns, newline/NUL termination, all 40 enum combinations, and invalid lower/upper enum values with unchanged output. CLI catalog smoke cases cover valid, invalid, and missing input. The byte-preserved `card-values.txt` and `card-suits.txt` remain historical-only fixtures; the renderer uses canonical enums directly.
 - Paired C17/C++20 line-count lessons now share byte-wise LF semantics and boundary tests, while comparing `FILE *` cleanup with `std::ifstream` RAII. Read/close failure branches are implemented but not injected by the portable test harness.
 - The C `qsort` and C++ `std::sort` lessons now use the same dataset and byte-identical output, with API and complexity differences documented separately from benchmark observations.
+- The C `malloc`/`free` array lesson is now paired with a C++ `std::vector` Rule-of-Zero owner using the same data and output; allocation-failure handling is implemented, but that branch is not injected by the smoke suite.
 - Legacy fixture associations are recorded in the migration map: the 1–144
   values in `Lista_2/Entrada.txt` are a shared raw matrix payload for Lista 2
   ex10/ex13, while `C++/in.txt` remains historical-only because its old menu
   tokens do not satisfy the current one-based, unquoted-name protocol.
-- Add C/C++ paired examples for ownership, containers, and error handling
-  without duplicating canonical implementations; the sorting pair now exists.
+- Paired ownership and sorting examples now exist without custom algorithm
+  duplication. Add paired container and error-handling examples.
 - Add data structures and algorithms with complexity discussions and boundary
   tests.
 - Expand the sorting benchmark with larger datasets, additional algorithms,

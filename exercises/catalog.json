@@ -2907,6 +2907,7 @@
       "difficulty": "intermediate",
       "topics": [
         "malloc",
+        "ownership",
         "allocation failure",
         "free"
       ],
@@ -2915,11 +2916,11 @@
         "c-foundations-basic-types"
       ],
       "learning_objectives": [
-        "Allocate dynamic storage",
-        "Check allocation",
-        "Release owned memory"
+        "Allocate storage for a fixed number of integers",
+        "Check allocation before accessing the returned pointer",
+        "Release the owned allocation exactly once with free"
       ],
-      "statement": "Allocate five integers, initialize them, sum them, and release the allocation.",
+      "statement": "Allocate five integers with malloc, initialize them to 1 through 5, print their sum, and release the allocation.",
       "examples": [
         {
           "input": "",
@@ -2927,18 +2928,22 @@
         }
       ],
       "constraints": [
-        "Allocation size must be expressed using sizeof"
+        "Use sizeof *values to calculate the allocation size.",
+        "Return status 1 with a stderr diagnostic if allocation fails."
       ],
       "status": "tested",
       "source": "tracks/c/05-pointers-memory/memory/01-malloc.c",
-      "validation": "Build target tracks_c_05-pointers-memory_memory_01-malloc",
+      "validation": "Build target tracks_c_05-pointers-memory_memory_01-malloc and pass its CTest smoke test. Allocation-failure injection is not part of the portable test.",
       "acceptance_criteria": [
-        "The program builds with its declared C17 or C++20 target.",
-        "For valid examples, standard output matches the catalog exactly.",
-        "Constraint: Allocation size must be expressed using sizeof"
+        "The C17 target builds with the repository warning options.",
+        "For the fixed five values, stdout is exactly `Sum = 15\\n`.",
+        "Allocation is checked before dereference and the successful allocation is freed once.",
+        "Allocation failure returns status 1 with a stderr diagnostic and no stdout."
       ],
-      "complexity": null,
-      "references": []
+      "complexity": "O(n) time and O(n) space for n integers.",
+      "references": [
+        "docs/language-comparisons/ownership.md"
+      ]
     },
     {
       "id": "c-modular-vector-api",
@@ -4279,37 +4284,50 @@
     },
     {
       "id": "cpp-rule-of-zero-owner",
-      "title": "Cpp Rule Of Zero Owner",
+      "title": "Own an integer sequence with the Rule of Zero",
       "language": "C++",
       "difficulty": "intermediate",
       "topics": [
         "RAII",
         "std::vector",
-        "rule of zero"
+        "rule of zero",
+        "ownership"
       ],
       "prerequisites": [
-        "cpp-point-class"
+        "cpp-stl-vector-iteration"
       ],
       "learning_objectives": [
-        "Understand RAII",
-        "Understand std::vector",
-        "Understand rule of zero"
+        "Represent owned integer storage as a std::vector member",
+        "Observe independent copying and ownership-preserving moves from compiler-generated special members",
+        "Sum the owned values with a standard algorithm"
       ],
-      "statement": "Create a value type that owns a sequence of integers using std::vector and needs no custom destructor or copy operations.",
-      "examples": [],
+      "statement": "Define a small aggregate value type containing std::vector<int>, initialize it with 1 through 5, and print the sum. Do not write custom destructor, copy, or move operations.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Sum = 15\n"
+        }
+      ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "Use std::vector to own the integer storage; do not use raw owning pointers.",
+        "Catch std::bad_alloc and return status 1 with a stderr diagnostic."
       ],
       "acceptance_criteria": [
-        "No raw owning pointer is used.",
-        "Copy and move behavior follow the member type."
+        "The C++20 target builds with the repository warning options.",
+        "For the fixed five values, stdout is exactly `Sum = 15\\n`, matching the C example.",
+        "The aggregate has no custom destructor, copy constructor, or move constructor.",
+        "Changing a copied vector does not change the original; moving the copy preserves its value.",
+        "std::vector releases its storage automatically when the value leaves scope.",
+        "Allocation failure returns status 1 with a stderr diagnostic and no stdout."
       ],
-      "complexity": "O(n) copy; O(1) move for vector storage.",
-      "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "complexity": "O(n) time for the copy and sum; O(n) storage. The vector move constructor transfers the stored sequence in constant time.",
+      "references": [
+        "tracks/c/05-pointers-memory/memory/01-malloc.c",
+        "docs/language-comparisons/ownership.md"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/09-modern-cpp/04-vector-ownership.cpp",
+      "validation": "Build target tracks_cpp_09-modern-cpp_04-vector-ownership and pass its CTest smoke test. Allocation-failure injection is not part of the portable test."
     },
     {
       "id": "cpp-sort-vector",

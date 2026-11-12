@@ -10,7 +10,7 @@ that still needs implementation.
 | Control flow | `for` and `while` examples | Conditions, switch, nested loops, validation exercises |
 | Functions | `03-functions/01-min-max.c` and reusable `algorithms/statistics/int_min_max` API | Recursion, scope, function pointers, arrays as parameters |
 | Arrays and strings | Array sum, sequence generation, Fibonacci, parity partition, matrix operations and patterns, bounded string copy | Dynamic strings, parsing, safe interfaces, multidimensional API design |
-| Pointers and memory | Pointer dereference and allocation/free example | Ownership contracts, pointer arithmetic, allocation APIs, error-path exercises |
+| Pointers and memory | Pointer dereference and checked `malloc`/`free` allocation paired with a C++ vector owner | Ownership contracts, pointer arithmetic, allocation APIs, error-path exercises |
 | Structures and files | `06-structures/01-calendar-date.c` and its header/source API, standard-stream line copy, checked file line counter, tree uses a struct | Binary file operations |
 | Data structures and algorithms | Binary search tree, linked stacks/lists, bounded queue, linear search, `qsort` comparator | Hash tables, sorting implementations, broader complexity comparisons |
 | Systems and advanced | Bounded POSIX queue; optional TCP and OpenSSL examples | Signals, processes, robust I/O, security threat models, portability variants |
@@ -20,3 +20,6 @@ is complete merely because the directory structure exists.
 
 For a paired view of the C `qsort` interface and C++ `std::sort`, see
 [`sorting.md`](../language-comparisons/sorting.md).
+
+For a paired view of explicit C allocation and C++ Rule-of-Zero ownership, see
+[`ownership.md`](../language-comparisons/ownership.md).

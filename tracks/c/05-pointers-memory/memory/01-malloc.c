@@ -1,24 +1,25 @@
-/* 01‑malloc.c – Dynamic allocation example
- *  Author:  [Your name]
- *  Purpose:  Allocate array via malloc and sum
- *  Compile:   gcc -Wall -Wextra -O2 01-malloc.c -o malloc
- *  Run:       ./malloc
- */
-
-#include <malloc.h>
+/* Allocate, initialize, sum, and release a dynamic array in C. */
+#include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(void) {
-    int n = 5;
-    int *arr = malloc(n * sizeof(int));
-    if (!arr) {
-        perror("malloc");
+    const size_t count = 5;
+    int *values = malloc(count * sizeof *values);
+    if (values == NULL) {
+        fputs("error: unable to allocate integer array\n", stderr);
         return 1;
     }
-    for (int i = 0; i < n; ++i) arr[i] = i + 1;
+
+    for (size_t index = 0; index < count; ++index) {
+        values[index] = (int)index + 1;
+    }
+
     int sum = 0;
-    for (int i = 0; i < n; ++i) sum += arr[i];
+    for (size_t index = 0; index < count; ++index) {
+        sum += values[index];
+    }
     printf("Sum = %d\n", sum);
-    free(arr);
+    free(values);
     return 0;
 }
