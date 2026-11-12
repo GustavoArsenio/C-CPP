@@ -4885,7 +4885,7 @@
     },
     {
       "id": "cpp-unique-ptr-tree",
-      "title": "Cpp Unique Ptr Tree",
+      "title": "Count nodes in a unique_ptr binary tree",
       "language": "C++",
       "difficulty": "intermediate",
       "topics": [
@@ -4899,23 +4899,34 @@
       "learning_objectives": [
         "Understand std::unique_ptr",
         "Understand RAII",
-        "Understand trees"
+        "Understand binary trees",
+        "Count nodes recursively without taking ownership of the root"
       ],
-      "statement": "Represent a binary tree with unique_ptr children and compute its node count recursively.",
-      "examples": [],
+      "statement": "Build a complete binary tree with seven integer-valued nodes using exclusive std::unique_ptr ownership, then print its node count. The reusable learning::trees::count_nodes API accepts a borrowed const root pointer.",
+      "examples": [
+        {
+          "input": "",
+          "output": "7\n"
+        }
+      ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "The lesson takes no input and prints exactly one line.",
+        "Each node stores an int and owns its children with std::unique_ptr.",
+        "count_nodes receives a borrowed const BinaryTreeNode pointer.",
+        "Counting and unique_ptr destruction use stack space proportional to tree height; extremely deep trees may exhaust the stack."
       ],
       "acceptance_criteria": [
-        "Ownership is exclusive and cleanup is automatic.",
-        "Empty trees report zero."
+        "A null root returns zero and a leaf returns one.",
+        "Left-only, right-only, balanced, and irregular trees are counted correctly.",
+        "The node type is move-only and moving a root preserves its count.",
+        "Destroying the root releases all child ownership through RAII.",
+        "The lesson prints exactly 7 followed by a newline."
       ],
       "complexity": "O(n) time and O(h) recursion space.",
       "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "status": "tested",
+      "source": "tracks/cpp/09-modern-cpp/05-unique-ptr-tree.cpp",
+      "validation": "cmake --preset default; cmake --build --preset default --target tracks_cpp_09-modern-cpp_05-unique-ptr-tree test_cpp_unique_ptr_tree; ctest --test-dir build/default --output-on-failure -R 'unit_cpp_unique_ptr_tree|smoke_tracks_cpp_09-modern-cpp_05-unique-ptr-tree'; python3 tools/validation/catalog.py"
     },
     {
       "id": "cpp-unique-resource",

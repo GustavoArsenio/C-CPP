@@ -243,6 +243,11 @@ foreach(source IN LISTS LEARNING_CXX_SOURCES)
     string(REPLACE "/" "_" target_name "${relative_source}")
     string(REPLACE ".cpp" "" target_name "${target_name}")
     add_executable("${target_name}" "${source}")
+    if(relative_source MATCHES
+       "^tracks/cpp/09-modern-cpp/05-unique-ptr-tree[.]cpp$")
+        target_include_directories("${target_name}" PRIVATE
+            "${CMAKE_CURRENT_SOURCE_DIR}")
+    endif()
     set_property(GLOBAL APPEND PROPERTY LEARNING_EXECUTABLES "${target_name}")
     if(MSVC)
         target_compile_options("${target_name}" PRIVATE /W4)
@@ -254,6 +259,18 @@ endforeach()
 
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(test_cpp_unique_ptr_tree
+                   tests/unit/test_cpp_unique_ptr_tree.cpp)
+    target_include_directories(test_cpp_unique_ptr_tree PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}")
+    if(MSVC)
+        target_compile_options(test_cpp_unique_ptr_tree PRIVATE /W4)
+    else()
+        target_compile_options(test_cpp_unique_ptr_tree PRIVATE
+                               -Wall -Wextra -Wpedantic)
+    endif()
+    add_test(NAME unit_cpp_unique_ptr_tree COMMAND test_cpp_unique_ptr_tree)
+
     add_executable(test_int_vector tests/unit/test_int_vector.c)
     target_link_libraries(test_int_vector PRIVATE int_vector)
     if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")

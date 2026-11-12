@@ -89,7 +89,7 @@ matrix, linked-list, regression, and card projects require focused review and
 should not be compiled as a single translation unit.
 
 No C++ implementation exists in the historical source inventory. The migrated
-tree has a separate C++20 track with 16 tested lesson sources; it continues to
+tree has a separate C++20 track with 17 tested lesson sources; it continues to
 expand independently rather than relabeling historical C examples.
 
 ## Initial architectural recommendation
