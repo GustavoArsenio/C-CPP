@@ -21,6 +21,12 @@
     "kernel": "6.6.87.2-microsoft-standard-WSL2",
     "python": "3.12.4"
   },
+  "timing_method": "C clock_gettime(CLOCK_MONOTONIC); C++ std::chrono::steady_clock",
+  "implementation_order": [
+    "C qsort",
+    "C++ std::sort",
+    "C++ std::stable_sort"
+  ],
   "results": {
     "random / C qsort": {
       "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",

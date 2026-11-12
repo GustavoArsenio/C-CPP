@@ -78,7 +78,12 @@ uint64_t factorial(unsigned int value) {
     return result;
 }
 
-/* Nine base-2^32 limbs hold the exact determinant for every supported input. */
+/*
+ * The Leibniz formula enumerates at most 8! products. Each product has
+ * magnitude at most 2^248; even the sum of all absolute terms is below
+ * 8! * 2^248 < 2^264. Nine base-2^32 limbs therefore hold every partial sum.
+ * All determinant arithmetic is integer arithmetic, so no rounding occurs.
+ */
 enum { DETERMINANT_LIMBS = 9 };
 struct big_signed {
     uint32_t limbs[DETERMINANT_LIMBS];
@@ -204,8 +209,12 @@ static void determinant_permutations(
     }
 }
 
-void determinant_decimal(int size, int32_t matrix[MAX_DIMENSION][MAX_DIMENSION],
+bool determinant_decimal(int size, int32_t matrix[MAX_DIMENSION][MAX_DIMENSION],
                          char output[DETERMINANT_TEXT_SIZE]) {
+    if (size < 1 || size > MAX_DIMENSION || matrix == NULL || output == NULL) {
+        return false;
+    }
+
     struct big_signed value = {{0}, 0, 0};
     bool used[MAX_DIMENSION] = {false};
     int permutation[MAX_DIMENSION] = {0};
@@ -231,6 +240,7 @@ void determinant_decimal(int size, int32_t matrix[MAX_DIMENSION][MAX_DIMENSION],
     if (value.sign < 0) output[output_index++] = '-';
     while (digits > 0) output[output_index++] = reversed[--digits];
     output[output_index] = '\0';
+    return true;
 }
 
 #ifndef MATRIX_OPERATIONS_NO_MAIN
@@ -285,7 +295,10 @@ static bool run_collection(void) {
                 free_collection(head);
                 return false;
             }
-            determinant_decimal(first->rows, first->values, text);
+            if (!determinant_decimal(first->rows, first->values, text)) {
+                free_collection(head);
+                return false;
+            }
             printf("%s\n", text);
         } else {
             int second_position;
@@ -447,7 +460,7 @@ int main(void) {
             !read_matrix(rows, rows, left))
             return 1;
         char determinant_text[DETERMINANT_TEXT_SIZE];
-        determinant_decimal(rows, left, determinant_text);
+        if (!determinant_decimal(rows, left, determinant_text)) return 1;
         printf("%s\n", determinant_text);
     } else if (operation == 6) {
         if (!run_collection()) return 1;

@@ -1,8 +1,8 @@
 /* Binary search tree insertion, inorder traversal, and cleanup. */
 
-#include "binary_search_tree.h"
-
 #include <stdio.h>
+
+#include "binary_search_tree.h"
 
 static void print_key(int key, void *context) {
     (void)context;

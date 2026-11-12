@@ -1,9 +1,9 @@
 /* A bounded producer-consumer queue protected by a mutex and conditions. */
 
-#include "bounded_queue.h"
-
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "bounded_queue.h"
 
 #define ITEM_COUNT 20
 

@@ -38,15 +38,16 @@ Catalog and output checks run through CTest when Python 3 is available.
 The intended canonical organization separates C and C++ tracks, reusable
 algorithms and data structures, integrated projects, paired language
 comparisons, and benchmarks. Historical assignment solutions and statements
-are being mapped from the original repository; see the migration map for
-their planned destinations. The directory named `C++/` in the old repository
-contained C programs and is not a C++ curriculum.
+are mapped from the original repository; see the migration map for their
+destinations and remaining gaps. The directory named `C++/` in the old
+repository contained C programs and is not a C++ curriculum.
 
 ## Current status
 
 - C examples exist from introductory through advanced topics.
-- The C++ track currently includes foundations, control flow, functions,
-  classes, and STL examples; RAII, templates, and advanced topics remain.
+- The C++ track includes foundations, control flow, functions, classes, STL,
+  exception-based parsing, RAII, and a function template; advanced topics
+  remain.
 - The exercise catalog is the single source of status and coverage counts;
   run `python3 tools/validation/catalog.py` to validate it and print totals.
 - Existing and historical examples are under review for correctness,

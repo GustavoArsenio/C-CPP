@@ -7,12 +7,21 @@ static void expect_determinant(int size,
                                int32_t matrix[MAX_DIMENSION][MAX_DIMENSION],
                                const char *expected) {
     char actual[DETERMINANT_TEXT_SIZE];
-    determinant_decimal(size, matrix, actual);
+    assert(determinant_decimal(size, matrix, actual));
     assert(strcmp(actual, expected) == 0);
 }
 
 int main(void) {
     int32_t matrix[MAX_DIMENSION][MAX_DIMENSION] = {{0}};
+    char unchanged[DETERMINANT_TEXT_SIZE] = "unchanged";
+    assert(!determinant_decimal(0, matrix, unchanged));
+    assert(strcmp(unchanged, "unchanged") == 0);
+    assert(!determinant_decimal(-1, matrix, unchanged));
+    assert(!determinant_decimal(MAX_DIMENSION + 1, matrix, unchanged));
+    assert(!determinant_decimal(1, NULL, unchanged));
+    assert(!determinant_decimal(1, matrix, NULL));
+    assert(strcmp(unchanged, "unchanged") == 0);
+
     matrix[0][0] = 7;
     expect_determinant(1, matrix, "7");
     matrix[0][0] = 1;
@@ -69,5 +78,17 @@ int main(void) {
     expect_determinant(8, matrix,
                        "-347376267172749653279217856191611407082245468776945900"
                        "913162254708176507109375");
+
+    uint32_t state = 74830;
+    for (int row = 0; row < 8; ++row) {
+        for (int column = 0; column < 8; ++column) {
+            state = state * UINT32_C(1664525) + UINT32_C(1013904223);
+            matrix[row][column] =
+                (int32_t)((int64_t)state - INT64_C(2147483648));
+        }
+    }
+    expect_determinant(8, matrix,
+                       "-157546896109958689553225351959002706123938274237013355"
+                       "11555801798934528000");
     return 0;
 }

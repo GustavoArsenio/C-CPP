@@ -1,7 +1,7 @@
-#include "binary_search_tree.h"
-
 #include <assert.h>
 #include <stddef.h>
+
+#include "binary_search_tree.h"
 
 struct keys {
     int values[8];

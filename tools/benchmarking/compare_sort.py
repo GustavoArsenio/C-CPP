@@ -114,6 +114,8 @@ def main():
         "warmups_per_case": args.warmups,
         "repetitions_per_case": args.repetitions,
         "timed_region": "sort call only; allocation, generation, process startup, and sortedness/checksum checks excluded",
+        "timing_method": "C clock_gettime(CLOCK_MONOTONIC); C++ std::chrono::steady_clock",
+        "implementation_order": ["C qsort", "C++ std::sort", "C++ std::stable_sort"],
         "correctness": "each native program verifies nondecreasing order; harness requires matching deterministic checksums across implementations",
         "platform": platform.platform(), "machine": platform.machine(),
         "machine_details": machine_details(), "results": results,

@@ -21,8 +21,9 @@ Priorities are based on the remaining requirements in the refactor brief.
   teaches function parameters, return status, output pointers, and separate
   header/source compilation. File line counting covers lifecycle, LF/CRLF/EOF
   path input, and unterminated final lines.
-- Add broader C++ template coverage; a generic maximum function template now
-  accompanies classes, overloads, `std::sort`, and exception-based parsing.
+- The C++ track has 13 tested lesson sources, including a generic maximum
+  function template, RAII, classes, overloads, `std::sort`, and exception-based
+  parsing. Advanced topics remain.
 - The binary search tree and bounded queue now have CTest unit coverage for
   ordering, duplicate insertion, empty/full states, FIFO draining, and close;
   queue tests avoid timing-dependent waits. Opaque stack/list APIs, Lista 4
@@ -38,11 +39,14 @@ Priorities are based on the remaining requirements in the refactor brief.
   handling without duplicating canonical implementations.
 - Add data structures and algorithms with complexity discussions and boundary
   tests.
-- Expand the first reproducible sorting benchmark with distributions, larger
-  datasets, multiple algorithms, and reruns on native (non-WSL) machines.
+- Expand the sorting benchmark with larger datasets, additional algorithms,
+  order-balanced runs, and reruns on native (non-WSL) machines. The current
+  harness already covers random, sorted, reverse, and duplicate-heavy inputs.
 - Add sanitizer and static-analysis coverage for optional targets and project
   code.
 - Add contribution and learning documentation in Portuguese and English.
+- The catalog is the authoritative backlog for planned and scaffolded
+  exercises; run `python3 tools/validation/catalog.py` for current totals.
 
 ## P2 — deepen advanced topics
 

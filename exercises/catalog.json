@@ -1592,7 +1592,7 @@
       "examples": [
         {
           "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/concentric.in",
-          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/concentric.out"
+          "output": "  1\n\n  1   1   1   1   1\n  1   2   2   2   1\n  1   2   3   2   1\n  1   2   2   2   1\n  1   1   1   1   1\n\n"
         }
       ],
       "constraints": [
@@ -1635,7 +1635,7 @@
       "examples": [
         {
           "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/powers-matrix.in",
-          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/powers-matrix.out"
+          "output": "1\n\n 1  2  4\n 2  4  8\n 4  8 16\n\n"
         }
       ],
       "constraints": [
@@ -2703,12 +2703,13 @@
       ],
       "status": "tested",
       "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
-      "validation": "Build and compare determinant examples; run the matrix determinant unit test",
+      "validation": "Build and compare determinant examples; unit tests cover exact 1x1–8x8 results, signed 32-bit edge values, dense full-range input, invalid API arguments, and unchanged output on failure.",
       "acceptance_criteria": [
         "Operation 5 computes determinants for square matrices of valid dimensions",
         "The output is exact for every supported matrix and does not use floating point",
         "Singular matrices produce zero",
-        "Invalid dimensions or incomplete input exit with status 1"
+        "Invalid dimensions or incomplete input exit with status 1",
+        "The public determinant helper rejects null pointers and dimensions outside 1 through 8 without changing output."
       ],
       "complexity": "O(n! * n) arithmetic operations and O(n) auxiliary storage; each exact accumulator uses a fixed nine 32-bit limbs",
       "references": [
@@ -3432,7 +3433,7 @@
     },
     {
       "id": "c-truco-paulista-game",
-      "title": "Implement a complete Truco Paulista match",
+      "title": "Implement a tested Truco Paulista match engine and frontends",
       "language": "C",
       "difficulty": "advanced",
       "topics": [
@@ -3469,17 +3470,17 @@
         "If both teams are at 11, request an explicit iron-hand policy outcome; do not silently choose its stake or acceptance rule.",
         "Resolve a pending raise only by acceptance or refusal; a counter-raise during that response is not specified."
       ],
-      "status": "planned",
-      "source": null,
-      "validation": "Unit-test the game state machine with fixed decks and scripted decisions; integration-test automatic and interactive frontends without requiring randomness.",
+      "status": "tested",
+      "source": "projects/card-game-c/truco.c",
+      "validation": "CTest unit_truco validates engine transitions; integration_play_match covers the deterministic automatic and user-controlled frontends, including hand-of-eleven decisions, raises, hidden cards, and signals.",
       "acceptance_criteria": [
-        "A fixed deck and action sequence produce deterministic round and match outcomes.",
-        "Each card is played at most once per hand and each player has at most three cards initially.",
-        "Round winners, hand winners, ties, wager acceptance/refusal and score updates follow documented rules.",
-        "The automatic and user-controlled modes call the same game-state transition API.",
-        "The circular player order alternates partners and remains valid after each turn.",
-        "A match terminates as soon as a partnership reaches 12 points.",
-        "All assignment ambiguities are documented as explicit policy choices."
+        "The engine deals four three-card hands from a deterministic seeded deck.",
+        "Each card is played at most once per hand and each player begins with at most three cards.",
+        "Round winners, hand ties, wager acceptance or refusal, and score updates follow documented rules.",
+        "Automatic and user-controlled modes call the same state-transition API.",
+        "The circular player order alternates partnerships and remains valid after each turn.",
+        "A match ends when a partnership reaches 12 points.",
+        "Rules omitted by the assignment are implemented as explicit, documented policies."
       ],
       "complexity": "Each hand has at most twelve card plays; total match work depends on the number of drawn hands.",
       "references": [

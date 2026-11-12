@@ -25,7 +25,9 @@ bool multiply_matrices(int rows, int shared, int columns,
                        int32_t right[MAX_DIMENSION][MAX_DIMENSION],
                        int64_t result[MAX_DIMENSION][MAX_DIMENSION]);
 uint64_t factorial(unsigned int value);
-void determinant_decimal(int size, int32_t matrix[MAX_DIMENSION][MAX_DIMENSION],
+/* The output buffer must hold DETERMINANT_TEXT_SIZE bytes. On failure (null
+ * pointers or a size outside 1..MAX_DIMENSION), it is left unchanged. */
+bool determinant_decimal(int size, int32_t matrix[MAX_DIMENSION][MAX_DIMENSION],
                          char output[DETERMINANT_TEXT_SIZE]);
 
 #endif

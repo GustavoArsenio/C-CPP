@@ -1,14 +1,15 @@
 # Migration Map
 
-Status: partial. Mappings are based on the committed baseline. Examples in
-the current working tree were migrated to canonical paths shown below. Other
-historical paths remain available in Git `HEAD`; they have not yet been
-restored or migrated. This ledger records destinations so the worktree
-deletions do not erase their educational provenance.
+Status: partial. Mappings are based on original baseline
+`ea1241027a98552c2b9d065948d0a24f0c16142b`. The migration is committed on
+`codex/educational-repo-refactor`; removed legacy source files remain
+recoverable with `git show ea1241027a98552c2b9d065948d0a24f0c16142b:<path>`.
+This ledger records destinations and remaining gaps so migration does not
+erase educational provenance.
 
 | Source path | Planned destination | Treatment |
 | --- | --- | --- |
-| `Lista_1/Ex1.c`–`Ex4.c` | `tracks/c/01-foundations/exercises/lista-1/01-...`–`04-...` | MIGRATED as corrected solutions with metadata and output smoke tests; all nine required items were checked against the PDF and linked from the catalog. Six complementary items remain uncatalogued. |
+| `Lista_1/Ex1.c`–`Ex4.c` | `tracks/c/01-foundations/exercises/lista-1/01-...`–`04-...` | MIGRATED as corrected solutions with metadata and output smoke tests; all nine required items were checked against the PDF and linked from the catalog. Six complementary items are catalogued with planned status. |
 | `Lista_1/Ex5.c`–`Ex9.c` | `tracks/c/01-foundations/exercises/lista-1/05-...`–`09-...` | MIGRATED as corrected array exercises with metadata and fixture-backed output smoke tests. |
 | `Lista_1/Lista_1 (1).pdf` | `docs/references/assignments/lista-1.pdf` | COPIED byte-for-byte; requirements transcribed to `docs/references/assignments/specifications.md`, with all required exercise records linked to the PDF. |
 | `Lista_2/ex02.c`, `ex05.c`, `ex07.c`, `ex08.c`, `ex10.c`, `ex13.c` | `tracks/c/04-arrays-strings/exercises/lista-2/01-...`–`06-...` | MIGRATED and reconciled against their PDFs; catalog links preserve the source, and smoke fixtures cover multi-case input, exact formatting, floating-point operations, and boundaries. |
@@ -24,17 +25,17 @@ deletions do not erase their educational provenance.
 | `Lista_3/ReadMe.txt`, `compilar.sh`, `compilarParam.sh`; `Lista_4/ReadMe.txt`, `compilarParam.sh` | `docs/references/legacy-build-notes.md` | Preserve relevant build history, supersede scripts with CMake/Make targets. |
 | `Lista_1/ReadMe.txt`, `Lista_2/ReadMe.txt`, root `ReadMe.txt` | `docs/references/legacy-build-notes.md` or archive manifest | Extract useful context; empty/root duplicates may be dropped only after mapping. |
 | `C++/Matriz.c`, `C++/algebra.c`, `C++/algebra.h`, `C++/ReadMe.txt` | `tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c`, `tracks/c/10-algorithms/linear-algebra/matrix-operations.h`, `tracks/c/10-algorithms/linear-algebra/02-matrix-menu.c` | MIGRATED: the bounded linked collection supports listing/lookup, appended sum/product, selected transpose/exact determinant, and a repeated interactive menu for add, arithmetic, factorial, determinant, transpose, display, and exit. Menu input is checked and collection storage is released at session end. Appended arithmetic results must fit signed 32-bit entries. |
-| `C++/in.txt` | `docs/references/fixtures/matrix-input.txt` | COPIED byte-for-byte; associate with matrix operations after implementation. |
+| `C++/in.txt` | `docs/references/fixtures/matrix-input.txt` | COPIED byte-for-byte and retained as historical data; its token format is incompatible with the current command-line protocol, so current tests do not consume it. |
 | `C++/start.bat` | `docs/references/legacy-build-notes.md` | Record Windows build context; replace with cross-platform CMake usage. |
 | `ProgBahia/MinimosQuadradosRegLinear.c` | `tracks/c/10-algorithms/regression/01-linear-regression.c` | MIGRATED as bounded least-squares fit with checked input, singular-case rejection and fixture-backed smoke tests. |
-| `ProgBahia/saida` | `docs/references/fixtures/regression-output.txt` | COPIED byte-for-byte; not yet validated against a deterministic corrected implementation. |
+| `ProgBahia/saida` | `docs/references/fixtures/regression-output.txt` | COPIED byte-for-byte as historical evidence of the old zero-point `nan` defect; corrected deterministic fixtures are maintained beside the replacement. |
 | `ProgBahia/compilarParam.sh` | `docs/references/legacy-build-notes.md` | Replace script with project target. |
 | `ProjetoCartas/deck.c`, `deck.h`, `main.c` | `tracks/c/09-data-structures/card-deck/01-deal-three-cards.c` | PARTIALLY MIGRATED: the historical generic distributor remains as a separate exercise; a canonical 40-card linked-list Truco model now provides seeded shuffle, four hands, vira, manilha ranking, circular player order, a wager-integrated hand coordinator that resolves in up to three tricks, scorekeeping, hand-of-eleven behavior, face-down plays after trick one and opaque partner signals. The hidden-card ranking interpretation and signal-code convention are explicit policies because the assignment leaves them undefined. Deterministic automatic and user-controlled match frontends use the shared state machine. The historical renderer remains. |
 | `ProjetoCartas/templateCarta.c` | `projects/card-game-c/` | Planned migration as a renderer example. |
 | Historical matrix and card functionality | `tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c`, `tracks/c/09-data-structures/card-deck/01-deal-three-cards.c` | Catalog entries cover matrix addition, multiplication, exact integer determinant, transpose, factorial, generic dealing, and Truco deck/dealing; smoke cases include arithmetic overflow rejection, determinant row-swap/singular and wide exact cases, factorial boundaries, invalid deck size, seeded Truco dealing, and unique cards. |
-| `ProjetoCartas/cartas.txt`, `nipes.txt` | `docs/references/fixtures/card-values.txt`, `card-suits.txt` | COPIED byte-for-byte; associate with the repaired card project. |
+| `ProjetoCartas/cartas.txt`, `nipes.txt` | `docs/references/fixtures/card-values.txt`, `card-suits.txt` | COPIED byte-for-byte and retained for the historical renderer, which is not yet migrated or tested. |
 | `ProjetoCartas/compilarParam.sh` | `docs/references/legacy-build-notes.md` | Replace script with project target. |
-| `Lista_4/lista4.pdf`, `Trabalho/Trabalho1.pdf` | `docs/references/assignments/lista-4.pdf`, `trabalho-1.pdf` | COPIED byte-for-byte; both visually reviewed and summarized in `specifications.md`. All Lista 4 exercises are implemented and tested; remaining Truco ambiguities include vira timing, iron-hand rules and leader choice. |
+| `Lista_4/lista4.pdf`, `Trabalho/Trabalho1.pdf` | `docs/references/assignments/lista-4.pdf`, `trabalho-1.pdf` | COPIED byte-for-byte; both visually reviewed and summarized in `specifications.md`. All Lista 4 exercises are implemented and tested; Truco ambiguities have documented engine or frontend policies and test coverage. The historical renderer remains pending. |
 | `Listas_Gustavo_Arsenio_de_Sousa_74830.zip` | `docs/references/archive-manifest.md` | REVIEWED: 26/30 entries are byte-identical; four differ only by a format bug or whitespace. No unique useful content; deprecate archive. |
 | `C++/*.o`, `*.exe`, `*.execls`; `ProgBahia/*.o`, `Executaveis/*.exe`; `ProjetoCartas/*.o`, `*.exe`; `.vscode/ipch/**` | no destination | Generated artifacts; exclude from source migration, document removal/ignore policy. |
 | `beginner/basic/01-hello.c`, `02-var.c`; `beginner/io/01-input.c` | `tracks/c/01-foundations/{basic,io}/` | MOVED; indexed in the partial exercise catalog. |
@@ -49,7 +50,7 @@ deletions do not erase their educational provenance.
 | New `data-structures/linear/int_stack.{h,c}`, `char_stack.{h,c}`, `tracks/c/09-data-structures/stack/01-stack-demo.c`, and unit tests | Canonical linked stacks | Type-safe integer and character APIs based on historical exercises; CTest covers empty operations, LIFO order, peek, size, null arguments, and destruction. |
 | `advanced/networking/01-socket.c` | `tracks/c/11-systems-programming/networking/01-socket.c` | MOVED and rewritten using POSIX `getaddrinfo`, checked connect/send/close, and a configurable endpoint. Optional build passes; local integration is SKIPPED because this sandbox denies socket creation; CI covers loopback. |
 | `advanced/security/01-hash.c` | `tracks/c/12-advanced/security/01-hash.c` | MOVED and rewritten with OpenSSL EVP SHA-256. Optional build and known digest output test pass. |
-| Sources under `tracks/cpp/01-foundations`, `02-control-flow`, `03-functions`, `04-functions`, `05-classes`, `06-classes`, `08-stl`, and `09-modern-cpp` | C++ track | Twelve examples implemented; function templates, exception parsing, and RAII have catalog smoke coverage. |
+| Sources under `tracks/cpp/01-foundations`, `02-control-flow`, `03-functions`, `04-functions`, `05-classes`, `06-classes`, `08-stl`, and `09-modern-cpp` | C++ track | Thirteen lesson sources are catalogued as tested; function templates, exception parsing, and RAII have catalog smoke coverage. |
 | `cpp-exception-parse` catalog exercise | `tracks/cpp/09-modern-cpp/01-parse-integer.cpp` | IMPLEMENTED: strict decimal input parsing distinguishes malformed input from `int` range errors; catalog smoke cases cover success, empty, trailing-character, and out-of-range input. |
 
 ## Migration invariants

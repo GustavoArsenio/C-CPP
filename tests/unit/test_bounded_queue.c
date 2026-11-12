@@ -1,6 +1,6 @@
-#include "bounded_queue.h"
-
 #include <assert.h>
+
+#include "bounded_queue.h"
 
 int main(void) {
     struct queue queue;

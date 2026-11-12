@@ -4,13 +4,13 @@ Audit date: 2026-11-12
 
 ## Scope and evidence
 
-The working tree was inspected before structural changes. The committed
-baseline (`HEAD`) and the current working tree differ substantially: `git
-status` reports 84 legacy paths deleted, while the working tree contains new
-`beginner/`, misspelled `intermidiate/`, and `advanced/` examples plus a new
-README, Makefile, and ignore file. Those deletions predate this audit and are
-treated as user work in progress. No source was restored or discarded during
-this phase. Historical file contents remain recoverable from `HEAD`.
+The initial audit compared baseline
+`ea1241027a98552c2b9d065948d0a24f0c16142b` with the then-current working tree,
+which contained 84 legacy path deletions and new `beginner/`, misspelled
+`intermidiate/`, and `advanced/` examples. That migration is committed on
+`codex/educational-repo-refactor`; removed source files remain recoverable from
+the baseline commit in Git history. Assignment PDFs and selected fixtures are
+retained under `docs/references/`.
 
 The current tree has 16 C sources and no C++ source. The original tree has 32
 C sources, 4 headers, 11 PDFs, input/output fixtures and shell scripts, plus
@@ -88,10 +88,9 @@ allocation, integer overflow, and algorithms with incorrect edge cases. The
 matrix, linked-list, regression, and card projects require focused review and
 should not be compiled as a single translation unit.
 
-No C++ implementation exists in the historical source inventory. The current
-working tree now includes a separate C++20 track with twelve implemented
-examples; it must
-continue expanding rather than relabeling historical C examples.
+No C++ implementation exists in the historical source inventory. The migrated
+tree has a separate C++20 track with 13 tested lesson sources; it continues to
+expand independently rather than relabeling historical C examples.
 
 ## Initial architectural recommendation
 
@@ -110,26 +109,27 @@ paths. The classifications are provisional where PDFs, archives, or fixtures
 require content-level review. Subsequent work moved the initial C examples
 to `tracks/c/`, `algorithms/`, and `data-structures/`; corrected the tree and
 bounded queue; migrated seventeen exercises from the first two lists; added
-a linked-stack library with unit tests, matrix arithmetic and exact determinant,
-linear regression, card dealing, and twelve C++ examples. CMake, catalog validation, and
-catalog-driven output smoke tests are in place. Catalog counts are calculated
-by `tools/validation/catalog.py`.
+a linked-stack library with unit tests, matrix arithmetic and exact integer
+determinant, linear regression, card dealing, and the C++ lessons. CMake,
+catalog validation, and catalog-driven output smoke tests are in place.
+Catalog counts are calculated by `tools/validation/catalog.py`.
 The POSIX TCP client builds, but
 its loopback integration was skipped locally because the sandbox denies
 socket creation; CI runs that case on its hosted runner.
 
-The historical material listed above remains recoverable from `HEAD` but is
-not all copied into the working tree.
-The catalog has reached the brief's minimum of eighty records, though
-assignment PDFs have not been fully reviewed,
-and the matrix project still lacks its dynamic collection workflow.
+The historical source inventory is recoverable from the baseline commit in
+Git history, but not every old source or fixture has a direct replacement.
+The catalog exceeds the brief's minimum of eighty records. Assignment PDFs
+have been reviewed and summarized, and the matrix project now has a dynamic
+collection workflow and interactive menu.
 The card implementation does not load the historical rank/suit files or
 reproduce its original renderer. It has automatic and user-controlled matches,
 with explicit policies for rules omitted by the assignment. The C++ track has
 lessons across six topics; unit coverage exercises the linked stacks and Truco
-state machine.
-A reproducible local sorting comparison now records environment metadata, but
-the suite still lacks varied datasets and native non-WSL measurements. CI checks
+state machine. Several legacy fixtures and the historical card renderer still
+need explicit disposition. A reproducible sorting comparison covers four
+distributions and records environment metadata, but the suite still lacks
+larger datasets, additional algorithms, and native non-WSL measurements. CI checks
 GCC/Clang builds, optional OpenSSL/POSIX examples, smoke tests, formatting,
 GCC analysis, and sanitizers. Locally, LeakSanitizer requires
 `ASAN_OPTIONS=detect_leaks=0` because the sandbox runs under ptrace; address

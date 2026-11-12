@@ -17,9 +17,11 @@ duplicate-heavy values use state modulo 16. Ordered datasets use integer
 ranges. All cases receive the same seed and count.
 
 Each program checks nondecreasing order after timing; the harness also requires
-deterministic checksums across implementations for each distribution. The timed
-region contains only the sorting call. Allocation, generation, process startup,
-sortedness checking, and checksum calculation are excluded. Each case gets the
+deterministic checksums across implementations for each distribution. The C
+implementation measures the call with `clock_gettime(CLOCK_MONOTONIC)`; the C++
+implementation uses `std::chrono::steady_clock`. The timed region contains only
+the sorting call. Allocation, generation, process startup, sortedness checking,
+and checksum calculation are excluded. Each case gets the
 specified number of warmups followed by measured repetitions; results report
 all samples and their median. There are no timing thresholds in CI.
 
@@ -29,5 +31,7 @@ comparator callback; the C++ standard algorithms have different implementations
 and storage behavior. This compares algorithm/API and compiler optimization
 differences, not language-runtime cost. Process creation is outside the timed
 region but adds machine noise; CPU load, scheduling, thermal state, cache state,
-compiler, and C library also affect the results. Rerun on the target machine
-before drawing conclusions.
+compiler, and C library also affect the results. Implementations run in a fixed
+order (`qsort`, `std::sort`, `std::stable_sort`), so time-varying load may bias
+later cases. Repeat runs and vary execution order when making comparative
+claims. Rerun on the target machine before drawing conclusions.
