@@ -411,6 +411,13 @@ if(BUILD_TESTING)
         add_test(NAME smoke_example_validation_tests
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_smoke_example.py")
+        add_test(NAME integration_matrix_determinant_exact
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_matrix_determinant_exact.py"
+                         --executable
+                         "$<TARGET_FILE:tracks_c_10-algorithms_linear-algebra_02-matrix-menu>")
+        set_tests_properties(integration_matrix_determinant_exact
+                             PROPERTIES TIMEOUT 15)
         add_test(NAME smoke_card_renderer
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/smoke_example.py"

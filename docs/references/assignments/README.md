@@ -17,7 +17,7 @@ records link to their source PDFs.
 | `lista-2-matrix-fill-i.pdf` | `Lista_2/matrizFill I.pdf` | URI 1435, multiple sizes through zero; concentric matrix and width-three fields. |
 | `lista-2-matrix-fill-iii.pdf` | `Lista_2/matrizFill III.pdf` | URI 1557, sizes through 15 and zero sentinel; powers of two with computed field width. |
 | `lista-4.pdf` | `Lista_4/lista4.pdf` | Three scanned image pages, transcribed by visual review as 12 linked-list exercises; all twelve now have tested implementations. |
-| `trabalho-1.pdf` | `Trabalho/Trabalho1.pdf` | Reviewed: linked-list structures and a Truco Paulista game specification. Full game requirements are summarized in `specifications.md`; implementation remains incomplete. |
+| `trabalho-1.pdf` | `Trabalho/Trabalho1.pdf` | Reviewed: linked-list structures and a Truco Paulista game specification. Core game rules, tested state transitions, automatic and user-controlled frontends are summarized in `specifications.md`; ambiguities left by the assignment are recorded as explicit policies or unresolved caller choices. |
 
 The matrix exercises' code and smoke fixtures follow the assignment statement.
 For `Line in Array`, the region boundaries were read from the source figure;

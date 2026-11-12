@@ -2953,7 +2953,7 @@
       ],
       "status": "tested",
       "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
-      "validation": "Build and compare determinant examples; unit tests cover exact 1x1–8x8 results, signed 32-bit edge values, dense full-range input, invalid API arguments, and unchanged output on failure.",
+      "validation": "Build and compare catalog examples; the unit test covers API boundaries and the integration test compares exact output for every size 1x1–8x8 with an independent arbitrary-precision integer oracle, including dense full-range and near-cancellation inputs.",
       "acceptance_criteria": [
         "Operation 5 computes determinants for square matrices of valid dimensions",
         "The output is exact for every supported matrix and does not use floating point",
@@ -2961,9 +2961,9 @@
         "Invalid dimensions or incomplete input exit with status 1",
         "The public determinant helper rejects null pointers and dimensions outside 1 through 8 without changing output."
       ],
-      "complexity": "O(n! * n) arithmetic operations and O(n) auxiliary storage; each exact accumulator uses a fixed nine 32-bit limbs",
+      "complexity": "O(n! * n^2) arithmetic operations because permutation parity is counted per term; O(n) recursion/permutation storage and fixed nine-limb exact accumulators",
       "references": [
-        "C++/algebra.c (historical determinant; algorithm details unspecified)"
+        "C++/algebra.c (historical recursive cofactor expansion returned int; supported dimensions and overflow limits were unspecified)"
       ]
     },
     {
