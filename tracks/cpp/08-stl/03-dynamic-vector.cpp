@@ -1,20 +1,26 @@
+#include <charconv>
 #include <iostream>
-#include <limits>
 #include <new>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 int main() {
-    long long requested_count = 0;
-    if (!(std::cin >> requested_count) || requested_count < 0 ||
-        static_cast<unsigned long long>(requested_count) >
-            std::numeric_limits<std::size_t>::max()) {
-        std::cerr << "error: expected an element count\n";
-        return 1;
-    }
-    const std::size_t count = static_cast<std::size_t>(requested_count);
-
     try {
+        std::string count_token;
+        if (!(std::cin >> count_token)) {
+            std::cerr << "error: expected an element count\n";
+            return 1;
+        }
+        std::size_t count = 0;
+        const auto [end, error] = std::from_chars(
+            count_token.data(), count_token.data() + count_token.size(), count);
+        if (error != std::errc{} ||
+            end != count_token.data() + count_token.size()) {
+            std::cerr << "error: expected a nonnegative element count\n";
+            return 1;
+        }
+
         std::vector<int> values;
         for (std::size_t index = 0; index < count; ++index) {
             int value = 0;

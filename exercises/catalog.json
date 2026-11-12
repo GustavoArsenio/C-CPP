@@ -2992,13 +2992,31 @@
             "stdout_empty",
             "stderr_nonempty"
           ]
+        },
+        {
+          "input": "999999999999999999999999999999999999999999999999\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "1 999999999999999999999999999999999999999999999999\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         }
       ],
       "constraints": [
         "The handle is opaque; callers can access elements only through the API.",
         "The caller destroys a successfully created vector exactly once.",
         "Failed append leaves existing elements unchanged.",
-        "The CLI rejects negative counts and missing values with status 1, a diagnostic, and no stdout."
+        "The CLI rejects negative counts, out-of-range decimal counts or values, and missing values with status 1, a diagnostic, and no stdout."
       ],
       "acceptance_criteria": [
         "The public header compiles from both the CLI and a separate unit-test translation unit.",
@@ -4483,11 +4501,29 @@
             "stdout_empty",
             "stderr_nonempty"
           ]
+        },
+        {
+          "input": "999999999999999999999999999999999999999999999999\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "1 999999999999999999999999999999999999999999999999\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         }
       ],
       "constraints": [
         "Use std::vector<int> and push_back; do not manually manage storage.",
-        "Reject negative counts and incomplete input with status 1, a diagnostic, and no stdout.",
+        "Reject negative counts, out-of-range decimals, and incomplete input with status 1, a diagnostic, and no stdout.",
         "Catch allocation and maximum-size failures from vector growth."
       ],
       "status": "tested",

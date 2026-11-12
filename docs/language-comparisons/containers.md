@@ -14,9 +14,10 @@ and values in insertion order:
 | Lifetime | Caller owns an opaque handle and calls `int_vector_destroy` | Automatic lifetime; the vector releases storage through RAII |
 | Access | Checked `int_vector_get` and `int_vector_pop_back` operations | Range-based traversal and standard container operations |
 
-The C API keeps its representation out of the public header. Its unit tests
-exercise empty state, invalid handles and indices, multiple capacity growths,
-insertion order, removal, and cleanup. Portable tests do not force allocator
-failure or synthetic size overflow. The C++ smoke cases cover normal,
-empty, and incomplete input. These lessons compare container interfaces and
-ownership; they contain no performance measurements.
+The C API keeps its representation out of the public header and parses decimal
+counts and elements with range checks before conversion. Its unit tests exercise
+empty state, invalid handles and indices, multiple capacity growths, insertion
+order, removal, and cleanup. Portable tests do not force allocator failure or
+synthetic vector-capacity overflow. Both smoke suites cover normal, empty,
+incomplete, negative-count, and out-of-range decimal input. These lessons compare
+container interfaces and ownership; they contain no performance measurements.
