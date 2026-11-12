@@ -44,7 +44,12 @@ Priorities are based on the remaining requirements in the refactor brief.
   ex10/ex13, while `C++/in.txt` remains historical-only because its old menu
   tokens do not satisfy the current one-based, unquoted-name protocol.
 - Paired ownership and sorting examples now exist without custom algorithm
-  duplication. Add paired container and error-handling examples.
+  duplication.
+- A C opaque growable-vector API and a C++ `std::vector` lesson now share
+  input/output examples; C unit coverage checks API boundaries and capacity
+  growth. Allocator failure injection remains outside the portable suite.
+- Paired container examples now exist. Add further error-handling comparisons
+  for APIs with different failure models.
 - Add data structures and algorithms with complexity discussions and boundary
   tests.
 - Expand the sorting benchmark with larger datasets, additional algorithms,

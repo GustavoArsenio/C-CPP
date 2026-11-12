@@ -9,7 +9,7 @@ that still needs implementation.
 | Foundations | Basic types, standard input/output, nine migrated introductory array/input exercises | More exercises based on the original PDF after its text is reviewed |
 | Control flow | `for` and `while` examples | Conditions, switch, nested loops, validation exercises |
 | Functions | `03-functions/01-min-max.c` and reusable `algorithms/statistics/int_min_max` API | Recursion, scope, function pointers, arrays as parameters |
-| Arrays and strings | Array sum, sequence generation, Fibonacci, parity partition, matrix operations and patterns, bounded string copy | Dynamic strings, parsing, safe interfaces, multidimensional API design |
+| Arrays and strings | Array sum, sequence generation, Fibonacci, parity partition, matrix operations and patterns, bounded string copy, modular growable integer vector | Dynamic strings, parsing, safe interfaces, multidimensional API design |
 | Pointers and memory | Pointer dereference and checked `malloc`/`free` allocation paired with a C++ vector owner | Ownership contracts, pointer arithmetic, allocation APIs, error-path exercises |
 | Structures and files | `06-structures/01-calendar-date.c` and its header/source API, standard-stream line copy, checked file line counter, tree uses a struct | Binary file operations |
 | Data structures and algorithms | Binary search tree, linked stacks/lists, bounded queue, linear search, `qsort` comparator | Hash tables, sorting implementations, broader complexity comparisons |
@@ -23,3 +23,6 @@ For a paired view of the C `qsort` interface and C++ `std::sort`, see
 
 For a paired view of explicit C allocation and C++ Rule-of-Zero ownership, see
 [`ownership.md`](../language-comparisons/ownership.md).
+
+For a paired view of a modular C dynamic-array API and C++ `std::vector`, see
+[`containers.md`](../language-comparisons/containers.md).

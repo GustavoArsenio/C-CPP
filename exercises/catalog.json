@@ -2947,42 +2947,74 @@
     },
     {
       "id": "c-modular-vector-api",
-      "title": "C Modular Vector Api",
+      "title": "Build a modular growable integer vector",
       "language": "C",
       "difficulty": "intermediate",
       "topics": [
         "headers",
         "modular programming",
-        "opaque types"
+        "opaque types",
+        "dynamic arrays",
+        "capacity growth"
       ],
       "prerequisites": [
         "c-lista3-linked-stack"
       ],
       "learning_objectives": [
-        "Understand headers",
-        "Understand modular programming",
-        "Understand opaque types"
+        "Use an opaque handle across separate header and implementation files",
+        "Grow storage geometrically while checking allocation-size overflow",
+        "Define ownership and error behavior for append, access, removal, and destruction"
       ],
-      "statement": "Create a growable integer-vector API in separate header and implementation files.",
+      "statement": "Implement an opaque integer-vector API in separate header and implementation files. Read a count and that many integers, append them, then print the count and values in insertion order.",
       "examples": [
         {
-          "input": "4 3 1 4 1\n",
-          "output": "3 1 4 1\n"
+          "input": "6 3 1 4 1 -2 9\n",
+          "output": "Count: 6, values: 3 1 4 1 -2 9\n"
+        },
+        {
+          "input": "0\n",
+          "output": "Count: 0, values:\n"
+        },
+        {
+          "input": "3 8 5\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "-1\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         }
       ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "The handle is opaque; callers can access elements only through the API.",
+        "The caller destroys a successfully created vector exactly once.",
+        "Failed append leaves existing elements unchanged.",
+        "The CLI rejects negative counts and missing values with status 1, a diagnostic, and no stdout."
       ],
       "acceptance_criteria": [
-        "The header compiles from a separate translation unit.",
-        "Capacity growth checks allocation and size overflow."
+        "The public header compiles from both the CLI and a separate unit-test translation unit.",
+        "Append grows capacity geometrically, checks multiplication and doubling overflow, and preserves the old allocation if realloc fails.",
+        "Access rejects out-of-range indices; pop rejects empty vectors and null output pointers.",
+        "Unit tests cover null handles, empty state, growth across multiple capacities, insertion order, indexed access, pop, and destruction.",
+        "CLI output matches the C++ vector example for nonempty and empty input."
       ],
       "complexity": "Amortized O(1) append; O(n) storage.",
-      "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "references": [
+        "docs/language-comparisons/containers.md",
+        "tracks/cpp/08-stl/03-dynamic-vector.cpp"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/arrays/02-dynamic-int-vector.c",
+      "validation": "Build targets tracks_c_04-arrays-strings_arrays_02-dynamic-int-vector and test_int_vector; pass unit_int_vector and smoke_tracks_c_04-arrays-strings_arrays_02-dynamic-int-vector."
     },
     {
       "id": "c-opaque-counter-adt",
@@ -4404,6 +4436,75 @@
       "status": "planned",
       "source": "",
       "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-stl-dynamic-vector",
+      "title": "Build a sequence with std::vector",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "std::vector",
+        "dynamic arrays",
+        "capacity growth",
+        "exceptions"
+      ],
+      "prerequisites": [
+        "cpp-stl-vector-iteration"
+      ],
+      "learning_objectives": [
+        "Append input values to a standard dynamic array",
+        "Read a vector through range-based iteration",
+        "Recognize vector allocation and length failures"
+      ],
+      "statement": "Read a count and that many integers, append them to std::vector<int>, then print the count and values in insertion order.",
+      "examples": [
+        {
+          "input": "6 3 1 4 1 -2 9\n",
+          "output": "Count: 6, values: 3 1 4 1 -2 9\n"
+        },
+        {
+          "input": "0\n",
+          "output": "Count: 0, values:\n"
+        },
+        {
+          "input": "3 8 5\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "-1\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        }
+      ],
+      "constraints": [
+        "Use std::vector<int> and push_back; do not manually manage storage.",
+        "Reject negative counts and incomplete input with status 1, a diagnostic, and no stdout.",
+        "Catch allocation and maximum-size failures from vector growth."
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/08-stl/03-dynamic-vector.cpp",
+      "validation": "Build tracks_cpp_08-stl_03-dynamic-vector and pass its catalog-driven CTest smoke test.",
+      "acceptance_criteria": [
+        "The C++20 target builds with repository warning options.",
+        "The nonempty example preserves insertion order and exactly matches the C output.",
+        "Zero values produce a valid empty sequence output.",
+        "Negative counts and missing values return status 1 with stderr diagnostics and empty stdout.",
+        "std::vector owns and releases its storage through RAII."
+      ],
+      "complexity": "Amortized O(1) append and O(n) traversal; O(n) storage.",
+      "references": [
+        "docs/language-comparisons/containers.md",
+        "tracks/c/04-arrays-strings/arrays/02-dynamic-int-vector.c"
+      ]
     },
     {
       "id": "cpp-stl-vector-iteration",

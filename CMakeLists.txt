@@ -70,6 +70,10 @@ target_link_libraries(bounded_queue PUBLIC Threads::Threads)
 add_library(calendar_date STATIC tracks/c/06-structures/calendar_date.c)
 target_include_directories(calendar_date PUBLIC
                            "${CMAKE_CURRENT_SOURCE_DIR}/tracks/c/06-structures")
+add_library(int_vector STATIC
+    tracks/c/04-arrays-strings/arrays/int_vector.c)
+target_include_directories(int_vector PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/tracks/c/04-arrays-strings/arrays")
 add_library(truco STATIC projects/card-game-c/truco.c
                          projects/card-game-c/card_renderer.c)
 target_include_directories(truco PUBLIC
@@ -80,6 +84,7 @@ target_compile_definitions(matrix_operations PRIVATE MATRIX_OPERATIONS_NO_MAIN)
 target_include_directories(matrix_operations PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/tracks/c/10-algorithms/linear-algebra")
 if(MSVC)
+    target_compile_options(int_vector PRIVATE /W4)
     target_compile_options(int_list PRIVATE /W4)
     target_compile_options(double_list PRIVATE /W4)
     target_compile_options(lista4_lists PRIVATE /W4)
@@ -91,6 +96,7 @@ if(MSVC)
     target_compile_options(binary_search_tree PRIVATE /W4)
     target_compile_options(bounded_queue PRIVATE /W4)
 else()
+    target_compile_options(int_vector PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(int_list PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(double_list PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(lista4_lists PRIVATE -Wall -Wextra -Wpedantic)
@@ -103,6 +109,7 @@ else()
     target_compile_options(bounded_queue PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(int_vector PRIVATE -fanalyzer)
     target_compile_options(int_list PRIVATE -fanalyzer)
     target_compile_options(double_list PRIVATE -fanalyzer)
     target_compile_options(lista4_lists PRIVATE -fanalyzer)
@@ -123,6 +130,7 @@ endif()
 
 foreach(source IN LISTS LEARNING_C_SOURCES)
     if(source MATCHES "/data-structures/linear/(int_stack|int_list|char_stack|double_list|lista4_lists).c$" OR
+       source MATCHES "/tracks/c/04-arrays-strings/arrays/int_vector.c$" OR
        source MATCHES "/data-structures/trees/binary_search_tree.c$" OR
        source MATCHES "/concurrency/bounded_queue.c$" OR
        source MATCHES "/algorithms/statistics/int_min_max.c$" OR
@@ -152,6 +160,10 @@ foreach(source IN LISTS LEARNING_C_SOURCES)
     add_executable("${target_name}" "${source}")
     if(source MATCHES "/tracks/c/10-algorithms/linear-algebra/02-matrix-menu[.]c$")
         target_link_libraries("${target_name}" PRIVATE matrix_operations)
+    endif()
+    if(relative_source MATCHES
+       "^tracks/c/04-arrays-strings/arrays/02-dynamic-int-vector[.]c$")
+        target_link_libraries("${target_name}" PRIVATE int_vector)
     endif()
     set_property(GLOBAL APPEND PROPERTY LEARNING_EXECUTABLES "${target_name}")
     if(MSVC)
@@ -240,6 +252,16 @@ endforeach()
 
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(test_int_vector tests/unit/test_int_vector.c)
+    target_link_libraries(test_int_vector PRIVATE int_vector)
+    if(MSVC)
+        target_compile_options(test_int_vector PRIVATE /W4 /UNDEBUG)
+    else()
+        target_compile_options(test_int_vector PRIVATE
+                               -Wall -Wextra -Wpedantic -UNDEBUG)
+    endif()
+    add_test(NAME unit_int_vector COMMAND test_int_vector)
+
     add_executable(test_binary_search_tree
                    tests/unit/test_binary_search_tree.c)
     target_link_libraries(test_binary_search_tree PRIVATE binary_search_tree)
