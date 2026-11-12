@@ -83,6 +83,11 @@ uint64_t factorial(unsigned int value) {
  * magnitude at most 2^248; even the sum of all absolute terms is below
  * 8! * 2^248 < 2^264. Nine base-2^32 limbs therefore hold every partial sum.
  * All determinant arithmetic is integer arithmetic, so no rounding occurs.
+ * Replacing this exact path with partial-pivoting double elimination is not
+ * equivalent: for some int32_t inputs, e.g. the 2x2 cancellation case in
+ * test_matrix_determinant.c, binary64 elimination returns zero for an exact
+ * determinant of one. Teach floating-point elimination as an approximation
+ * separately if its numerical limits are part of the lesson.
  */
 enum { DETERMINANT_LIMBS = 9 };
 struct big_signed {

@@ -10,8 +10,10 @@ Priorities are based on the remaining requirements in the refactor brief.
   and exit. Determinant, addition, multiplication, transpose and factorial have
   catalog examples. Determinants use exact integer arithmetic; an independent
   arbitrary-precision oracle checks all sizes 1x1 through 8x8, including a
-  near-cancellation case where double elimination can lose a determinant of
-  one. The Truco engine and
+  near-cancellation case where binary64 partial-pivoting elimination returns
+  zero for a determinant of one. The unit test now preserves that regression
+  even in Release builds, where standard `assert` checks are disabled. The
+  Truco engine and
   interactive frontend now implement face-down plays after trick one and
   opaque partner signals under documented policies. The seeded automatic and
   user-controlled matches share the tested hand, wager, and score-to-12 engine.
