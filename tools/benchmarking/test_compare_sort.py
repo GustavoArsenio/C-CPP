@@ -6,6 +6,7 @@ from collections import Counter
 import importlib.util
 import json
 from pathlib import Path
+import statistics
 import subprocess
 import sys
 import unittest
@@ -20,6 +21,29 @@ SPEC.loader.exec_module(compare_sort)
 
 
 class CompareSortTests(unittest.TestCase):
+    def test_paired_ratio_summary_handles_values_and_zero_times(self):
+        summary = compare_sort.paired_ratio_summary([100, 200], [50, 100])
+        self.assertEqual(summary["ratio_samples"], [2.0, 2.0])
+        self.assertEqual(summary["median_ratio"], 2.0)
+        self.assertEqual(summary["valid_samples"], 2)
+
+        summary = compare_sort.paired_ratio_summary(
+            [100, 60, 50], [0, 30, 0])
+        self.assertEqual(summary["ratio_samples"], [None, 2.0, None])
+        self.assertEqual(summary["median_ratio"], 2.0)
+        self.assertEqual(summary["valid_samples"], 1)
+
+    def test_paired_ratio_summary_handles_empty_and_unmatched_samples(self):
+        summary = compare_sort.paired_ratio_summary([], [])
+        self.assertEqual(summary, {
+            "ratio_samples": [], "median_ratio": None,
+            "valid_samples": 0})
+        summary = compare_sort.paired_ratio_summary([10], [0])
+        self.assertIsNone(summary["median_ratio"])
+        self.assertEqual(summary["valid_samples"], 0)
+        with self.assertRaises(ValueError):
+            compare_sort.paired_ratio_summary([10], [])
+
     def test_counts_require_positive_unique_decimal_values(self):
         self.assertEqual(compare_sort.positive_count("17"), 17)
         self.assertEqual(compare_sort.parse_counts("17,29"), [17, 29])
@@ -59,6 +83,9 @@ class CompareSortTests(unittest.TestCase):
         self.assertEqual(result["counts"], [40, 80])
         self.assertEqual(len(result["results"]), 2 * 4 * 3)
         self.assertEqual(len(result["run_orders"]), 2 * 4)
+        self.assertEqual(len(result["comparisons"]), 2 * 4)
+        self.assertIn("not significance tests",
+                      result["paired_ratio_definition"])
         labels = result["implementation_order"]
         for count in result["counts"]:
             for distribution in result["distributions"]:
@@ -66,6 +93,8 @@ class CompareSortTests(unittest.TestCase):
                 schedule = result["run_orders"][key]
                 self.assertEqual(len(schedule["warmups"]), 1)
                 self.assertEqual(len(schedule["measured"]), 3)
+                for order in schedule["measured"]:
+                    self.assertEqual(sorted(order), sorted(labels))
                 for position in range(len(labels)):
                     starts = Counter(order[position]
                                      for order in schedule["measured"])
@@ -78,6 +107,30 @@ class CompareSortTests(unittest.TestCase):
                     self.assertEqual(len(sample["samples_ns"]), 3)
                     checksums.add(sample["checksum"])
                 self.assertEqual(len(checksums), 1)
+
+                comparison = result["comparisons"][key]
+                self.assertEqual(comparison["baseline"], "C qsort")
+                baseline_samples = result["results"][
+                    f"{key} / C qsort"]["samples_ns"]
+                self.assertEqual(set(comparison["candidates"]),
+                                 set(labels) - {"C qsort"})
+                for label, summary in comparison["candidates"].items():
+                    candidate_samples = result["results"][
+                        f"{key} / {label}"]["samples_ns"]
+                    ratios = [
+                        None if candidate == 0 else baseline / candidate
+                        for baseline, candidate in zip(
+                            baseline_samples, candidate_samples)
+                    ]
+                    valid_ratios = [
+                        ratio for ratio in ratios if ratio is not None]
+                    self.assertEqual(summary["ratio_samples"], ratios)
+                    self.assertEqual(summary["valid_samples"],
+                                     len(valid_ratios))
+                    self.assertEqual(
+                        summary["median_ratio"],
+                        statistics.median(valid_ratios)
+                        if valid_ratios else None)
 
     def test_count_options_are_mutually_exclusive(self):
         completed = subprocess.run(

@@ -426,6 +426,9 @@ if(BUILD_TESTING)
 
     find_package(Python3 COMPONENTS Interpreter QUIET)
     if(Python3_Interpreter_FOUND)
+        add_test(NAME sorting_benchmark_harness_tests
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/benchmarking/test_compare_sort.py")
         add_test(NAME sorting_benchmark_correctness
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/benchmarking/compare_sort.py"

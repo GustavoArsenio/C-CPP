@@ -87,6 +87,25 @@ def orders_by_round(labels, rounds, offset=0):
     ]
 
 
+def paired_ratio_summary(reference_samples_ns, candidate_samples_ns):
+    """Summarize reference/candidate timing ratios for matched rounds."""
+    if len(reference_samples_ns) != len(candidate_samples_ns):
+        raise ValueError("paired samples must have equal lengths")
+
+    ratios = [
+        None if candidate_ns == 0 else reference_ns / candidate_ns
+        for reference_ns, candidate_ns in zip(
+            reference_samples_ns, candidate_samples_ns)
+    ]
+    valid_ratios = [ratio for ratio in ratios if ratio is not None]
+    return {
+        "ratio_samples": ratios,
+        "median_ratio": (
+            statistics.median(valid_ratios) if valid_ratios else None),
+        "valid_samples": len(valid_ratios),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     count_group = parser.add_mutually_exclusive_group()
@@ -109,6 +128,7 @@ def main():
     flags_c = ["-std=c17", "-O3", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic"]
     flags_cpp = ["-std=c++20", "-O3", "-DNDEBUG", "-Wall", "-Wextra", "-Wpedantic"]
     results = {}
+    comparisons = {}
     with tempfile.TemporaryDirectory(prefix="sort-benchmark-") as temporary:
         c_binary = Path(temporary) / "sort-c"
         cpp_binary = Path(temporary) / "sort-cpp"
@@ -171,6 +191,15 @@ def main():
                         "samples_ns": samples[label],
                         "median_ns": int(statistics.median(samples[label])),
                     }
+                comparisons[f"{count} / {distribution}"] = {
+                    "baseline": "C qsort",
+                    "candidates": {
+                        label: paired_ratio_summary(
+                            samples["C qsort"], samples[label])
+                        for label in base_order
+                        if label != "C qsort"
+                    },
+                }
 
     result = {
         "case": "C qsort vs C++ std::sort and std::stable_sort",
@@ -198,8 +227,14 @@ def main():
         "correctness": (
             "each native program verifies nondecreasing order; harness "
             "requires matching deterministic checksums across implementations"),
+        "paired_ratio_definition": (
+            "for each matched measured round, C qsort time divided by "
+            "candidate time; values above 1 mean the candidate had a lower "
+            "measured time; a zero candidate time is null; medians include "
+            "only non-null ratios and are descriptive, not significance tests"),
         "platform": platform.platform(), "machine": platform.machine(),
         "machine_details": machine_details(), "results": results,
+        "comparisons": comparisons,
     }
     rendered = json.dumps(result, indent=2) + "\n"
     if args.output:

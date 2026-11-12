@@ -19,6 +19,13 @@ reproduce the calculation. Treat measurements as observations tied to that
 environment. CI must not fail because a benchmark is slower than an arbitrary
 threshold.
 
+When the run order supports matched rounds, keep the pairing in the result and
+define ratio direction explicitly. Report the median of per-round ratios as a
+separate statistic from the ratio of medians. Preserve unavailable ratios
+instead of dropping their positions, and document the denominator policy. A
+paired ratio describes these observations; it does not establish statistical
+significance or isolate one implementation detail by itself.
+
 A first runnable case is available in `benchmarks/`. It compares C `qsort`
 with C++ `std::sort`, verifies matching result checksums, records raw samples,
 and stores compiler and platform metadata. The checked-in local result is a

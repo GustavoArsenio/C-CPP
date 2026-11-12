@@ -62,7 +62,9 @@ Priorities are based on the remaining requirements in the refactor brief.
   run-order balancing for `qsort`, `std::sort`, and `std::stable_sort` across
   random, sorted, reverse, and duplicate-heavy inputs. Run larger workloads
   and collect a fresh result on native (non-WSL) machines; the checked-in WSL
-  result predates the balanced schedule.
+  result predates the balanced schedule. JSON now also reports per-round
+  `qsort`/C++ timing ratios with zero-denominator handling and descriptive
+  medians; no significance or performance claim is inferred from them.
 - The GCC analyzer and sanitizer CI jobs now build standard and optional
   POSIX/OpenSSL examples. GCC `-fanalyzer` covers C targets, including the
   tree/queue libraries and tests; ASan/UBSan instruments configured C and C++

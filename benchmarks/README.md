@@ -23,6 +23,9 @@ the schedule and executes this same harness with small datasets:
 python3 tools/benchmarking/test_compare_sort.py
 ```
 
+The test is also registered with CTest as
+`sorting_benchmark_harness_tests` when Python is available.
+
 ## Larger workloads
 
 For a multi-size observation, use the same seed and a larger dataset sweep:
@@ -65,7 +68,13 @@ datasets use integer ranges. Every implementation receives the same count and
 seed. Native programs check nondecreasing order, and the harness requires
 checksums to match across all implementations and samples for a given count
 and distribution. JSON includes compiler versions, flags, standards, raw
-samples, medians, environment details, and per-round order.
+samples, medians, environment details, per-round order, and paired ratios of
+C `qsort` time to each C++ candidate time. Ratio samples align by measured
+round; a ratio above one means the candidate took less measured time in that
+round. Each candidate reports `ratio_samples`, `median_ratio`, and
+`valid_samples`. A zero candidate time is recorded as `null`. The summary is
+the median of valid per-round ratios, not the ratio of the two median times;
+it is descriptive and is not a significance test.
 
 ## Interpreting results
 
@@ -80,8 +89,8 @@ thresholds in CI.
 
 The checked-in [`sort-comparison-local.json`](results/sort-comparison-local.json)
 is a historical observation from WSL2 using the earlier fixed implementation
-order. It is not a result from the current cyclic schedule, nor a native
-Windows or Linux measurement. Rerun the full command on the exact target
-machine and preserve its emitted environment metadata before drawing claims.
-Do not compare results collected on WSL with native results as if only the
-algorithm changed.
+order and predates paired-ratio output. It is not a result from the current
+cyclic schedule, nor a native Windows or Linux measurement. Rerun the full
+command on the exact target machine and preserve its emitted environment
+metadata before drawing claims. Do not compare results collected on WSL with
+native results as if only the algorithm changed.
