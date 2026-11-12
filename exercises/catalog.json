@@ -764,6 +764,114 @@
       "validation": "cmake --build build --target tracks_c_03-functions_01-min-max test_int_min_max && ctest --test-dir build -R \"unit_int_min_max|smoke_tracks_c_03-functions_01-min-max\" --output-on-failure"
     },
     {
+      "id": "c-function-parse-integer",
+      "title": "Parse a signed decimal integer with strtoimax",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "input validation",
+        "errno",
+        "strtoimax",
+        "range checking",
+        "error handling"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Validate a signed decimal grammar before conversion",
+        "Use errno and the end pointer to detect conversion failures",
+        "Return explicit parse statuses for invalid and out-of-range values"
+      ],
+      "statement": "Read one bounded line and parse a signed decimal int. Distinguish invalid syntax from a value outside the range of int.",
+      "examples": [
+        {
+          "input": "-42\n",
+          "output": "value=-42\n"
+        },
+        {
+          "input": "+42\n",
+          "output": "value=42\n"
+        },
+        {
+          "input": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n",
+          "output": "value=1\n"
+        },
+        {
+          "input": "-7",
+          "output": "value=-7\n"
+        },
+        {
+          "input": "\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "+\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "12x\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": " 42\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "42 \n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "\u000042\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "999999999999999999999999999999\n",
+          "output": "error: integer out of range\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Read one line of at most 128 bytes, excluding the newline; consume and reject a longer line.",
+        "Accept an optional ASCII sign followed by one or more ASCII decimal digits; reject whitespace and suffixes.",
+        "EOF before any bytes, an empty line, or an embedded NUL is invalid; a valid final line need not end in newline.",
+        "A syntactically valid value outside the host int range is an out-of-range error.",
+        "Invalid syntax prints error: invalid integer and exits 1; range errors print error: integer out of range and exit 1."
+      ],
+      "acceptance_criteria": [
+        "The C17 program builds with repository warning options and uses only standard C facilities.",
+        "Input lines of exactly 128 bytes are evaluated; lines of 129 bytes are fully consumed and rejected.",
+        "Grammar validation runs before strtoimax; errno is reset and ERANGE is checked.",
+        "The end pointer must consume the entire line, and the parsed intmax_t is checked against INT_MIN and INT_MAX before conversion.",
+        "All catalog cases produce the exact stdout and exit code; parse failures do not write to stderr.",
+        "EOF-terminated valid input and both invalid-syntax and out-of-range paths are covered."
+      ],
+      "complexity": "O(n) time for a line of n bytes and O(1) auxiliary space.",
+      "references": [
+        "tracks/cpp/09-modern-cpp/01-parse-integer.cpp",
+        "docs/language-comparisons/error-handling.md"
+      ],
+      "status": "tested",
+      "source": "tracks/c/03-functions/02-parse-integer.c",
+      "validation": "Build tracks_c_03-functions_02-parse-integer and pass its catalog-driven CTest smoke cases."
+    },
+    {
       "id": "c-function-pointer-map",
       "title": "C Function Pointer Map",
       "language": "C",
@@ -3994,30 +4102,74 @@
     },
     {
       "id": "cpp-exception-parse",
-      "title": "Cpp Exception Parse",
+      "title": "Parse a signed decimal integer with exceptions",
       "language": "C++",
       "difficulty": "intermediate",
       "topics": [
         "exceptions",
         "input validation",
-        "std::string"
+        "std::string",
+        "range checking",
+        "error handling"
       ],
       "prerequisites": [
         "cpp-string-view-parse"
       ],
       "learning_objectives": [
-        "Distinguish malformed input from an integer outside the int range",
+        "Validate signed decimal syntax before conversion",
         "Use std::stoi and verify complete input consumption",
-        "Catch exceptions at the program boundary"
+        "Distinguish invalid_argument from out_of_range at the program boundary"
       ],
-      "statement": "Read one line, parse a base-10 int, and report malformed input and range errors distinctly.",
+      "statement": "Read one bounded line and parse a signed decimal int. Distinguish invalid syntax from a value outside the range of int.",
       "examples": [
         {
           "input": "-42\n",
           "output": "value=-42\n"
         },
         {
+          "input": "+42\n",
+          "output": "value=42\n"
+        },
+        {
+          "input": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n",
+          "output": "value=1\n"
+        },
+        {
+          "input": "-7",
+          "output": "value=-7\n"
+        },
+        {
+          "input": "\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "+\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
           "input": "12x\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": " 42\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "42 \n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "\u000042\n",
           "output": "error: invalid integer\n",
           "expected_exit_code": 1
         },
@@ -4027,27 +4179,35 @@
           "expected_exit_code": 1
         },
         {
-          "input": "\n",
+          "input": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n",
           "output": "error: invalid integer\n",
           "expected_exit_code": 1
         }
       ],
       "constraints": [
-        "Read exactly one line as the input string.",
-        "Accept an optional sign followed by at least one base-10 digit.",
-        "Reject leading/trailing whitespace, trailing characters, and empty input."
+        "Read one line of at most 128 bytes, excluding the newline; consume and reject a longer line.",
+        "Accept an optional ASCII sign followed by one or more ASCII decimal digits; reject whitespace and suffixes.",
+        "EOF before any bytes, an empty line, or an embedded NUL is invalid; a valid final line need not end in newline.",
+        "A syntactically valid value outside the host int range is an out-of-range error.",
+        "Invalid syntax prints error: invalid integer and exits 1; range errors print error: integer out of range and exit 1."
       ],
       "acceptance_criteria": [
-        "Successful parsing consumes the entire line.",
-        "Malformed input reports error: invalid integer and exits with status 1.",
-        "Out-of-range input reports error: integer out of range and exits with status 1.",
-        "The program catches both standard parsing exception types."
+        "The C++20 target builds with the repository warning options.",
+        "The input reader stores at most 128 bytes while consuming an entire line, including overlong input.",
+        "Successful parsing consumes the entire line; malformed input reports error: invalid integer and exits 1.",
+        "Out-of-range input reports error: integer out of range and exits 1.",
+        "The program catches std::invalid_argument and std::out_of_range from std::stoi.",
+        "Allocation failure while storing input reports on stderr and exits 1 without stdout.",
+        "All shared catalog cases produce byte-identical output and exit status to the C implementation."
       ],
-      "complexity": "O(n) time and O(1) extra space.",
-      "references": [],
+      "complexity": "O(n) time and O(min(n, 128)) storage for a line of n bytes.",
+      "references": [
+        "tracks/c/03-functions/02-parse-integer.c",
+        "docs/language-comparisons/error-handling.md"
+      ],
       "status": "tested",
       "source": "tracks/cpp/09-modern-cpp/01-parse-integer.cpp",
-      "validation": "Build the C++20 target and run catalog smoke cases for valid, malformed, empty, and out-of-range input."
+      "validation": "Build tracks_cpp_09-modern-cpp_01-parse-integer and pass its catalog-driven CTest smoke cases."
     },
     {
       "id": "cpp-foundations-basic-types",

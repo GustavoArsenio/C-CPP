@@ -29,3 +29,6 @@ For a paired view of explicit C allocation and C++ Rule-of-Zero ownership, see
 
 For a paired view of a modular C dynamic-array API and C++ `std::vector`, see
 [`containers.md`](../language-comparisons/containers.md).
+
+For a paired view of C `errno`/end-pointer handling and C++ parsing exceptions,
+see [`error-handling.md`](../language-comparisons/error-handling.md).

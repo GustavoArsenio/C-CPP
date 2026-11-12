@@ -48,8 +48,9 @@ Priorities are based on the remaining requirements in the refactor brief.
 - A C opaque growable-vector API and a C++ `std::vector` lesson now share
   input/output examples; C unit coverage checks API boundaries and capacity
   growth. Allocator failure injection remains outside the portable suite.
-- Paired container examples now exist. Add further error-handling comparisons
-  for APIs with different failure models.
+- Paired container examples now exist. A signed-integer parsing pair compares
+  C `errno`/end-pointer/status handling with C++ exceptions; add further
+  error-handling comparisons for APIs with different failure models.
 - Add data structures and algorithms with complexity discussions and boundary
   tests.
 - Expand the sorting benchmark with larger datasets, additional algorithms,
