@@ -1,0 +1,11 @@
+# Ignore compiled binaries
+*.o
+*.exe
+*.d
+
+# Ignore build directories
+build/
+out/
+
+# Ignore backup tarballs
+*.tar.gz

@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build python3
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DCMAKE_C_COMPILER=${{ matrix.compiler }} -DCMAKE_CXX_COMPILER=${{ matrix.compiler == 'gcc' && 'g++' || 'clang++' }} -DBUILD_TESTING=ON
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+      - name: Check formatting
+        run: clang-format --dry-run --Werror $(find tracks algorithms data-structures projects tests -type f \( -name '*.c' -o -name '*.cpp' \))
+
+  gcc-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure GCC analyzer
+        run: cmake -S . -B build -DLEARNING_ENABLE_GCC_ANALYZER=ON
+      - name: Build with GCC analyzer
+        run: cmake --build build --parallel
+
+  sanitizers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure sanitizers
+        run: cmake -S . -B build -DLEARNING_ENABLE_SANITIZERS=ON
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+  optional-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OpenSSL development files
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev
+      - name: Configure optional examples
+        run: cmake -S . -B build -DLEARNING_BUILD_POSIX_NETWORKING=ON -DLEARNING_BUILD_OPENSSL_EXAMPLES=ON
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Test
+        run: ctest --test-dir build --output-on-failure

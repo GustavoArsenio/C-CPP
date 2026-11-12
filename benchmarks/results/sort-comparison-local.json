@@ -1,0 +1,326 @@
+{
+  "case": "C qsort vs C++ std::sort and std::stable_sort",
+  "count": 100000,
+  "seed": 20261112,
+  "distributions": [
+    "random",
+    "sorted",
+    "reverse",
+    "duplicates"
+  ],
+  "generator": "64-bit LCG: state = state * 6364136223846793005 + 1 modulo 2^64; random uses high 32 bits, duplicates uses state modulo 16; sorted/reverse use ordered integer ranges",
+  "warmups_per_case": 2,
+  "repetitions_per_case": 9,
+  "timed_region": "sort call only; allocation, generation, process startup, and sortedness/checksum checks excluded",
+  "correctness": "each native program verifies nondecreasing order; harness requires matching deterministic checksums across implementations",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "machine_details": {
+    "cpu": "AMD Ryzen 9 7900X 12-Core Processor",
+    "memory_bytes": 58967851008,
+    "kernel": "6.6.87.2-microsoft-standard-WSL2",
+    "python": "3.12.4"
+  },
+  "results": {
+    "random / C qsort": {
+      "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c17",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c17",
+      "checksum": "13223929986945452529",
+      "samples_ns": [
+        7545665,
+        7527215,
+        7482709,
+        7787033,
+        7588542,
+        7501471,
+        7805948,
+        7529696,
+        7458726
+      ],
+      "median_ns": 7529696
+    },
+    "random / C++ std::sort": {
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c++20",
+      "checksum": "13223929986945452529",
+      "samples_ns": [
+        3809486,
+        3705007,
+        3754869,
+        3668737,
+        3639112,
+        3820959,
+        3635850,
+        3668974,
+        3641504
+      ],
+      "median_ns": 3668974
+    },
+    "random / C++ std::stable_sort": {
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c++20",
+      "checksum": "13223929986945452529",
+      "samples_ns": [
+        4505017,
+        4765695,
+        4294478,
+        4320211,
+        4280224,
+        4314063,
+        4379796,
+        4275653,
+        4270716
+      ],
+      "median_ns": 4314063
+    },
+    "sorted / C qsort": {
+      "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c17",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c17",
+      "checksum": "14180411078876222789",
+      "samples_ns": [
+        1826802,
+        1818664,
+        1833327,
+        1871642,
+        1927495,
+        1830648,
+        1822689,
+        2058611,
+        1858128
+      ],
+      "median_ns": 1833327
+    },
+    "sorted / C++ std::sort": {
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c++20",
+      "checksum": "14180411078876222789",
+      "samples_ns": [
+        750239,
+        770876,
+        952195,
+        745930,
+        757491,
+        780635,
+        750966,
+        850673,
+        747869
+      ],
+      "median_ns": 757491
+    },
+    "sorted / C++ std::stable_sort": {
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c++20",
+      "checksum": "14180411078876222789",
+      "samples_ns": [
+        558937,
+        514579,
+        523968,
+        537249,
+        499579,
+        632414,
+        512848,
+        529049,
+        505497
+      ],
+      "median_ns": 523968
+    },
+    "reverse / C qsort": {
+      "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c17",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c17",
+      "checksum": "4019155926993518661",
+      "samples_ns": [
+        2485601,
+        2448245,
+        2511385,
+        2469747,
+        2490119,
+        2633715,
+        2442685,
+        2460632,
+        2514626
+      ],
+      "median_ns": 2485601
+    },
+    "reverse / C++ std::sort": {
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c++20",
+      "checksum": "4019155926993518661",
+      "samples_ns": [
+        495281,
+        494488,
+        494399,
+        506930,
+        518326,
+        498356,
+        498896,
+        511493,
+        496747
+      ],
+      "median_ns": 498356
+    },
+    "reverse / C++ std::stable_sort": {
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c++20",
+      "checksum": "4019155926993518661",
+      "samples_ns": [
+        787891,
+        844320,
+        809482,
+        798533,
+        844309,
+        812601,
+        751892,
+        785224,
+        766330
+      ],
+      "median_ns": 798533
+    },
+    "duplicates / C qsort": {
+      "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c17",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c17",
+      "checksum": "16303138613737658117",
+      "samples_ns": [
+        3629397,
+        3626946,
+        3667271,
+        3620498,
+        3663298,
+        3644348,
+        3654271,
+        3816494,
+        3714060
+      ],
+      "median_ns": 3654271
+    },
+    "duplicates / C++ std::sort": {
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c++20",
+      "checksum": "16303138613737658117",
+      "samples_ns": [
+        1110761,
+        1108850,
+        1136809,
+        1105229,
+        1106208,
+        1104964,
+        1095437,
+        1131181,
+        1105615
+      ],
+      "median_ns": 1106208
+    },
+    "duplicates / C++ std::stable_sort": {
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "flags": [
+        "-std=c++20",
+        "-O3",
+        "-DNDEBUG",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "standard": "c++20",
+      "checksum": "16303138613737658117",
+      "samples_ns": [
+        899192,
+        943210,
+        889318,
+        903849,
+        898623,
+        1077385,
+        900763,
+        1074932,
+        881036
+      ],
+      "median_ns": 900763
+    }
+  }
+}

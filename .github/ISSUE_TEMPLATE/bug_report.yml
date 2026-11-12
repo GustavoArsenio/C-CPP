@@ -1,0 +1,21 @@
+name: Bug report
+description: Report an error in an example, exercise, build, or documentation.
+body:
+  - type: input
+    id: path
+    attributes:
+      label: Affected file or exercise ID
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Build/run commands and environment
+    validations:
+      required: true

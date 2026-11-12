@@ -1,0 +1,4545 @@
+{
+  "schema_version": 1,
+  "exercises": [
+    {
+      "id": "c-arrays-sum",
+      "title": "Sum an array",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "size_t",
+        "iteration"
+      ],
+      "prerequisites": [
+        "c-control-for-sum"
+      ],
+      "learning_objectives": [
+        "Determine a local array length",
+        "Traverse an array safely"
+      ],
+      "statement": "Sum all elements of a fixed integer array.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Sum = 15\n"
+        }
+      ],
+      "constraints": [
+        "Array contains five small positive integers"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/arrays/01-sum.c",
+      "validation": "Build target tracks_c_04-arrays-strings_arrays_01-sum",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Array contains five small positive integers"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-binary-search-recursive",
+      "title": "C Binary Search Recursive",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "binary search",
+        "recursion",
+        "array bounds"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Understand binary search",
+        "Understand recursion",
+        "Understand array bounds"
+      ],
+      "statement": "Implement recursive binary search over a sorted integer array.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "Empty ranges and absent values are handled.",
+        "Midpoint arithmetic cannot overflow."
+      ],
+      "complexity": "O(log n) time and O(log n) stack.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-bit-count",
+      "title": "C Bit Count",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "bitwise operations",
+        "unsigned integers",
+        "loops"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Understand bitwise operations",
+        "Understand unsigned integers",
+        "Understand loops"
+      ],
+      "statement": "Count set bits in an unsigned integer using a loop that clears its lowest set bit.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "The routine is defined for zero and the full unsigned range.",
+        "No signed shifts are used."
+      ],
+      "complexity": "O(number of set bits) time and O(1) space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-card-deck-deal",
+      "title": "Deal three unique cards to each player",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "arrays",
+        "random shuffle",
+        "uniqueness",
+        "allocation"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Represent a card as a value object",
+        "Shuffle a finite deck",
+        "Deal without duplicates"
+      ],
+      "statement": "Read player, rank and suit counts, construct and shuffle the deck, then deal three cards to each player.",
+      "examples": [
+        {
+          "input_file": "tracks/c/09-data-structures/card-deck/fixtures/deal.in",
+          "output": "Player 1: 9/4 6/4 8/1\nPlayer 2: 6/2 7/3 8/4\n",
+          "checks": [
+            "unique_cards_per_player"
+          ]
+        },
+        {
+          "input": "1\n1\n1\n",
+          "output": "",
+          "checks": [
+            "unique_cards_per_player"
+          ],
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "The deck must contain at least three cards per player",
+        "Each rank-suit pair is unique"
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/card-deck/01-deal-three-cards.c",
+      "validation": "Build, compare seeded sample and verify dealt card uniqueness",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Invalid or boundary inputs use the declared exit status.",
+        "Constraint: The deck must contain at least three cards per player",
+        "Constraint: Each rank-suit pair is unique"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-concurrency-bounded-queue",
+      "title": "Bounded producer-consumer queue",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "threads",
+        "mutex",
+        "condition variables",
+        "bounded buffer"
+      ],
+      "prerequisites": [
+        "c-pointers-dereference",
+        "c-memory-allocate-array"
+      ],
+      "learning_objectives": [
+        "Protect shared state",
+        "Wait on condition predicates",
+        "Coordinate producer and consumer lifetimes"
+      ],
+      "statement": "Pass a fixed sequence through a bounded queue shared by producer and consumer threads.",
+      "examples": [
+        {
+          "input": "",
+          "output": "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 \n"
+        }
+      ],
+      "constraints": [
+        "Queue operations block while full or empty",
+        "Default build requires POSIX threads"
+      ],
+      "status": "tested",
+      "source": "tracks/c/11-systems-programming/concurrency/05-queue.c",
+      "validation": "CTest unit_bounded_queue for empty/full/close and FIFO behavior; build and run target tracks_c_11-systems-programming_concurrency_05-queue",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Queue operations block while full or empty",
+        "Constraint: Default build requires POSIX threads"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-control-for-sum",
+      "title": "Sum with a for loop",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "for loop",
+        "accumulator"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Use a counted loop",
+        "Maintain an accumulator"
+      ],
+      "statement": "Calculate the sum of the integers from 1 through 10.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Sum 1..10 = 55\n"
+        }
+      ],
+      "constraints": [
+        "Include both endpoints"
+      ],
+      "status": "tested",
+      "source": "tracks/c/02-control-flow/loops/01-for-loop.c",
+      "validation": "Build target tracks_c_02-control-flow_loops_01-for-loop",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Include both endpoints"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-control-while-countdown",
+      "title": "Countdown with a while loop",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "while loop",
+        "loop invariant"
+      ],
+      "prerequisites": [
+        "c-control-for-sum"
+      ],
+      "learning_objectives": [
+        "Use a condition-controlled loop",
+        "Update loop state"
+      ],
+      "statement": "Sum the integers from 10 down through 0 using a while loop.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Sum 10..0 = 55\n"
+        }
+      ],
+      "constraints": [
+        "Include zero"
+      ],
+      "status": "tested",
+      "source": "tracks/c/02-control-flow/loops/02-while.c",
+      "validation": "Build target tracks_c_02-control-flow_loops_02-while",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Include zero"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-enum-state-machine",
+      "title": "C Enum State Machine",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "enum",
+        "switch",
+        "state machines"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Understand enum",
+        "Understand switch",
+        "Understand state machines"
+      ],
+      "statement": "Model a traffic light with an enum and print the next state for each valid command.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "All enum states have defined transitions.",
+        "Unknown commands do not change state."
+      ],
+      "complexity": "O(1) per transition.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-factorial-checked",
+      "title": "Calculate a bounded factorial",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "loops",
+        "integer range",
+        "factorial"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Accumulate a factorial iteratively",
+        "Choose a range whose result fits the output type"
+      ],
+      "statement": "Read an integer from zero through twenty and print its factorial.",
+      "examples": [
+        {
+          "input": "4\n0\n",
+          "output": "1\n"
+        },
+        {
+          "input": "4\n20\n",
+          "output": "2432902008176640000\n"
+        },
+        {
+          "input": "4\n21\n",
+          "output": "",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Input must be from 0 through 20",
+        "Use uint64_t for the result"
+      ],
+      "status": "tested",
+      "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
+      "validation": "Build and compare boundary factorial outputs",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Invalid or boundary inputs use the declared exit status.",
+        "Constraint: Input must be from 0 through 20",
+        "Constraint: Use uint64_t for the result"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-file-copy-checked",
+      "title": "C File Copy Checked",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "file I/O",
+        "buffers",
+        "error handling"
+      ],
+      "prerequisites": [
+        "c-file-line-count"
+      ],
+      "learning_objectives": [
+        "Understand file I/O",
+        "Understand buffers",
+        "Understand error handling"
+      ],
+      "statement": "Copy a file using a fixed-size buffer and verify read, write, flush, and close errors.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "The copy handles arbitrary bytes.",
+        "All opened streams are closed on every path."
+      ],
+      "complexity": "O(n) time and O(1) space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-file-line-count",
+      "title": "Count lines in a file",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "file I/O",
+        "EOF",
+        "error handling"
+      ],
+      "prerequisites": [
+        "c-fileio-echo-lines"
+      ],
+      "learning_objectives": [
+        "Open and close a file safely",
+        "Distinguish EOF from read errors",
+        "Count a final unterminated line"
+      ],
+      "statement": "Read one file path from standard input and print the number of logical text lines in that file. A logical line ends at a newline or at end-of-file after at least one byte.",
+      "examples": [
+        {
+          "input": "tracks/c/07-file-io/line-count/fixtures/three-lines.txt\n",
+          "output": "3\n"
+        }
+      ],
+      "constraints": [
+        "The path is at most 1022 bytes and may end with LF, CRLF, or EOF.",
+        "Files are read as bytes; each LF terminates a line.",
+        "An empty file has zero lines; a final non-LF byte ends one line."
+      ],
+      "acceptance_criteria": [
+        "Open, read, and close failures return status 1 and write a diagnostic to standard error.",
+        "Empty files, newline-only files, and files with or without a final newline are counted correctly.",
+        "The file path is read from standard input; the count is printed as an unsigned decimal integer."
+      ],
+      "complexity": "O(n) time and O(1) space.",
+      "references": [],
+      "status": "tested",
+      "source": "tracks/c/07-file-io/line-count/01-count-lines.c",
+      "validation": "Build the CMake target, run its smoke test and integration_file_line_count CTest."
+    },
+    {
+      "id": "c-fileio-echo-lines",
+      "title": "Echo standard input line by line",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "fgets",
+        "standard streams",
+        "EOF"
+      ],
+      "prerequisites": [
+        "c-foundations-read-integer"
+      ],
+      "learning_objectives": [
+        "Read bounded chunks",
+        "Handle end of input"
+      ],
+      "statement": "Copy text from standard input to standard output until EOF.",
+      "examples": [
+        {
+          "input": "one\ntwo\n",
+          "output": "one\ntwo\n"
+        }
+      ],
+      "constraints": [
+        "Each input chunk is bounded by the local buffer"
+      ],
+      "status": "tested",
+      "source": "tracks/c/07-file-io/fileio/01-fileio.c",
+      "validation": "Build target tracks_c_07-file-io_fileio_01-fileio",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Each input chunk is bounded by the local buffer"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-foundations-basic-types",
+      "title": "Basic variable types",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "integer",
+        "floating point",
+        "format specifiers"
+      ],
+      "prerequisites": [
+        "c-foundations-hello-world"
+      ],
+      "learning_objectives": [
+        "Declare and initialize scalar types",
+        "Format numeric output"
+      ],
+      "statement": "Declare an integer, float, and double, then print their values.",
+      "examples": [
+        {
+          "input": "",
+          "output": "int 5, float 3.140000, double 2.718282\n"
+        }
+      ],
+      "constraints": [
+        "Use matching printf format specifiers"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/basic/02-var.c",
+      "validation": "Build target tracks_c_01-foundations_basic_02-var",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Use matching printf format specifiers"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-foundations-hello-world",
+      "title": "Hello world",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "stdio",
+        "program structure"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Compile a minimal C program",
+        "Print a line using the standard library"
+      ],
+      "statement": "Write a program that prints Hello world followed by a newline.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Hello world\n"
+        }
+      ],
+      "constraints": [
+        "Use the C standard I/O library"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/basic/01-hello.c",
+      "validation": "Build target tracks_c_01-foundations_basic_01-hello",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Use the C standard I/O library"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-foundations-read-integer",
+      "title": "Read and echo an integer",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "stdio",
+        "input validation"
+      ],
+      "prerequisites": [
+        "c-foundations-hello-world"
+      ],
+      "learning_objectives": [
+        "Read formatted input",
+        "Check scanf conversion results"
+      ],
+      "statement": "Read one integer and print it, reporting invalid input.",
+      "examples": [
+        {
+          "input": "42\n",
+          "output": "Enter a number: You entered 42\n"
+        }
+      ],
+      "constraints": [
+        "Input must contain one representable int"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/io/01-input.c",
+      "validation": "Build target tracks_c_01-foundations_io_01-input",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Input must contain one representable int"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-function-min-max",
+      "title": "Find minimum and maximum with output parameters",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "functions",
+        "parameters",
+        "return values",
+        "output parameters"
+      ],
+      "prerequisites": [
+        "c-foundations-hello-world"
+      ],
+      "learning_objectives": [
+        "Pass values to a function through parameters",
+        "Return multiple results through output pointers",
+        "Use a return value to report success or invalid arguments"
+      ],
+      "statement": "Use a reusable function to find the minimum and maximum of four integers.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Minimum: -3\nMaximum: 12\n"
+        }
+      ],
+      "constraints": [
+        "The function accepts four integer values.",
+        "Both output pointers must be non-null and point to distinct objects.",
+        "On invalid pointers, return failure without modifying outputs."
+      ],
+      "acceptance_criteria": [
+        "The function returns success for valid distinct output pointers.",
+        "The function returns failure if either output pointer is null or both are identical.",
+        "Invalid arguments leave output objects unchanged.",
+        "The input values are not modified and outputs are correct."
+      ],
+      "complexity": "O(1) time and O(1) auxiliary space.",
+      "references": [],
+      "status": "tested",
+      "source": "tracks/c/03-functions/01-min-max.c",
+      "validation": "cmake --build build --target tracks_c_03-functions_01-min-max test_int_min_max && ctest --test-dir build -R \"unit_int_min_max|smoke_tracks_c_03-functions_01-min-max\" --output-on-failure"
+    },
+    {
+      "id": "c-function-pointer-map",
+      "title": "C Function Pointer Map",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "function pointers",
+        "callbacks",
+        "generic programming"
+      ],
+      "prerequisites": [
+        "c-modular-vector-api"
+      ],
+      "learning_objectives": [
+        "Understand function pointers",
+        "Understand callbacks",
+        "Understand generic programming"
+      ],
+      "statement": "Apply a callback to every element of an integer array and write results to a separate output array.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "Null callbacks and invalid output buffers are rejected.",
+        "Input is unchanged."
+      ],
+      "complexity": "O(n) time and O(n) output space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-linear-regression-least-squares",
+      "title": "Fit a line with least squares",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linear regression",
+        "least squares",
+        "floating point",
+        "input validation"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Accumulate sums for a linear model",
+        "Compute slope and intercept",
+        "Detect undefined fits when x values do not vary"
+      ],
+      "statement": "Read between 2 and 1000 x/y pairs and print the least-squares line G(x) = intercept + slope*x.",
+      "examples": [
+        {
+          "input_file": "tracks/c/10-algorithms/regression/fixtures/regression.in",
+          "output_file": "tracks/c/10-algorithms/regression/fixtures/regression.out"
+        },
+        {
+          "input": "3\n2 1\n2 4\n2 8\n",
+          "output": "",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Input points are finite real values",
+        "The x values must not all be equal"
+      ],
+      "status": "tested",
+      "source": "tracks/c/10-algorithms/regression/01-linear-regression.c",
+      "validation": "Build and compare exact line fit and singular-input exit status",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Invalid or boundary inputs use the declared exit status.",
+        "Constraint: Input points are finite real values",
+        "Constraint: The x values must not all be equal"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-linked-list-reverse",
+      "title": "C Linked List Reverse",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "pointers",
+        "ownership"
+      ],
+      "prerequisites": [
+        "c-lista3-linked-stack"
+      ],
+      "learning_objectives": [
+        "Understand linked lists",
+        "Understand pointers",
+        "Understand ownership"
+      ],
+      "statement": "Reverse a singly linked list in place and return the new head.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "Empty and one-node lists are valid.",
+        "Every node remains reachable exactly once."
+      ],
+      "complexity": "O(n) time and O(1) extra space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-lista1-complementary-factorial",
+      "title": "Calculate factorial recursively",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "recursion",
+        "factorial",
+        "integer bounds"
+      ],
+      "prerequisites": [
+        "c-recursive-factorial"
+      ],
+      "learning_objectives": [
+        "Identify the recursive base case.",
+        "Respect the chosen result type range."
+      ],
+      "statement": "Read a non-negative integer and calculate its factorial, handling zero as a valid input.",
+      "examples": [],
+      "constraints": [
+        "The input is non-negative and does not exceed the supported factorial range."
+      ],
+      "status": "planned",
+      "source": null,
+      "validation": "Calculate the factorial of an input integer.",
+      "acceptance_criteria": [
+        "The program returns 1 for zero and the exact factorial for supported inputs.",
+        "Add catalog examples and automated output checks when implementing the exercise."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (complementary exercise)"
+      ]
+    },
+    {
+      "id": "c-lista1-complementary-max-three",
+      "title": "Find the largest of three numbers",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "conditionals",
+        "minimum and maximum"
+      ],
+      "prerequisites": [
+        "c-lista1-complementary-max-two"
+      ],
+      "learning_objectives": [
+        "Compare three values.",
+        "Handle ties consistently."
+      ],
+      "statement": "Read three representable numbers and print the greatest.",
+      "examples": [],
+      "constraints": [
+        "Exactly three representable numeric values are provided."
+      ],
+      "status": "planned",
+      "source": null,
+      "validation": "Read three numbers and report their maximum.",
+      "acceptance_criteria": [
+        "The program prints the greatest of the three inputs.",
+        "Add catalog examples and automated output checks when implementing the exercise."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (complementary exercise)"
+      ]
+    },
+    {
+      "id": "c-lista1-complementary-max-two",
+      "title": "Find the larger of two numbers",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "input",
+        "conditionals",
+        "minimum and maximum"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Compare both values without changing either input.",
+        "If inputs are equal, report that value."
+      ],
+      "statement": "Read two representable numbers and print the greater value.",
+      "examples": [],
+      "constraints": [
+        "Exactly two representable numeric values are provided."
+      ],
+      "status": "planned",
+      "source": null,
+      "validation": "Read two numbers and report the larger one.",
+      "acceptance_criteria": [
+        "The program prints the maximum of the two input values.",
+        "Add catalog examples and automated output checks when implementing the exercise."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (complementary exercise)"
+      ]
+    },
+    {
+      "id": "c-lista1-complementary-max-vector-20",
+      "title": "Find the maximum in a vector",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "loops",
+        "minimum and maximum"
+      ],
+      "prerequisites": [
+        "c-lista1-complementary-max-two"
+      ],
+      "learning_objectives": [
+        "Traverse the whole vector.",
+        "Initialize the running maximum from actual input."
+      ],
+      "statement": "Read twenty integers and print the greatest value.",
+      "examples": [],
+      "constraints": [
+        "Exactly twenty representable integers are provided."
+      ],
+      "status": "planned",
+      "source": null,
+      "validation": "Find the greatest value in an integer vector of length twenty.",
+      "acceptance_criteria": [
+        "The program prints the maximum across all twenty values.",
+        "Add catalog examples and automated output checks when implementing the exercise."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (complementary exercise)"
+      ]
+    },
+    {
+      "id": "c-lista1-complementary-square-area",
+      "title": "Find a square side from half the area",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "floating point",
+        "math",
+        "square root"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Translate area to side length using the square root.",
+        "Validate that the input area is non-negative."
+      ],
+      "statement": "Read the area of a square and calculate the side length of a square whose area is half as large.",
+      "examples": [],
+      "constraints": [
+        "Area is a finite non-negative real number."
+      ],
+      "status": "planned",
+      "source": null,
+      "validation": "Given a square area, output the side of a square with half that area.",
+      "acceptance_criteria": [
+        "For area A, output sqrt(A / 2) within documented floating-point tolerance.",
+        "Add catalog examples and automated output checks when implementing the exercise."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (complementary exercise)"
+      ]
+    },
+    {
+      "id": "c-lista1-complementary-three-city-route",
+      "title": "Find the shortest route through three cities",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "minimum and maximum",
+        "combinatorics",
+        "algorithms"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Enumerate the distinct route lengths.",
+        "Use symmetry to avoid duplicate reverse paths."
+      ],
+      "statement": "Read distances between each pair of three cities and find the shortest route that visits each city once, starting anywhere.",
+      "examples": [],
+      "constraints": [
+        "Three pairwise distances are finite and non-negative."
+      ],
+      "status": "planned",
+      "source": null,
+      "validation": "Find the shortest path that visits three cities once using the three pairwise distances.",
+      "acceptance_criteria": [
+        "The program chooses the minimum of the three distinct two-edge routes.",
+        "Add catalog examples and automated output checks when implementing the exercise."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (complementary exercise)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex01-sum-18",
+      "title": "Sum eighteen integers",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "input",
+        "loops",
+        "integer accumulation"
+      ],
+      "prerequisites": [
+        "c-control-for-sum"
+      ],
+      "learning_objectives": [
+        "Read a fixed number of values",
+        "Accumulate without narrow intermediate overflow"
+      ],
+      "statement": "Read eighteen integers and print their sum.",
+      "examples": [
+        {
+          "input": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18\n",
+          "output": "Sum: 171\n"
+        }
+      ],
+      "constraints": [
+        "Exactly eighteen representable int values are provided"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/01-sum-18-integers.c",
+      "validation": "Build and smoke test the matching CMake target",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Exactly eighteen representable int values are provided"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 1)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex02-average-18",
+      "title": "Average eighteen integers",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "input",
+        "loops",
+        "integer and floating-point arithmetic"
+      ],
+      "prerequisites": [
+        "c-lista1-ex01-sum-18"
+      ],
+      "learning_objectives": [
+        "Distinguish integer division from floating-point division",
+        "Compute a mean from a fixed data set"
+      ],
+      "statement": "Read eighteen integers and print their arithmetic mean to two decimal places.",
+      "examples": [
+        {
+          "input": "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18\n",
+          "output": "Average: 9.50\n"
+        }
+      ],
+      "constraints": [
+        "Exactly eighteen representable int values are provided"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/02-average-18-integers.c",
+      "validation": "Build and smoke test the matching CMake target",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Exactly eighteen representable int values are provided"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 2)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex03-classify-four",
+      "title": "Analyze four integers",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "conditionals",
+        "parity",
+        "minimum and maximum",
+        "edge cases"
+      ],
+      "prerequisites": [
+        "c-lista1-ex01-sum-18"
+      ],
+      "learning_objectives": [
+        "Track multiple statistics in one pass",
+        "Handle missing odd or even values",
+        "Avoid signed overflow in range calculation"
+      ],
+      "statement": "Read four integers and report the odd-value mean, largest even value, and range.",
+      "examples": [
+        {
+          "input": "3 8 7 4\n",
+          "output": "Odd average: 5.00\nLargest even: 8\nRange: 5\n"
+        },
+        {
+          "input": "1 3 5 7\n",
+          "output": "Odd average: 4.00\nLargest even: unavailable\nRange: 6\n"
+        }
+      ],
+      "constraints": [
+        "Exactly four representable int values are provided",
+        "If a parity class is absent, report its statistic as unavailable"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/03-analyze-four-integers.c",
+      "validation": "Build and smoke test the matching CMake target",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Exactly four representable int values are provided",
+        "Constraint: If a parity class is absent, report its statistic as unavailable"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 3)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex04-average-100",
+      "title": "Average one hundred integers",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "loops",
+        "fixed-size input",
+        "mean"
+      ],
+      "prerequisites": [
+        "c-lista1-ex02-average-18"
+      ],
+      "learning_objectives": [
+        "Generalize a fixed-count accumulation",
+        "Use the correct sample count in the mean"
+      ],
+      "statement": "Read one hundred integers and print their arithmetic mean to two decimal places.",
+      "examples": [
+        {
+          "input_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/one-hundred-ones.txt",
+          "output": "Average: 1.00\n"
+        }
+      ],
+      "constraints": [
+        "Exactly one hundred representable int values are provided"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/04-average-100-integers.c",
+      "validation": "Build and smoke test the matching CMake target",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Exactly one hundred representable int values are provided"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 4)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex05-average-paired-arrays",
+      "title": "Average corresponding array elements",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "floating-point arithmetic",
+        "parallel traversal"
+      ],
+      "prerequisites": [
+        "c-arrays-sum"
+      ],
+      "learning_objectives": [
+        "Traverse paired arrays by index",
+        "Store and print derived values"
+      ],
+      "statement": "Read two arrays of fifty numbers and print the average at each corresponding index.",
+      "examples": [
+        {
+          "input_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/paired-arrays.in",
+          "output_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/paired-arrays.out"
+        }
+      ],
+      "constraints": [
+        "Both arrays contain exactly 50 values"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/05-average-paired-arrays.c",
+      "validation": "Build and compare all 50 output values",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Both arrays contain exactly 50 values"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 5)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex06-triple-values",
+      "title": "Triple each array value",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "floating-point arithmetic",
+        "transformation"
+      ],
+      "prerequisites": [
+        "c-lista1-ex05-average-paired-arrays"
+      ],
+      "learning_objectives": [
+        "Transform every array element",
+        "Format floating-point output"
+      ],
+      "statement": "Read thirty numbers and print three times each value.",
+      "examples": [
+        {
+          "input_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/triple-array.in",
+          "output_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/triple-array.out"
+        }
+      ],
+      "constraints": [
+        "Input contains exactly 30 representable double values"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/06-triple-array-values.c",
+      "validation": "Build and compare all 30 results",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Input contains exactly 30 representable double values"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 6)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex07-transform-by-parity",
+      "title": "Transform integers based on parity",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "conditionals",
+        "parity",
+        "integer range"
+      ],
+      "prerequisites": [
+        "c-lista1-ex06-triple-values"
+      ],
+      "learning_objectives": [
+        "Branch on even or odd values",
+        "Widen arithmetic before multiplication"
+      ],
+      "statement": "For one hundred integers, multiply even values by five and add five to odd values.",
+      "examples": [
+        {
+          "input_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/transform-integers.in",
+          "output_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/transform-integers.out"
+        }
+      ],
+      "constraints": [
+        "Input contains exactly 100 representable int values"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/07-transform-integers.c",
+      "validation": "Build and compare all 100 transformed values",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Input contains exactly 100 representable int values"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 7)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex08-swap-arrays",
+      "title": "Swap two arrays element by element",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "temporary variables",
+        "assignment"
+      ],
+      "prerequisites": [
+        "c-lista1-ex05-average-paired-arrays"
+      ],
+      "learning_objectives": [
+        "Exchange values without losing either original",
+        "Preserve corresponding indices"
+      ],
+      "statement": "Read two arrays with twenty numbers each, swap corresponding values, and print the result.",
+      "examples": [
+        {
+          "input_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/swap-arrays.in",
+          "output_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/swap-arrays.out"
+        }
+      ],
+      "constraints": [
+        "Both arrays contain exactly 20 values"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/08-swap-two-arrays.c",
+      "validation": "Build and compare the swapped arrays",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Both arrays contain exactly 20 values"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 8)"
+      ]
+    },
+    {
+      "id": "c-lista1-ex09-merge-arrays",
+      "title": "Place two arrays into one array",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "index mapping",
+        "bounds"
+      ],
+      "prerequisites": [
+        "c-lista1-ex05-average-paired-arrays"
+      ],
+      "learning_objectives": [
+        "Map two source arrays into disjoint output ranges",
+        "Use correct source offsets"
+      ],
+      "statement": "Read two arrays of fifteen integers and place the first array in the first half of a thirty-element result and the second array in the remaining half.",
+      "examples": [
+        {
+          "input_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/merge-arrays.in",
+          "output_file": "tracks/c/01-foundations/exercises/lista-1/fixtures/merge-arrays.out"
+        }
+      ],
+      "constraints": [
+        "Each source array contains exactly 15 integers"
+      ],
+      "status": "tested",
+      "source": "tracks/c/01-foundations/exercises/lista-1/09-merge-array-halves.c",
+      "validation": "Build and compare the resulting 30 values",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Each source array contains exactly 15 integers"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-1.pdf#page=1 (exercise 9)"
+      ]
+    },
+    {
+      "id": "c-lista2-ex02-doubling-sequence",
+      "title": "Generate a doubling sequence",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "loops",
+        "integer overflow"
+      ],
+      "prerequisites": [
+        "c-arrays-sum"
+      ],
+      "learning_objectives": [
+        "Generate a sequence from a recurrence",
+        "Detect overflow before signed multiplication"
+      ],
+      "statement": "Read a starting integer and print ten terms, doubling each term.",
+      "examples": [
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/double-sequence.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/double-sequence.out"
+        },
+        {
+          "input": "50\n",
+          "output": "",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Input integer V is less than 50",
+        "Store ten values in N[10]",
+        "Output follows N[i] = X"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/exercises/lista-2/01-double-sequence.c",
+      "validation": "Build and compare all ten generated terms",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Print each value as N[i] = X.",
+        "Reject a starting integer that is not less than 50."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-2-ex02-array-fill-1.pdf"
+      ]
+    },
+    {
+      "id": "c-lista2-ex05-fibonacci-term",
+      "title": "Find a Fibonacci term",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "sequences",
+        "integer bounds"
+      ],
+      "prerequisites": [
+        "c-lista2-ex02-doubling-sequence"
+      ],
+      "learning_objectives": [
+        "Compute a sequence iteratively",
+        "Set a bound that prevents unsigned overflow"
+      ],
+      "statement": "Read T test cases and print each requested Fibonacci term using the prescribed Fib(N) = X format.",
+      "examples": [
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/fibonacci.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/fibonacci.out"
+        }
+      ],
+      "constraints": [
+        "T is the number of test cases",
+        "Each index N is from 0 through 60",
+        "Every result fits in an unsigned 64-bit integer"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/exercises/lista-2/02-fibonacci-term.c",
+      "validation": "Build and compare the selected term",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Each index N is from 0 through 60",
+        "Output each result as Fib(N) = X"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-2-ex05-fibonacci-array.pdf"
+      ]
+    },
+    {
+      "id": "c-lista2-ex07-halving-sequence",
+      "title": "Generate a halving sequence",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "floating-point arithmetic",
+        "underflow"
+      ],
+      "prerequisites": [
+        "c-lista2-ex02-doubling-sequence"
+      ],
+      "learning_objectives": [
+        "Generate a floating-point recurrence",
+        "Observe precision and underflow"
+      ],
+      "statement": "Read a double-precision value and print 100 successive values in N[i] = Y format, halving each term and using four decimal places.",
+      "examples": [
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/halving.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/halving.out"
+        }
+      ],
+      "constraints": [
+        "Input is a double-precision number with four decimal places",
+        "Print 100 values with four digits after the decimal point"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/exercises/lista-2/03-halving-sequence.c",
+      "validation": "Build and compare all one hundred formatted values",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Print each value with four digits after the decimal point.",
+        "Print every term as N[i] = Y with the correct zero-based index."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-2-ex07-array-fill-iii.pdf"
+      ]
+    },
+    {
+      "id": "c-lista2-ex08-partition-parity",
+      "title": "Partition integers by parity",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "arrays",
+        "parity",
+        "conditional insertion"
+      ],
+      "prerequisites": [
+        "c-lista2-ex02-doubling-sequence"
+      ],
+      "learning_objectives": [
+        "Maintain separate collections",
+        "Use actual element counts when printing"
+      ],
+      "statement": "Read 15 integers into separate par and impar buffers of five; print each full buffer when filled, then print remaining impar values followed by remaining par values.",
+      "examples": [
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/parity.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/parity.out"
+        }
+      ],
+      "constraints": [
+        "Input contains 15 integers",
+        "Each buffer has five positions",
+        "Output labels and indexing follow the original statement"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/exercises/lista-2/04-partition-by-parity.c",
+      "validation": "Build and compare both output collections",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Print the remaining odd buffer before the remaining even buffer."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-2-ex08-array-fill-iv.pdf"
+      ]
+    },
+    {
+      "id": "c-lista2-ex10-row-operation",
+      "title": "Operate on a matrix row",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "two-dimensional arrays",
+        "matrix traversal",
+        "mean"
+      ],
+      "prerequisites": [
+        "c-arrays-sum"
+      ],
+      "learning_objectives": [
+        "Read a matrix",
+        "Select a row by index",
+        "Compute sum or mean"
+      ],
+      "statement": "Read row L (0 through 11), operation S or M, and a 12 by 12 floating-point matrix; operate on the green region shown in the source figure.",
+      "examples": [
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/row-operation.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/row-operation.out"
+        },
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/row-operation-average.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/row-operation-average.out"
+        }
+      ],
+      "constraints": [
+        "Row index is from 0 through 11",
+        "Operation is uppercase S or M",
+        "Matrix values are floating-point numbers",
+        "Region selection follows the original figure for row L"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/exercises/lista-2/05-matrix-row-operation.c",
+      "validation": "Build and compare the selected row average",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Row index is from 0 through 11",
+        "Print the sum or average with one digit after the decimal point."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-2-ex10-line-in-array.pdf"
+      ]
+    },
+    {
+      "id": "c-lista2-ex13-below-diagonal",
+      "title": "Operate on the lower triangle of a matrix",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "two-dimensional arrays",
+        "matrix diagonals",
+        "mean"
+      ],
+      "prerequisites": [
+        "c-lista2-ex10-row-operation"
+      ],
+      "learning_objectives": [
+        "Use row and column relationships",
+        "Count included elements when computing a mean"
+      ],
+      "statement": "Read an operation and a 12 by 12 floating-point matrix; sum or average the values strictly below the main diagonal and print one digit after the decimal point.",
+      "examples": [
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/lower-triangle.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/lower-triangle.out"
+        },
+        {
+          "input": "M\n1.0\n2.0\n3.0\n4.0\n5.0\n6.0\n7.0\n8.0\n9.0\n10.0\n11.0\n12.0\n13.0\n14.0\n15.0\n16.0\n17.0\n18.0\n19.0\n20.0\n21.0\n22.0\n23.0\n24.0\n25.0\n26.0\n27.0\n28.0\n29.0\n30.0\n31.0\n32.0\n33.0\n34.0\n35.0\n36.0\n37.0\n38.0\n39.0\n40.0\n41.0\n42.0\n43.0\n44.0\n45.0\n46.0\n47.0\n48.0\n49.0\n50.0\n51.0\n52.0\n53.0\n54.0\n55.0\n56.0\n57.0\n58.0\n59.0\n60.0\n61.0\n62.0\n63.0\n64.0\n65.0\n66.0\n67.0\n68.0\n69.0\n70.0\n71.0\n72.0\n73.0\n74.0\n75.0\n76.0\n77.0\n78.0\n79.0\n80.0\n81.0\n82.0\n83.0\n84.0\n85.0\n86.0\n87.0\n88.0\n89.0\n90.0\n91.0\n92.0\n93.0\n94.0\n95.0\n96.0\n97.0\n98.0\n99.0\n100.0\n101.0\n102.0\n103.0\n104.0\n105.0\n106.0\n107.0\n108.0\n109.0\n110.0\n111.0\n112.0\n113.0\n114.0\n115.0\n116.0\n117.0\n118.0\n119.0\n120.0\n121.0\n122.0\n123.0\n124.0\n125.0\n126.0\n127.0\n128.0\n129.0\n130.0\n131.0\n132.0\n133.0\n134.0\n135.0\n136.0\n137.0\n138.0\n139.0\n140.0\n141.0\n142.0\n143.0\n144.0\n",
+          "output": "96.3\n"
+        }
+      ],
+      "constraints": [
+        "Operation is uppercase S or M",
+        "Matrix values are floating-point numbers",
+        "The strict lower triangle contains 66 values"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/exercises/lista-2/06-below-main-diagonal.c",
+      "validation": "Build and compare the lower-triangle mean",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Operation is uppercase S or M",
+        "Constraint: The strict lower triangle contains 66 values"
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-2-ex13-below-main-diagonal.pdf"
+      ]
+    },
+    {
+      "id": "c-lista2-matrix-concentric-layers",
+      "title": "Fill a matrix with concentric layers",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "matrix indexing",
+        "dynamic allocation",
+        "patterns"
+      ],
+      "prerequisites": [
+        "c-lista2-ex10-row-operation"
+      ],
+      "learning_objectives": [
+        "Map coordinates to a layer number",
+        "Allocate and release a contiguous matrix"
+      ],
+      "statement": "Read a square matrix size and fill each concentric border with increasing integers starting at one.",
+      "examples": [
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/concentric.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/concentric.out"
+        }
+      ],
+      "constraints": [
+        "Matrix size is from 1 through 100",
+        "Process multiple sizes until input zero",
+        "Each field is width 3, right aligned, with blank line after each matrix"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/exercises/lista-2/07-concentric-matrix.c",
+      "validation": "Build and compare a five by five pattern",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Matrix size is from 1 through 100",
+        "Read sizes through the zero sentinel and match the prescribed matrix formatting."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-2-matrix-fill-i.pdf"
+      ]
+    },
+    {
+      "id": "c-lista2-matrix-powers-of-two",
+      "title": "Fill a matrix with powers of two",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "matrix indexing",
+        "bit shifts",
+        "integer width"
+      ],
+      "prerequisites": [
+        "c-lista2-matrix-concentric-layers"
+      ],
+      "learning_objectives": [
+        "Derive an exponent from row and column indices",
+        "Use fixed-width unsigned arithmetic safely"
+      ],
+      "statement": "Fill each matrix cell at row i and column j with 2 raised to i plus j.",
+      "examples": [
+        {
+          "input_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/powers-matrix.in",
+          "output_file": "tracks/c/04-arrays-strings/exercises/lista-2/fixtures/powers-matrix.out"
+        }
+      ],
+      "constraints": [
+        "Matrix size is from 1 through 15",
+        "Process multiple sizes until input zero",
+        "Each field width equals the maximum value digit count; right aligned with blank line after each matrix"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/exercises/lista-2/08-powers-of-two-matrix.c",
+      "validation": "Build and compare a three by three matrix",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Matrix size is from 1 through 15",
+        "Constraint: Exponent is at most 28",
+        "Read sizes through the zero sentinel and match the prescribed matrix formatting."
+      ],
+      "complexity": null,
+      "references": [
+        "docs/references/assignments/lista-2-matrix-fill-iii.pdf"
+      ]
+    },
+    {
+      "id": "c-lista3-base-conversion",
+      "title": "Convert a non-negative integer to another base",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "stacks",
+        "integer division",
+        "radix conversion"
+      ],
+      "prerequisites": [
+        "c-lista3-linked-stack"
+      ],
+      "learning_objectives": [
+        "Use remainders to derive digits",
+        "Use a stack to reverse digit order",
+        "Map values above nine to letters"
+      ],
+      "statement": "Read a non-negative integer and a base from 2 through 36, then print its representation using uppercase letters for digits above nine.",
+      "examples": [
+        {
+          "input_file": "tracks/c/09-data-structures/stack/fixtures/convert-base.in",
+          "output_file": "tracks/c/09-data-structures/stack/fixtures/convert-base.out"
+        },
+        {
+          "input_file": "tracks/c/09-data-structures/stack/fixtures/convert-zero.in",
+          "output_file": "tracks/c/09-data-structures/stack/fixtures/convert-zero.out"
+        }
+      ],
+      "constraints": [
+        "Value must fit in long long",
+        "Base is from 2 to 36"
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/stack/02-convert-base.c",
+      "validation": "Build and compare base-16 and zero-value cases",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Value must fit in long long",
+        "Constraint: Base is from 2 to 36"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-lista3-character-stack",
+      "title": "Character stack using a linked list",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked list",
+        "stack",
+        "characters",
+        "dynamic allocation",
+        "ownership"
+      ],
+      "prerequisites": [
+        "c-lista3-linked-stack"
+      ],
+      "learning_objectives": [
+        "Implement a type-safe character stack",
+        "Handle empty pop and peek operations",
+        "Release all allocated nodes"
+      ],
+      "statement": "Implement a linked character stack with create, push, pop, peek, size, and destroy operations. Use it to support byte-oriented line reversal and palindrome checks.",
+      "examples": [],
+      "constraints": [
+        "The stack owns each allocated node.",
+        "Empty operations return false without changing output arguments.",
+        "Text examples are byte-oriented and preserve spaces."
+      ],
+      "acceptance_criteria": [
+        "The unit test verifies empty behavior, null arguments, LIFO order, size, peek, and destruction.",
+        "The reversal exercise reverses a line with spaces.",
+        "The palindrome exercise compares case-sensitive bytes including spaces."
+      ],
+      "complexity": "O(1) push, pop, and peek; O(n) destruction.",
+      "references": [],
+      "status": "tested",
+      "source": "data-structures/linear/char_stack.c",
+      "validation": "ctest --test-dir build --output-on-failure (unit_char_stack and related smoke examples)"
+    },
+    {
+      "id": "c-lista3-linked-stack",
+      "title": "Integer stack using a linked list",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked list",
+        "stack",
+        "dynamic allocation",
+        "ownership"
+      ],
+      "prerequisites": [
+        "c-memory-allocate-array",
+        "c-pointers-dereference"
+      ],
+      "learning_objectives": [
+        "Model LIFO behavior",
+        "Handle empty operations",
+        "Release nodes and container storage"
+      ],
+      "statement": "Push three integers onto a linked stack and print them in last-in, first-out order.",
+      "examples": [
+        {
+          "input": "",
+          "output": "4 1 3\n"
+        }
+      ],
+      "constraints": [
+        "The stack owns each allocated node",
+        "An empty pop reports failure without dereferencing a null pointer"
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/stack/01-stack-demo.c",
+      "validation": "Build and smoke test; API behavior is covered by unit_int_stack",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: The stack owns each allocated node",
+        "Constraint: An empty pop reports failure without dereferencing a null pointer"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-lista3-palindrome-with-stack",
+      "title": "Check a palindrome with a stack",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "stacks",
+        "strings",
+        "symmetry",
+        "bounded input"
+      ],
+      "prerequisites": [
+        "c-lista3-linked-stack",
+        "c-lista3-character-stack"
+      ],
+      "learning_objectives": [
+        "Compare a sequence with its reverse",
+        "Define text comparison rules",
+        "Handle empty and mismatched input safely"
+      ],
+      "statement": "Read one line of at most 255 bytes and report whether it reads the same forward and backward.",
+      "examples": [
+        {
+          "input_file": "tracks/c/09-data-structures/stack/fixtures/palindrome-yes.in",
+          "output_file": "tracks/c/09-data-structures/stack/fixtures/palindrome-yes.out"
+        },
+        {
+          "input_file": "tracks/c/09-data-structures/stack/fixtures/palindrome-no.in",
+          "output_file": "tracks/c/09-data-structures/stack/fixtures/palindrome-no.out"
+        }
+      ],
+      "constraints": [
+        "Comparison is case-sensitive and includes spaces",
+        "Input line is at most 255 bytes"
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/stack/04-palindrome.c",
+      "validation": "Build and compare palindrome and non-palindrome cases",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Comparison is case-sensitive and includes spaces",
+        "Constraint: Input line is at most 255 bytes"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-lista3-reverse-line-with-stack",
+      "title": "Reverse a line with a stack",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "stacks",
+        "strings",
+        "bounded input"
+      ],
+      "prerequisites": [
+        "c-lista3-linked-stack",
+        "c-lista3-character-stack"
+      ],
+      "learning_objectives": [
+        "Use LIFO order to reverse input",
+        "Bound line input",
+        "Release every stack node"
+      ],
+      "statement": "Read one line of at most 255 bytes and print its bytes in reverse order.",
+      "examples": [
+        {
+          "input_file": "tracks/c/09-data-structures/stack/fixtures/reverse-line.in",
+          "output_file": "tracks/c/09-data-structures/stack/fixtures/reverse-line.out"
+        }
+      ],
+      "constraints": [
+        "The operation is byte-oriented and preserves spaces",
+        "Input line is at most 255 bytes"
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/stack/03-reverse-line.c",
+      "validation": "Build and compare reversed text including spaces",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: The operation is byte-oriented and preserves spaces",
+        "Constraint: Input line is at most 255 bytes"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-lista3-transfer-between-stacks",
+      "title": "Transfer values between stacks",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "stacks",
+        "LIFO order",
+        "composing data structures"
+      ],
+      "prerequisites": [
+        "c-lista3-linked-stack"
+      ],
+      "learning_objectives": [
+        "Move values using only push and pop",
+        "Track the effect of sequential stack operations"
+      ],
+      "statement": "Push four values onto one stack, transfer their top values among three stacks, and print the final destination stack.",
+      "examples": [
+        {
+          "input": "",
+          "output": "2 4 1 3\n"
+        }
+      ],
+      "constraints": [
+        "Each transfer removes one value from its source before pushing it to its destination"
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/stack/05-transfer-between-stacks.c",
+      "validation": "Build and compare the final stack order",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Each transfer removes one value from its source before pushing it to its destination"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-lista4-circular-doubly-list",
+      "title": "Insert and remove nodes in a circular doubly linked list",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "circular lists",
+        "doubly linked lists",
+        "pointer invariants"
+      ],
+      "prerequisites": [
+        "c-lista4-doubly-list-remove-ends",
+        "c-lista4-singly-linked-to-circular"
+      ],
+      "learning_objectives": [
+        "Maintain bidirectional circular links",
+        "Insert and remove nodes at defined positions"
+      ],
+      "statement": "Implement insertion and removal operations for a circular doubly linked list.",
+      "examples": [
+        {
+          "input": "5 I 0 10 I 1 30 I 1 20 R 0 R 1\n",
+          "output": "removed 10\nremoved 30\n20\n"
+        }
+      ],
+      "constraints": [
+        "For a non-empty list, next and previous links are circular.",
+        "For a singleton list, both links point to the node itself."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/12-circular-doubly.c",
+      "validation": "Build and compare output; unit tests verify forward and backward traversal after each mutation.",
+      "acceptance_criteria": [
+        "Preserve next/previous symmetry after insertion and removal.",
+        "Handle empty and singleton transitions.",
+        "Release removed nodes."
+      ],
+      "complexity": "O(n) to locate an index; O(1) to rewire links once located.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=3 (exercise 12)"
+      ]
+    },
+    {
+      "id": "c-lista4-doubly-list-remove-ends",
+      "title": "Remove both ends of a doubly linked list",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "doubly linked lists",
+        "pointer invariants",
+        "memory management"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length"
+      ],
+      "learning_objectives": [
+        "Update previous and next links consistently",
+        "Handle singleton and empty lists"
+      ],
+      "statement": "Implement operations to remove the first and last node from a doubly linked list.",
+      "examples": [
+        {
+          "input": "4 10 20 30 40\n",
+          "output": "first 10\nlast 40\n20 30\n"
+        }
+      ],
+      "constraints": [
+        "Removed nodes must be freed.",
+        "Head and tail links remain consistent."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/11-remove-doubly-ends.c",
+      "validation": "Build and compare output; unit tests cover empty, singleton, and multi-node removal.",
+      "acceptance_criteria": [
+        "Correctly update head and tail.",
+        "Clear both links for a singleton list after removal.",
+        "Free each removed node exactly once."
+      ],
+      "complexity": "O(1) per operation with head and tail pointers.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=3 (exercise 11)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-concatenate-real",
+      "title": "Concatenate two real-valued linked lists",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "ownership",
+        "transfer"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length"
+      ],
+      "learning_objectives": [
+        "Append one list to another",
+        "Transfer ownership and leave the source empty"
+      ],
+      "statement": "Read two counts and their real-valued list elements, append the second list to the first by transferring nodes, and print the resulting sequence.",
+      "examples": [
+        {
+          "input": "3\n1.25 2.5 -3\n2\n4.25 5.5\n",
+          "output": "1.25 2.5 -3 4.25 5.5\n"
+        },
+        {
+          "input": "0\n2\n7.5 8.25\n",
+          "output": "7.5 8.25\n"
+        },
+        {
+          "input": "2\n1 2\n0\n",
+          "output": "1 2\n"
+        }
+      ],
+      "constraints": [
+        "The second list is empty after concatenation.",
+        "Both lists preserve their original element order."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/07-concatenate-real.c",
+      "validation": "CTest unit_double_list verifies order, empty inputs, source reset, alias rejection, and metadata; catalog smoke examples cover non-empty and both empty-side cases.",
+      "acceptance_criteria": [
+        "Preserve the order of both input lists.",
+        "Leave the second list empty after a successful move.",
+        "Handle either input list being empty.",
+        "Reject null and aliased list arguments without mutating them.",
+        "Build and pass unit_double_list and catalog smoke cases."
+      ],
+      "complexity": "O(1) with maintained head, tail, and size metadata.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=1 (exercise 4)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-copy-characters",
+      "title": "Copy a character linked list iteratively and recursively",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "recursion",
+        "ownership"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length"
+      ],
+      "learning_objectives": [
+        "Create an independent deep copy",
+        "Compare iterative and recursive traversal"
+      ],
+      "statement": "Implement iterative and recursive functions that create a copy of a singly linked list of characters.",
+      "examples": [
+        {
+          "input": "listas\n",
+          "output": "listas\nlistas\n"
+        }
+      ],
+      "constraints": [
+        "The copied list owns independent nodes.",
+        "The source list remains unchanged."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/09-copy-characters.c",
+      "validation": "Build and compare both copies; unit tests verify empty inputs and independent ownership.",
+      "acceptance_criteria": [
+        "Both variants preserve order and content.",
+        "Both return an empty list for an empty input.",
+        "The copy can be destroyed independently of the source."
+      ],
+      "complexity": "O(n) time and O(n) output storage; recursive variant uses O(n) call stack.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=3 (exercise 9)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-count-greater",
+      "title": "Count values greater than a threshold",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "traversal",
+        "conditionals"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length"
+      ],
+      "learning_objectives": [
+        "Traverse without modifying the list.",
+        "Count only values strictly greater than x."
+      ],
+      "statement": "Read an integer list and threshold x; count nodes with value greater than x.",
+      "examples": [
+        {
+          "input": "2\n3 17\n5\n",
+          "output": "1\n"
+        }
+      ],
+      "constraints": [
+        "Lista 4 exercise 2 specifies values greater than x."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/02-count-greater.c",
+      "validation": "Build and run the matching catalog smoke example; API behavior is covered by unit_int_list.",
+      "acceptance_criteria": [
+        "The operation matches the linked-list assignment semantics.",
+        "Empty or boundary list conditions are handled without invalid memory access.",
+        "The program builds and the catalog example passes."
+      ],
+      "complexity": "O(n) time and O(1) extra space.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=1 (exercise 2)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-last-value",
+      "title": "Read the last linked-list value",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "traversal",
+        "edge cases"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length"
+      ],
+      "learning_objectives": [
+        "Traverse to the terminal node",
+        "Handle an empty list without dereferencing a null pointer"
+      ],
+      "statement": "Return and print the final integer value in a non-empty singly linked list.",
+      "examples": [
+        {
+          "input": "3\n3 17 5\n",
+          "output": "5\n"
+        }
+      ],
+      "constraints": [
+        "The input list is non-empty."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/03-last-value.c",
+      "validation": "Build and run the matching catalog smoke example; API behavior is covered by unit_int_list.",
+      "acceptance_criteria": [
+        "The operation matches the linked-list assignment semantics.",
+        "Empty or boundary list conditions are handled without invalid memory access.",
+        "The program builds and the catalog example passes."
+      ],
+      "complexity": "O(n) time and O(1) extra space.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=1 (exercise 3)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-length",
+      "title": "Count nodes in a linked list",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "traversal",
+        "size"
+      ],
+      "prerequisites": [
+        "c-lista3-linked-stack",
+        "c-pointers-dereference"
+      ],
+      "learning_objectives": [
+        "Traverse every node in a singly linked list",
+        "Return zero for an empty list"
+      ],
+      "statement": "Implement int comprimento(Lista *l), which returns the number of nodes in an integer linked list.",
+      "examples": [
+        {
+          "input": "5\n3 17 5 12 1\n",
+          "output": "5\n"
+        },
+        {
+          "input": "0\n",
+          "output": "0\n"
+        }
+      ],
+      "constraints": [
+        "Input begins with the number of nodes, followed by that many integer values.",
+        "The list may be empty.",
+        "The operation must not modify the list."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/01-list-length.c",
+      "validation": "Build and smoke test list length; unit tests cover the list API size and empty states.",
+      "acceptance_criteria": [
+        "Return zero for an empty list.",
+        "Return the exact node count for a non-empty list.",
+        "Do not mutate the list during counting.",
+        "The program builds and its catalog examples pass.",
+        "Input count determines exactly how many list values are read."
+      ],
+      "complexity": "O(n) time and O(1) additional space.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=1 (exercise 1)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-merge-real",
+      "title": "Interleave and transfer two real-valued lists",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "ownership",
+        "interleaving"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-concatenate-real"
+      ],
+      "learning_objectives": [
+        "Interleave nodes from two lists",
+        "Transfer ownership while preserving order"
+      ],
+      "statement": "Read two counts and their real-valued list elements, create a new list by alternating nodes from the two sources, append any remaining nodes in order, and print the result.",
+      "examples": [
+        {
+          "input": "3\n1 3 5\n2\n2 4\n",
+          "output": "1 2 3 4 5\n"
+        },
+        {
+          "input": "1\n1.5\n3\n2.5 4.5 6.5\n",
+          "output": "1.5 2.5 4.5 6.5\n"
+        },
+        {
+          "input": "0\n0\n",
+          "output": "\n"
+        }
+      ],
+      "constraints": [
+        "Do not duplicate node payloads.",
+        "Both source lists are empty after the merge."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/08-interleave-real.c",
+      "validation": "CTest unit_double_list verifies equal/unequal lengths, either or both empty sources, order, source reset, and invalid aliases; catalog smoke examples check output order.",
+      "acceptance_criteria": [
+        "Alternate nodes while both lists have values.",
+        "Append any remaining nodes in original order.",
+        "Leave both source lists empty after success.",
+        "Allocate no replacement nodes while transferring payload nodes.",
+        "Build and pass unit_double_list and catalog smoke cases."
+      ],
+      "complexity": "O(n + m) time and O(1) additional node storage; the result list header is allocated separately.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=2 (exercise 7)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-remove-all",
+      "title": "Remove all matching list values",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "ownership",
+        "memory management"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length"
+      ],
+      "learning_objectives": [
+        "Remove matching head, middle, and tail nodes.",
+        "Maintain list head, tail, and size."
+      ],
+      "statement": "Read an integer list and x; unlink and free every node whose value equals x.",
+      "examples": [
+        {
+          "input": "5\n3 5 17 5 1\n5\n",
+          "output": "2\n"
+        }
+      ],
+      "constraints": [
+        "The input begins with node count n, then n integers, then target x."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/04-remove-value.c",
+      "validation": "Build and run the matching catalog smoke example; API behavior is covered by unit_int_list.",
+      "acceptance_criteria": [
+        "The operation matches the linked-list assignment semantics.",
+        "Empty or boundary list conditions are handled without invalid memory access.",
+        "The program builds and the catalog example passes."
+      ],
+      "complexity": "O(n) time and O(1) extra space.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=1 (exercise 5)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-reverse",
+      "title": "Reverse a singly linked list",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "pointer relinking",
+        "invariants"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length"
+      ],
+      "learning_objectives": [
+        "Reverse links iteratively",
+        "Maintain list head and tail"
+      ],
+      "statement": "Reverse the links of an integer singly linked list in place.",
+      "examples": [
+        {
+          "input": "5\n3 17 5 12 1\n",
+          "output": "1 12 5 17 3\n"
+        }
+      ],
+      "constraints": [
+        "The operation uses constant additional storage."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/06-reverse-list.c",
+      "validation": "Build and smoke test; unit tests inspect node order after reversal.",
+      "acceptance_criteria": [
+        "Reverse every link in place.",
+        "Update head and tail correctly.",
+        "Handle empty and single-node lists."
+      ],
+      "complexity": "O(n) time and O(1) additional space.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=3 (exercise 8)"
+      ]
+    },
+    {
+      "id": "c-lista4-linked-list-split-after",
+      "title": "Split a list after the first matching value",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "ownership",
+        "pointer relinking"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length"
+      ],
+      "learning_objectives": [
+        "Detach and transfer a suffix without copying nodes",
+        "Handle absent split values and empty suffixes"
+      ],
+      "statement": "Split an integer list after the first occurrence of x; x remains in the original list and the returned list begins with the following node.",
+      "examples": [
+        {
+          "input": "5\n3 17 5 12 1\n5\n",
+          "output": "3 17 5\n12 1\n"
+        }
+      ],
+      "constraints": [
+        "Split at the first occurrence only.",
+        "If x is absent, return an empty list and leave the original unchanged."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/05-split-after-value.c",
+      "validation": "Build and smoke test; unit tests cover transfer, absent target, and suffix order.",
+      "acceptance_criteria": [
+        "Keep the first x in the original list.",
+        "Move the suffix nodes without allocating replacement nodes.",
+        "Handle an absent x without changing the source list."
+      ],
+      "complexity": "O(n) time and O(1) additional node storage.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=1 (exercise 6)"
+      ]
+    },
+    {
+      "id": "c-lista4-singly-linked-to-circular",
+      "title": "Convert a singly linked list to circular form",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "linked lists",
+        "circular lists",
+        "pointer invariants"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-reverse"
+      ],
+      "learning_objectives": [
+        "Establish circular next-pointer invariants",
+        "Handle empty and single-node lists"
+      ],
+      "statement": "Transform a singly linked list so its final node points to its first node.",
+      "examples": [
+        {
+          "input": "4 3 1 4 1\n",
+          "output": "3 1 4 1\n"
+        }
+      ],
+      "constraints": [
+        "An empty list remains empty.",
+        "A non-empty list has exactly one cycle covering all nodes."
+      ],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/linked-list/10-singly-circular.c",
+      "validation": "Build and compare the bounded traversal; unit tests verify empty, singleton, and multi-node cycles.",
+      "acceptance_criteria": [
+        "Handle empty and singleton lists.",
+        "Make the tail point to the head.",
+        "Do not introduce a shorter cycle or lose nodes."
+      ],
+      "complexity": "O(1) with a maintained tail pointer.",
+      "references": [
+        "docs/references/assignments/lista-4.pdf#page=3 (exercise 10)"
+      ]
+    },
+    {
+      "id": "c-matrix-collection",
+      "title": "Operate on a linked matrix collection",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "matrices",
+        "linked lists",
+        "dynamic allocation"
+      ],
+      "prerequisites": [
+        "c-matrix-addition"
+      ],
+      "learning_objectives": [
+        "Append matrix records to a linked collection",
+        "Select records for arithmetic and linear-algebra operations",
+        "Append result records and release the collection safely"
+      ],
+      "statement": "Select operation 6 and enter a collection size from 0 through 1000, then each matrix name, dimensions, and signed 32-bit entries. Finish with 0 to list all entries, a positive one-based position to look up one entry, or -1/-2 followed by two positions to add/multiply and append the result. Select -3/-4 followed by one position to display its transpose/determinant.",
+      "examples": [
+        {
+          "input": "6\n2\nidentity 2 2\n1 0\n0 1\nrow 1 2\n4 5\n0\n",
+          "output": "1 identity 2 2\n1 0\n0 1\n2 row 1 2\n4 5\n"
+        },
+        {
+          "input": "6\n2\nidentity 1 1\n3\nrow 1 2\n4 5\n2\n",
+          "output": "2 row 1 2\n4 5\n"
+        },
+        {
+          "input": "6\n0\n0\n",
+          "output": ""
+        },
+        {
+          "input": "6\n1\nbad 9 1\n",
+          "output": "",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "6\n2\nA 2 2\n1 2\n3 4\nB 2 2\n5 6\n7 8\n-1\n1\n2\n",
+          "output": "3 sum 2 2\n6 8\n10 12\n"
+        },
+        {
+          "input": "6\n2\nA 2 2\n1 2\n3 4\nB 2 2\n5 6\n7 8\n-2\n1\n2\n",
+          "output": "3 product 2 2\n19 22\n43 50\n"
+        },
+        {
+          "input": "6\n1\nA 2 2\n1 2\n3 4\n-3\n1\n",
+          "output": "1 3\n2 4\n"
+        },
+        {
+          "input": "6\n1\nA 2 2\n1 2\n3 4\n-4\n1\n",
+          "output": "-2\n"
+        },
+        {
+          "input": "6\n2\nA 1 1\n1\nB 2 1\n1\n2\n-2\n1\n2\n",
+          "output": "",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Collection size is from 0 through 1000",
+        "Each dimension is from 1 through 8",
+        "Names contain 1 through 31 non-whitespace characters",
+        "Malformed input or allocation failure exits with status 1",
+        "Commands -1 and -2 require compatible dimensions and append only results representable as signed 32-bit entries",
+        "Command -3 transposes one selected matrix without changing the collection",
+        "Command -4 requires a square matrix and prints its exact determinant"
+      ],
+      "status": "tested",
+      "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
+      "validation": "Build and compare collection list, lookup, append, transpose, determinant, and invalid-operation examples",
+      "acceptance_criteria": [
+        "Position zero lists records in insertion order and positive positions look up one record",
+        "Commands -1 and -2 use the canonical checked arithmetic and append the result",
+        "Commands -3 and -4 operate on the selected collection record",
+        "Invalid positions, incompatible dimensions, and out-of-range appended values exit with status 1",
+        "All allocated records are released on success and input failure"
+      ],
+      "complexity": "Listing and selection are O(n); sum and product are O(r*c*k) for the selected dimensions; determinant is O(k! * k). Storage is O(n) records with fixed 8x8 payloads.",
+      "references": [
+        "C++/Matriz.c (historical collection menu)"
+      ]
+    },
+    {
+      "id": "c-matrix-interactive-menu",
+      "title": "Run a stateful matrix menu",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "matrices",
+        "linked lists",
+        "interactive input"
+      ],
+      "prerequisites": [
+        "c-matrix-collection",
+        "c-matrix-determinant"
+      ],
+      "learning_objectives": [
+        "Maintain matrix records across multiple menu commands",
+        "Validate selections and input while cleaning up dynamic records",
+        "Reuse canonical arithmetic and exact determinant helpers"
+      ],
+      "statement": "Run the matrix-menu executable and enter commands repeatedly: 0 exits, 1 adds a named matrix (name, rows, columns, then entries), 2 or 3 adds the sum or product of two one-based selections, 4 prints a factorial for 0 through 20, 5 prints one selected square matrix's exact determinant, 6 prints its transpose, and 7 displays one selection or all records when selection is 0. EOF between commands ends the session cleanly; EOF within a command returns status 1.",
+      "examples": [
+        {
+          "input": "1 A 1 1 4 4 5 0",
+          "output": "Added matrix 1\n4\n120\n"
+        }
+      ],
+      "constraints": [
+        "The collection contains at most 1000 matrices",
+        "Dimensions are from 1 through 8 and entries are signed 32-bit integers",
+        "Invalid selections leave the session available for another command",
+        "Incompatible or unrepresentable appended arithmetic results are rejected"
+      ],
+      "status": "tested",
+      "source": "tracks/c/10-algorithms/linear-algebra/02-matrix-menu.c",
+      "validation": "Build target tracks_c_10-algorithms_linear-algebra_02-matrix-menu and run CTest integration_matrix_menu",
+      "acceptance_criteria": [
+        "Multiple commands operate on the same collection and appended results",
+        "Invalid menu and matrix selections are reported without corrupting state",
+        "EOF between commands exits cleanly and mid-command EOF fails",
+        "All collection nodes are freed on every exit path"
+      ],
+      "complexity": "Selection is O(n); sum and product are O(r*c*k); determinant is O(k! * k).",
+      "references": [
+        "C++/Matriz.c (historical interactive menu)"
+      ]
+    },
+    {
+      "id": "c-matrix-addition",
+      "title": "Add two matrices",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "matrices",
+        "nested loops",
+        "fixed-size arrays"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Read two matrices with matching dimensions",
+        "Add corresponding matrix entries"
+      ],
+      "statement": "Select addition, provide dimensions up to 8 by 8 and two matrices, then print their element-wise sum.",
+      "examples": [
+        {
+          "input": "1\n2 2\n1 2\n3 4\n5 6\n7 8\n",
+          "output": "6 8\n10 12\n"
+        }
+      ],
+      "constraints": [
+        "Rows and columns are from 1 through 8",
+        "Operation 1 selects addition",
+        "Matrix elements are signed 32-bit integers; computed results must fit signed 64-bit integers."
+      ],
+      "status": "tested",
+      "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
+      "validation": "Build and compare element-wise addition output",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Rows and columns are from 1 through 8",
+        "Constraint: Operation 1 selects addition"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-matrix-multiplication",
+      "title": "Multiply two matrices",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "matrices",
+        "nested loops",
+        "linear algebra"
+      ],
+      "prerequisites": [
+        "c-matrix-addition"
+      ],
+      "learning_objectives": [
+        "Check compatible matrix dimensions",
+        "Compute row-column dot products"
+      ],
+      "statement": "Select multiplication, provide row, shared and column dimensions followed by both matrices, then print their product.",
+      "examples": [
+        {
+          "input": "2\n2 2 2\n1 2\n3 4\n5 6\n7 8\n",
+          "output": "19 22\n43 50\n"
+        },
+        {
+          "input": "2\n1 3 1\n2147483647 2147483647 2147483647\n2147483647\n2147483647\n2147483647\n",
+          "output": "",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Each dimension is from 1 through 8",
+        "The second matrix has the same number of rows as the first matrix has columns",
+        "Matrix elements are signed 32-bit integers; computed results must fit signed 64-bit integers."
+      ],
+      "status": "tested",
+      "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
+      "validation": "Build and compare matrix multiplication output",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Invalid or boundary inputs use the declared exit status.",
+        "Constraint: Each dimension is from 1 through 8",
+        "Constraint: The second matrix has the same number of rows as the first matrix has columns"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-matrix-determinant",
+      "title": "Compute a matrix determinant",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "matrices",
+        "linear algebra",
+        "determinant",
+        "permutations",
+        "arbitrary precision"
+      ],
+      "prerequisites": [
+        "c-matrix-multiplication"
+      ],
+      "learning_objectives": [
+        "Compute a square matrix determinant",
+        "Use the Leibniz permutation formula",
+        "Represent a result wider than built-in integer types"
+      ],
+      "statement": "Select operation 5, provide a square dimension from 1 through 8 and signed 32-bit entries, then print the exact integer determinant in decimal. The implementation evaluates the Leibniz formula and accumulates signed base-2^32 limbs.",
+      "examples": [
+        {
+          "input": "5\n1\n7\n",
+          "output": "7\n"
+        },
+        {
+          "input": "5\n2\n1 2\n3 4\n",
+          "output": "-2\n"
+        },
+        {
+          "input": "5\n3\n1 2 3\n0 1 4\n5 6 0\n",
+          "output": "1\n"
+        },
+        {
+          "input": "5\n4\n1 0 0 0\n0 2 0 0\n0 0 3 0\n0 0 0 4\n",
+          "output": "24\n"
+        },
+        {
+          "input": "5\n2\n0 1\n1 0\n",
+          "output": "-1\n"
+        },
+        {
+          "input": "5\n2\n1 2\n2 4\n",
+          "output": "0\n"
+        },
+        {
+          "input": "5\n0\n",
+          "output": "",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Dimension is from 1 through 8",
+        "Matrix elements are signed 32-bit integers",
+        "The exact determinant is printed without floating-point conversion",
+        "Malformed input and invalid dimensions exit with status 1"
+      ],
+      "status": "tested",
+      "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
+      "validation": "Build and compare determinant examples; run the matrix determinant unit test",
+      "acceptance_criteria": [
+        "Operation 5 computes determinants for square matrices of valid dimensions",
+        "The output is exact for every supported matrix and does not use floating point",
+        "Singular matrices produce zero",
+        "Invalid dimensions or incomplete input exit with status 1"
+      ],
+      "complexity": "O(n! * n) arithmetic operations and O(n) auxiliary storage; each exact accumulator uses a fixed nine 32-bit limbs",
+      "references": [
+        "C++/algebra.c (historical determinant; algorithm details unspecified)"
+      ]
+    },
+    {
+      "id": "c-matrix-transpose",
+      "title": "Transpose a matrix",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "matrices",
+        "rows and columns",
+        "nested loops"
+      ],
+      "prerequisites": [
+        "c-matrix-addition"
+      ],
+      "learning_objectives": [
+        "Swap the row and column roles of matrix elements",
+        "Print a rectangular transpose"
+      ],
+      "statement": "Read a matrix and print its transpose.",
+      "examples": [
+        {
+          "input": "3\n2 3\n1 2 3\n4 5 6\n",
+          "output": "1 4\n2 5\n3 6\n"
+        }
+      ],
+      "constraints": [
+        "Rows and columns are from 1 through 8",
+        "Matrix elements are signed 32-bit integers."
+      ],
+      "status": "tested",
+      "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
+      "validation": "Build and compare rectangular transpose output",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Rows and columns are from 1 through 8"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-memory-allocate-array",
+      "title": "Allocate and sum a dynamic array",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "malloc",
+        "allocation failure",
+        "free"
+      ],
+      "prerequisites": [
+        "c-arrays-sum",
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Allocate dynamic storage",
+        "Check allocation",
+        "Release owned memory"
+      ],
+      "statement": "Allocate five integers, initialize them, sum them, and release the allocation.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Sum = 15\n"
+        }
+      ],
+      "constraints": [
+        "Allocation size must be expressed using sizeof"
+      ],
+      "status": "tested",
+      "source": "tracks/c/05-pointers-memory/memory/01-malloc.c",
+      "validation": "Build target tracks_c_05-pointers-memory_memory_01-malloc",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Allocation size must be expressed using sizeof"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-modular-vector-api",
+      "title": "C Modular Vector Api",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "headers",
+        "modular programming",
+        "opaque types"
+      ],
+      "prerequisites": [
+        "c-lista3-linked-stack"
+      ],
+      "learning_objectives": [
+        "Understand headers",
+        "Understand modular programming",
+        "Understand opaque types"
+      ],
+      "statement": "Create a growable integer-vector API in separate header and implementation files.",
+      "examples": [
+        {
+          "input": "4 3 1 4 1\n",
+          "output": "3 1 4 1\n"
+        }
+      ],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "The header compiles from a separate translation unit.",
+        "Capacity growth checks allocation and size overflow."
+      ],
+      "complexity": "Amortized O(1) append; O(n) storage.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-opaque-counter-adt",
+      "title": "C Opaque Counter Adt",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "opaque pointers",
+        "abstract data types",
+        "ownership"
+      ],
+      "prerequisites": [
+        "c-modular-vector-api"
+      ],
+      "learning_objectives": [
+        "Understand opaque pointers",
+        "Understand abstract data types",
+        "Understand ownership"
+      ],
+      "statement": "Implement a counter as an opaque type with create, increment, read, and destroy operations.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "Representation details are absent from the public header.",
+        "Allocation failure and null handles are handled."
+      ],
+      "complexity": "O(1) per operation.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-pointers-dereference",
+      "title": "Read a value through a pointer",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "address-of",
+        "dereference",
+        "object lifetime"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Take an object's address",
+        "Dereference a valid pointer"
+      ],
+      "statement": "Print an integer directly and through a pointer to it.",
+      "examples": [
+        {
+          "input": "",
+          "output": "value 42 via pointer 42\n"
+        }
+      ],
+      "constraints": [
+        "Pointer refers to a live object"
+      ],
+      "status": "tested",
+      "source": "tracks/c/05-pointers-memory/pointers/01-ptr.c",
+      "validation": "Build target tracks_c_05-pointers-memory_pointers_01-ptr",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Pointer refers to a live object"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-recursive-factorial",
+      "title": "C Recursive Factorial",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "recursion",
+        "base case",
+        "integer bounds"
+      ],
+      "prerequisites": [
+        "c-factorial-checked"
+      ],
+      "learning_objectives": [
+        "Understand recursion",
+        "Understand base case",
+        "Understand integer bounds"
+      ],
+      "statement": "Implement factorial recursively for values 0 through 20 and reject larger values.",
+      "examples": [],
+      "constraints": [
+        "Input is from zero through twenty.",
+        "Values above the supported range are rejected."
+      ],
+      "acceptance_criteria": [
+        "The base case returns 1 for zero and one.",
+        "Inputs outside the supported range fail without signed overflow."
+      ],
+      "complexity": "O(n) time and O(n) call-stack space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-search-linear",
+      "title": "Linear search",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "searching",
+        "arrays",
+        "algorithm analysis"
+      ],
+      "prerequisites": [
+        "c-arrays-sum"
+      ],
+      "learning_objectives": [
+        "Search unsorted data",
+        "Identify best- and worst-case comparisons"
+      ],
+      "statement": "Search a fixed integer array for a target and report whether it exists.",
+      "examples": [
+        {
+          "input": "",
+          "output": "found\n"
+        }
+      ],
+      "constraints": [
+        "Array is unsorted",
+        "Search stops after the first match"
+      ],
+      "status": "tested",
+      "source": "algorithms/searching/01-search.c",
+      "validation": "Build target algorithms_searching_01-search",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Array is unsorted",
+        "Constraint: Search stops after the first match"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-security-sha256",
+      "title": "Hash a message with SHA-256",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "cryptographic hash",
+        "OpenSSL API",
+        "external dependencies"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Call a cryptographic digest API",
+        "Format digest bytes as hexadecimal",
+        "Declare optional dependency requirements"
+      ],
+      "statement": "Compute and print the SHA-256 digest of a fixed message.",
+      "examples": [
+        {
+          "input": "",
+          "output": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\n"
+        }
+      ],
+      "constraints": [
+        "Requires OpenSSL",
+        "Do not use deprecated digest APIs"
+      ],
+      "status": "tested",
+      "source": "tracks/c/12-advanced/security/01-hash.c",
+      "validation": "Not buildable in the current state; replace deprecated/inconsistent API usage",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Requires OpenSSL",
+        "Constraint: Do not use deprecated digest APIs"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-sorting-qsort",
+      "title": "Sort integers with the C standard library",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "qsort",
+        "comparison functions",
+        "sorting"
+      ],
+      "prerequisites": [
+        "c-arrays-sum",
+        "c-search-linear"
+      ],
+      "learning_objectives": [
+        "Provide a comparator compatible with qsort",
+        "Distinguish API contract from algorithm choice"
+      ],
+      "statement": "Sort a small integer array with the standard library qsort function.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Sorted: 1 3 4 5 8 \n"
+        }
+      ],
+      "constraints": [
+        "Comparator must not overflow when comparing integers"
+      ],
+      "status": "tested",
+      "source": "algorithms/sorting/01-qs.c",
+      "validation": "Build target algorithms_sorting_01-qs",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Comparator must not overflow when comparing integers"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-string-copy-bounded",
+      "title": "C String Copy Bounded",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "strings",
+        "buffer bounds",
+        "capacity"
+      ],
+      "prerequisites": [
+        "c-string-length-pointer"
+      ],
+      "learning_objectives": [
+        "Understand strings",
+        "Understand buffer bounds",
+        "Understand capacity"
+      ],
+      "statement": "Copy a source string into a caller-provided destination with an explicit capacity and report insufficient capacity.",
+      "examples": [],
+      "constraints": [
+        "The destination capacity is supplied explicitly.",
+        "Insufficient capacity is reported without partial overflow."
+      ],
+      "acceptance_criteria": [
+        "The destination is null-terminated on success.",
+        "Insufficient capacity is reported without writing out of bounds."
+      ],
+      "complexity": "O(n) time and O(1) extra space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-string-length-pointer",
+      "title": "C String Length Pointer",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "pointers",
+        "strings",
+        "pointer traversal"
+      ],
+      "prerequisites": [
+        "c-pointers-dereference"
+      ],
+      "learning_objectives": [
+        "Understand pointers",
+        "Understand strings",
+        "Understand pointer traversal"
+      ],
+      "statement": "Implement string length by advancing a pointer until the null terminator.",
+      "examples": [],
+      "constraints": [
+        "The input is a valid null-terminated string.",
+        "The source must not be modified."
+      ],
+      "acceptance_criteria": [
+        "The input remains unchanged.",
+        "The implementation does not index beyond the terminator."
+      ],
+      "complexity": "O(n) time and O(1) space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-strings-copy",
+      "title": "Copy a string into a bounded array",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "null-terminated strings",
+        "array bounds"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Understand C strings",
+        "Choose a destination with sufficient capacity"
+      ],
+      "statement": "Copy a short string into a destination array and print both strings.",
+      "examples": [
+        {
+          "input": "",
+          "output": "hello -> hello\n"
+        }
+      ],
+      "constraints": [
+        "Destination must hold the terminator"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/strings/01-dup.c",
+      "validation": "Build target tracks_c_04-arrays-strings_strings_01-dup",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Destination must hold the terminator"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-struct-student-average",
+      "title": "C Struct Student Average",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "structs",
+        "arrays",
+        "floating point"
+      ],
+      "prerequisites": [
+        "c-arrays-sum"
+      ],
+      "learning_objectives": [
+        "Understand structs",
+        "Understand arrays",
+        "Understand floating point"
+      ],
+      "statement": "Read student names and three grades, then print each average.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "Each student is represented by a struct.",
+        "Input bounds are explicit and checked."
+      ],
+      "complexity": "O(n) time and O(n) space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "c-systems-tcp-client",
+      "title": "TCP client skeleton",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "sockets",
+        "TCP",
+        "platform APIs"
+      ],
+      "prerequisites": [
+        "c-fileio-echo-lines",
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Identify platform-specific socket interfaces",
+        "Check socket lifecycle and I/O errors"
+      ],
+      "statement": "Connect to a local TCP server and send a short message.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Sent 6 bytes\n"
+        }
+      ],
+      "constraints": [
+        "Requires a documented platform socket API and a listening server"
+      ],
+      "status": "implemented",
+      "source": "tracks/c/11-systems-programming/networking/01-socket.c",
+      "validation": "Optional POSIX loopback integration is configured in CTest; local socket creation is denied by this sandbox and CI provides the supported runtime check.",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Requires a documented platform socket API and a listening server"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-tree-binary-search-tree",
+      "title": "Binary search tree insertion and traversal",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "binary search tree",
+        "recursion",
+        "dynamic allocation",
+        "ownership"
+      ],
+      "prerequisites": [
+        "c-memory-allocate-array"
+      ],
+      "learning_objectives": [
+        "Insert keys while preserving ordering",
+        "Traverse inorder",
+        "Free a recursive structure"
+      ],
+      "statement": "Insert fixed keys into a binary search tree, print them in order, and free all nodes.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Inorder: 2 3 4 5 6 7 8 \n"
+        }
+      ],
+      "constraints": [
+        "Allocation failure is reported",
+        "Duplicate keys are inserted into the right subtree"
+      ],
+      "status": "tested",
+      "source": "data-structures/trees/01-btree.c",
+      "validation": "CTest unit_binary_search_tree; build target data-structures_trees_01-btree",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Allocation failure is reported",
+        "Constraint: Duplicate keys are inserted into the right subtree"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-truco-deterministic-auto-hand",
+      "title": "Play a deterministic automatic Truco hand",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "state machines",
+        "deterministic simulation",
+        "linked lists"
+      ],
+      "prerequisites": [
+        "c-truco-trick-engine",
+        "c-truco-wager-engine"
+      ],
+      "learning_objectives": [
+        "Drive the shared trick and wager engine from an automatic policy",
+        "Reproduce a deal from an explicit seed",
+        "Separate strategy decisions from game state transitions"
+      ],
+      "statement": "Read a 32-bit seed, deal one Paulista Truco hand, and let each player automatically play their weakest card, stopping once the hand result is determined or three tricks have been played. The policy makes no raises and uses player 0 as leader for all three tricks.",
+      "examples": [
+        {
+          "input": "2024\n",
+          "output": "seed=2024 vira=J/hearts manilha=K\nPolicy: each player plays their weakest card; no raises; leader 0 starts every trick.\nwinner_team=1 score=0-1 stake=1\n"
+        }
+      ],
+      "constraints": [
+        "Use the same hand, trick, and match state transitions as other frontends.",
+        "A fixed seed and policy produce byte-for-byte identical output.",
+        "The assignment does not specify leader selection between tricks; this example keeps the caller-selected leader fixed.",
+        "The automatic strategy is illustrative and is not claimed to be optimal."
+      ],
+      "status": "tested",
+      "source": "projects/card-game-c/auto-hand.c",
+      "validation": "CTest smoke test checks the seeded output; unit_truco covers the shared hand and wager state transitions.",
+      "acceptance_criteria": [
+        "The program deals three cards to each player and reveals the vira.",
+        "Cards are played through truco_hand_play until the result is determined, for at most twelve plays.",
+        "Each player selects their weakest available card according to the engine ranking.",
+        "The same seed produces byte-identical output.",
+        "The hand winner and score come from the shared engine."
+      ],
+      "complexity": "O(n²) for linked-list shuffle and card selection over n=40; game transitions are bounded by twelve plays.",
+      "references": [
+        "docs/references/assignments/trabalho-1.pdf#page=1",
+        "docs/references/assignments/trabalho-1.pdf#page=2"
+      ]
+    },
+    {
+      "id": "c-truco-deterministic-auto-match",
+      "title": "Play a deterministic automatic Truco match",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "state machines",
+        "deterministic simulation",
+        "scorekeeping",
+        "linked lists"
+      ],
+      "prerequisites": [
+        "c-truco-deterministic-auto-hand",
+        "c-truco-wager-engine"
+      ],
+      "learning_objectives": [
+        "Orchestrate repeated deals and hands until a partnership reaches 12 points",
+        "Apply explicit policies for hand-of-eleven and iron-hand decisions",
+        "Verify that each hand result updates the shared match score"
+      ],
+      "statement": "Read a 32-bit seed and play a complete automatic Paulista Truco match through the shared deck, hand, wager, and score engines. Each hand uses a deterministic derived seed.",
+      "examples": [
+        {
+          "input": "2024\n",
+          "output_file": "projects/card-game-c/fixtures/auto-match-2024.out"
+        }
+      ],
+      "constraints": [
+        "The automatic policy plays the weakest card, never raises, accepts a three-point hand at 11, and uses player 0 as leader.",
+        "The automatic iron-hand policy explicitly awards one point for a normally played hand; this is a simulator policy, not a rule claimed from the assignment.",
+        "A fixed seed and policy produce byte-identical output.",
+        "Scores are capped at 12 and the match exits as soon as a team wins."
+      ],
+      "status": "tested",
+      "source": "projects/card-game-c/auto-match.c",
+      "validation": "CTest smoke fixture verifies the complete seeded match including an accepted hand of eleven, a played iron hand, and termination at 12; unit_truco tests explicit iron policy transitions.",
+      "acceptance_criteria": [
+        "Each hand deals three cards to each player and reveals a vira.",
+        "All card plays and trick outcomes pass through the shared truco_hand API.",
+        "The same seed produces byte-identical match output.",
+        "The match ends with exactly one team at 12 and no score above 12.",
+        "Iron-hand stake is supplied explicitly by the selected frontend policy."
+      ],
+      "complexity": "O(h*n²) for h hands with linked-list shuffle and card selection over n=40; each hand has twelve card plays.",
+      "references": [
+        "docs/references/assignments/trabalho-1.pdf#page=1",
+        "docs/references/assignments/trabalho-1.pdf#page=2"
+      ]
+    },
+    {
+      "id": "c-truco-interactive-match",
+      "title": "Play a user-controlled Truco match",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "state machines",
+        "user input",
+        "game rules",
+        "scorekeeping",
+        "partner signaling"
+      ],
+      "prerequisites": [
+        "c-truco-deterministic-auto-match",
+        "c-truco-wager-engine"
+      ],
+      "learning_objectives": [
+        "Drive shared match transitions with user-selected card plays",
+        "Validate interactive actions without advancing invalid turns",
+        "Resolve accepted and refused raises through the game engine",
+        "Send an opaque team signal and allow the partner to read it on their turn"
+      ],
+      "statement": "Read a deterministic seed and run a four-seat local Truco match. At each turn, let the current player select a face-up or face-down card, send an opaque signal, or request a raise; ask the opposing team to respond to a pending raise.",
+      "examples": [],
+      "constraints": [
+        "The frontend selects cards and changes match state only through the shared truco_hand and truco_match APIs.",
+        "The seed controls every deal in a reproducible sequence.",
+        "At 11, the user sees the partner hand before choosing whether to accept the three-point hand; when both teams are at 11, the user supplies the iron-hand point award.",
+        "The same terminal is shared by all four seats; the frontend does not claim to provide private displays.",
+        "Seat parity defines the partnerships: seats 0/2 are team 0 and seats 1/3 are team 1; hand inspection reveals seat 2 or 3 accordingly.",
+        "The first trick forbids face-down plays. Later face-down cards count toward trick completion but do not participate in card ranking; an all-hidden trick is a draw.",
+        "Signal codes are opaque integers from 0 through 255; the engine assigns no meaning. Each team’s latest code persists for the hand.",
+        "The shared terminal displays signal codes publicly and does not guarantee private communication."
+      ],
+      "status": "tested",
+      "source": "projects/card-game-c/play-match.c",
+      "validation": "CTest integration_play_match runs accepted and declined hand-of-eleven cases, accepted and refused raises, invalid card rejection, hidden-card play after trick one, partner signaling, teammate inspection and iron-hand decisions. Unit_truco covers shared engine transitions.",
+      "acceptance_criteria": [
+        "The current player can select an owned card by its displayed index.",
+        "Invalid card selections leave the game turn unchanged.",
+        "The current player can request a raise and only the opposing team can respond.",
+        "At 11, show the teammate cards before accepting or declining.",
+        "The user can accept or decline a hand at 11 and explicitly set the iron-hand award.",
+        "The match ends when a team reaches 12 and reports a consistent winner and score.",
+        "Reject an invalid card index without consuming the player's turn or card.",
+        "Reject a hidden card in trick one and accept it in later tricks without comparing its rank.",
+        "Deliver the latest opaque signal code to the partner on their turn without interpreting it."
+      ],
+      "complexity": "Each match hand uses at most twelve card selections; total work depends on draws and user decisions.",
+      "references": [
+        "docs/references/assignments/trabalho-1.pdf#page=1",
+        "docs/references/assignments/trabalho-1.pdf#page=2"
+      ]
+    },
+    {
+      "id": "c-truco-paulista-game",
+      "title": "Implement a complete Truco Paulista match",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "linked lists",
+        "circular lists",
+        "state machines",
+        "game rules",
+        "random shuffle",
+        "testing"
+      ],
+      "prerequisites": [
+        "c-truco-standard-deal",
+        "c-truco-trick-engine",
+        "c-truco-wager-engine",
+        "c-lista4-singly-linked-to-circular"
+      ],
+      "learning_objectives": [
+        "Model a turn-based game as explicit states and transitions",
+        "Use linked lists for deck, hands and played cards",
+        "Resolve trick ties, wagers and match scoring deterministically",
+        "Provide automatic and user-controlled frontends over one game engine"
+      ],
+      "statement": "Implement a playable four-player Truco Paulista match with two partnerships, three-card hands, up to three rounds per hand, manilhas, truco raises, tie resolution, automatic play and user-selected play. The match ends when a partnership reaches 12 points.",
+      "examples": [],
+      "constraints": [
+        "Use a linked list for deck shuffling and lists for each player hand.",
+        "Keep undealt and played piles explicit and use a circular list for alternating player turns.",
+        "A hand uses at most three rounds and ends as soon as tie rules determine its winner; all tied rounds award no points. A match ends at 12, and draws can extend it beyond 12 hands.",
+        "Raises progress through 1, 3, 6, 9 and 12; refusing a raise awards the challenger the previous stake.",
+        "At 11 points, asking for Truco causes immediate defeat; accepting hand-of-eleven starts at 3 points, declining awards the opponents one point.",
+        "Resolve ties according to the assignment: use earlier won rounds where specified; three tied rounds award no points.",
+        "Before implementing unspecified rules, document decisions for hidden cards, hand of iron, partner signals, starting player and automatic strategy.",
+        "If a team at 11 requests Truco, record the opposing team as winner without changing score; the assignment does not specify a score adjustment.",
+        "If both teams are at 11, request an explicit iron-hand policy outcome; do not silently choose its stake or acceptance rule.",
+        "Resolve a pending raise only by acceptance or refusal; a counter-raise during that response is not specified."
+      ],
+      "status": "planned",
+      "source": null,
+      "validation": "Unit-test the game state machine with fixed decks and scripted decisions; integration-test automatic and interactive frontends without requiring randomness.",
+      "acceptance_criteria": [
+        "A fixed deck and action sequence produce deterministic round and match outcomes.",
+        "Each card is played at most once per hand and each player has at most three cards initially.",
+        "Round winners, hand winners, ties, wager acceptance/refusal and score updates follow documented rules.",
+        "The automatic and user-controlled modes call the same game-state transition API.",
+        "The circular player order alternates partners and remains valid after each turn.",
+        "A match terminates as soon as a partnership reaches 12 points.",
+        "All assignment ambiguities are documented as explicit policy choices."
+      ],
+      "complexity": "Each hand has at most twelve card plays; total match work depends on the number of drawn hands.",
+      "references": [
+        "docs/references/assignments/trabalho-1.pdf#page=1",
+        "docs/references/assignments/trabalho-1.pdf#page=2",
+        "docs/references/assignments/trabalho-1.pdf#page=3"
+      ]
+    },
+    {
+      "id": "c-truco-standard-deal",
+      "title": "Build and deal a Truco Paulista hand",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "linked lists",
+        "random shuffle",
+        "ownership",
+        "game rules",
+        "card ranking"
+      ],
+      "prerequisites": [
+        "c-lista4-linked-list-length",
+        "c-lista4-linked-list-reverse"
+      ],
+      "learning_objectives": [
+        "Represent a standard 40-card Truco deck with typed ranks and suits",
+        "Shuffle linked-list nodes reproducibly using an explicit seed",
+        "Deal three cards to each of four player lists and reveal the vira",
+        "Determine manilha rank and compare card strength"
+      ],
+      "statement": "Read a 32-bit seed, create and shuffle the 40-card Paulista deck, deal three cards in turn order to each of four players, reveal the vira, report its manilha rank, and show the remaining deck size.",
+      "examples": [
+        {
+          "input": "1234\n",
+          "output": "Seed: 1234\nVira: 6 of hearts\nManilhas: 7 (clubs > hearts > spades > diamonds)\nPlayer 1: 5 of clubs 3 of hearts K of clubs\nPlayer 2: Q of hearts K of spades J of spades\nPlayer 3: 2 of clubs 5 of spades 3 of spades\nPlayer 4: 4 of clubs 7 of clubs J of clubs\nUndealt cards: 27\n"
+        },
+        {
+          "input": "4294967296\n",
+          "output": "",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "The deck contains 40 unique cards: 4, 5, 6, 7, Q, J, K, A, 2, and 3 in four suits.",
+        "Four players receive three cards each; one vira is revealed and 27 cards remain undealt.",
+        "The same seed produces the same shuffle on the same implementation.",
+        "The task implements deck creation and dealing, not a complete Truco hand or match."
+      ],
+      "status": "tested",
+      "source": "projects/card-game-c/deal-hand.c",
+      "validation": "Unit tests cover deck composition, uniqueness, deterministic shuffle, manilha successor and card ranking; smoke tests check seeded deal and invalid seed.",
+      "acceptance_criteria": [
+        "Create each valid rank-suit pair exactly once and exclude 8, 9, 10, and jokers.",
+        "Deal exactly three cards to each of four linked-list hands.",
+        "Reveal one vira and leave 27 cards in the undealt pile.",
+        "The vira 3 selects 4 as manilha and vira 7 selects Q.",
+        "Manilhas outrank normal cards, with suit order clubs, hearts, spades, diamonds.",
+        "The program builds and all catalog and unit tests pass."
+      ],
+      "complexity": "Deck generation O(n); linked-list random extraction shuffle O(n²) for n cards.",
+      "references": [
+        "docs/references/assignments/trabalho-1.pdf#page=1",
+        "docs/references/assignments/trabalho-1.pdf#page=2",
+        "docs/references/assignments/trabalho-1.pdf#page=3"
+      ]
+    },
+    {
+      "id": "c-truco-trick-engine",
+      "title": "Play a trick through circular turn order",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "circular lists",
+        "linked lists",
+        "state machines",
+        "card ranking",
+        "tie handling",
+        "hidden card play"
+      ],
+      "prerequisites": [
+        "c-truco-standard-deal"
+      ],
+      "learning_objectives": [
+        "Represent four-player turn order as a circular linked list",
+        "Move a selected card from its owner hand to the played pile",
+        "Resolve a four-card trick and detect a tied high card",
+        "Apply the assignment tie rules to three trick outcomes",
+        "Stop a hand after two rounds when the tie rules already determine the result",
+        "Track face-down plays without allowing them to win a trick"
+      ],
+      "statement": "Implement a four-player trick engine. Starting at a selected player, each current player must play a card from their own hand. The round resolves after all four players act. A hand resolver combines three round winners according to the assignment tie rules.",
+      "examples": [],
+      "constraints": [
+        "Player order advances in a circular linked list.",
+        "The round borrows player hands and owns its played-card pile.",
+        "A player cannot play a card they do not own or play twice in the same trick.",
+        "Round result is a player id or draw; hand result is partnership 0, partnership 1, or draw.",
+        "Invalid round-winner values are rejected.",
+        "Hidden cards are forbidden in trick 1; later hidden cards count as plays but are excluded from ranking, and the all-hidden result is a draw."
+      ],
+      "status": "tested",
+      "source": "projects/card-game-c/truco.c",
+      "validation": "CTest unit_truco checks circular order, ownership transfer, face-down restrictions and trick ranking, normal winner, tied trick, hand tie resolution and invalid results.",
+      "acceptance_criteria": [
+        "Visit all four players exactly once in circular order from the chosen starter.",
+        "Reject an invalid card without advancing the turn.",
+        "Move each played card from the player hand to the played pile exactly once.",
+        "Return the strongest player or a draw when multiple players tie for the strongest card.",
+        "Resolve tied and untied three-round outcomes according to the transcribed assignment rules.",
+        "Pass unit and sanitizer tests.",
+        "End after two rounds when their outcomes determine the partnership winner; continue to a third after two tied rounds or split wins.",
+        "Reject face-down plays on trick 1; in later tricks count them as plays but exclude them from winner comparison."
+      ],
+      "complexity": "O(n) to locate and move a card in a linked hand; O(1) state update after the move.",
+      "references": [
+        "docs/references/assignments/trabalho-1.pdf#page=2"
+      ]
+    },
+    {
+      "id": "c-truco-wager-engine",
+      "title": "Resolve Truco stakes and match scoring",
+      "language": "C",
+      "difficulty": "advanced",
+      "topics": [
+        "state machines",
+        "game rules",
+        "scorekeeping",
+        "edge cases"
+      ],
+      "prerequisites": [
+        "c-truco-standard-deal",
+        "c-truco-trick-engine"
+      ],
+      "learning_objectives": [
+        "Model the stake ladder as explicit transitions",
+        "Award the previous stake when a raise is refused",
+        "Apply hand-of-eleven outcomes and the immediate-Truco penalty",
+        "Keep hand-of-iron scoring explicit because the PDF is incomplete"
+      ],
+      "statement": "Implement match score and hand-bet transitions for the 1, 3, 6, 9, and 12 point stakes, including accepted/refused raises, hand of eleven, immediate loss for asking Truco at 11, drawn hands, and an explicit external outcome for hand of iron.",
+      "examples": [],
+      "constraints": [
+        "The match ends when a team reaches 12; stored score is capped at 12.",
+        "A raise request is legal only from the supplied current player and with no pending offer.",
+        "Refusal awards the challenger the stake before the refused raise and ends the hand.",
+        "A team at 11 that asks Truco immediately loses; score is unchanged because the PDF does not specify score adjustment.",
+        "A hand-of-iron request returns a policy-required state; its winner and points are supplied explicitly by the caller.",
+        "While an offer is pending, only the opposing partnership may accept or refuse; counter-raises are not modeled."
+      ],
+      "status": "tested",
+      "source": "projects/card-game-c/truco.c",
+      "validation": "CTest unit_truco covers the full accepted ladder, refusal at each prior stake, current-player validation, hand-of-eleven accept/refuse, score cap, immediate penalty, iron-policy boundary and drawn hand.",
+      "acceptance_criteria": [
+        "Accepted raises move the stake 1→3→6→9→12.",
+        "Refusal awards the challenger the previous stake and closes the hand.",
+        "A draw closes the hand without changing scores.",
+        "A team at 11 accepts a three-point hand or declines and gives opponents one point.",
+        "A Truco request by a team at 11 ends the match for the opponents without inventing score changes.",
+        "An iron hand cannot be scored until the caller supplies an explicit outcome.",
+        "The match ends and caps the winning score at 12."
+      ],
+      "complexity": "O(1) per score or wager transition.",
+      "references": [
+        "docs/references/assignments/trabalho-1.pdf#page=1",
+        "docs/references/assignments/trabalho-1.pdf#page=2"
+      ]
+    },
+    {
+      "id": "cpp-constexpr-factorial",
+      "title": "Cpp Constexpr Factorial",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "constexpr",
+        "compile-time programming",
+        "integer bounds"
+      ],
+      "prerequisites": [
+        "cpp-function-overloading"
+      ],
+      "learning_objectives": [
+        "Understand constexpr",
+        "Understand compile-time programming",
+        "Understand integer bounds"
+      ],
+      "statement": "Implement a constexpr factorial for a documented small range and verify one result with static_assert.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "The supported range avoids overflow.",
+        "At least one assertion is evaluated at compile time."
+      ],
+      "complexity": "O(n) constant evaluation.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-control-classify-integer",
+      "title": "Classify an integer by sign",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "if and else",
+        "formatted input",
+        "boundary values"
+      ],
+      "prerequisites": [
+        "cpp-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Choose a branch from an input value",
+        "Cover negative, zero, and positive cases"
+      ],
+      "statement": "Read an integer and report whether it is negative, zero, or positive.",
+      "examples": [
+        {
+          "input": "-3\n",
+          "output": "negative\n"
+        },
+        {
+          "input": "0\n",
+          "output": "zero\n"
+        },
+        {
+          "input": "8\n",
+          "output": "positive\n"
+        }
+      ],
+      "constraints": [
+        "Input must contain one representable int"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/02-control-flow/01-classify-integer.cpp",
+      "validation": "Build and smoke test all catalog examples",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Input must contain one representable int"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-control-sum-to-n",
+      "title": "Sum integers from one through N",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "for loop",
+        "accumulator",
+        "input constraints"
+      ],
+      "prerequisites": [
+        "cpp-control-classify-integer"
+      ],
+      "learning_objectives": [
+        "Use a counted loop",
+        "Choose an accumulator type that holds the result"
+      ],
+      "statement": "Read N and calculate the sum from 1 through N.",
+      "examples": [
+        {
+          "input": "10\n",
+          "output": "Sum: 55\n"
+        }
+      ],
+      "constraints": [
+        "0 <= N <= 10000",
+        "N = 0 produces a sum of zero"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/02-control-flow/02-sum-to-n.cpp",
+      "validation": "Build and smoke test the matching CMake target",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: 0 <= N <= 10000",
+        "Constraint: N = 0 produces a sum of zero"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-exception-parse",
+      "title": "Cpp Exception Parse",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "exceptions",
+        "input validation",
+        "std::string"
+      ],
+      "prerequisites": [
+        "cpp-string-view-parse"
+      ],
+      "learning_objectives": [
+        "Distinguish malformed input from an integer outside the int range",
+        "Use std::stoi and verify complete input consumption",
+        "Catch exceptions at the program boundary"
+      ],
+      "statement": "Read one line, parse a base-10 int, and report malformed input and range errors distinctly.",
+      "examples": [
+        {
+          "input": "-42\n",
+          "output": "value=-42\n"
+        },
+        {
+          "input": "12x\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "999999999999999999999999999999\n",
+          "output": "error: integer out of range\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Read exactly one line as the input string.",
+        "Accept an optional sign followed by at least one base-10 digit.",
+        "Reject leading/trailing whitespace, trailing characters, and empty input."
+      ],
+      "acceptance_criteria": [
+        "Successful parsing consumes the entire line.",
+        "Malformed input reports error: invalid integer and exits with status 1.",
+        "Out-of-range input reports error: integer out of range and exits with status 1.",
+        "The program catches both standard parsing exception types."
+      ],
+      "complexity": "O(n) time and O(1) extra space.",
+      "references": [],
+      "status": "tested",
+      "source": "tracks/cpp/09-modern-cpp/01-parse-integer.cpp",
+      "validation": "Build the C++20 target and run catalog smoke cases for valid, malformed, empty, and out-of-range input."
+    },
+    {
+      "id": "cpp-foundations-basic-types",
+      "title": "Basic C++ value types",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "integer",
+        "floating point",
+        "character",
+        "boolean",
+        "iostream"
+      ],
+      "prerequisites": [
+        "cpp-foundations-hello-world"
+      ],
+      "learning_objectives": [
+        "Initialize typed values",
+        "Format output with stream insertion",
+        "Display boolean values clearly"
+      ],
+      "statement": "Declare an integer, double, character, and boolean, then print them with labels.",
+      "examples": [
+        {
+          "input": "",
+          "output": "answer=42, ratio=2.5, grade=A, ready=true\n"
+        }
+      ],
+      "constraints": [
+        "Use const for values that are not modified"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/01-foundations/basic/02-basic-types.cpp",
+      "validation": "Build target tracks_cpp_01-foundations_basic_02-basic-types",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Use const for values that are not modified"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-foundations-hello-world",
+      "title": "Hello world in C++",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "main function",
+        "iostream",
+        "standard output"
+      ],
+      "prerequisites": [],
+      "learning_objectives": [
+        "Compile a C++ program",
+        "Write to standard output with streams"
+      ],
+      "statement": "Write a C++ program that prints Hello, C++ followed by a newline.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Hello, C++\n"
+        }
+      ],
+      "constraints": [
+        "Use the C++ standard library"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/01-foundations/basic/01-hello.cpp",
+      "validation": "Build target tracks_cpp_01-foundations_basic_01-hello",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Use the C++ standard library"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-function-overloading",
+      "title": "Overload a function for two types",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "functions",
+        "overloading",
+        "std::string"
+      ],
+      "prerequisites": [
+        "cpp-foundations-hello-world"
+      ],
+      "learning_objectives": [
+        "Define overloads with different parameter types",
+        "Use a const string reference"
+      ],
+      "statement": "Overload describe for an integer and a string, then call both overloads.",
+      "examples": [
+        {
+          "input": "",
+          "output": "42\nHello, C++\n"
+        }
+      ],
+      "constraints": [
+        "Use C++ standard library strings"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/04-functions/02-function-overloading.cpp",
+      "validation": "Build and compare both overload results",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Use C++ standard library strings"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-functions-euclidean-gcd",
+      "title": "Greatest common divisor",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "functions",
+        "Euclidean algorithm",
+        "loop invariants"
+      ],
+      "prerequisites": [
+        "cpp-control-sum-to-n"
+      ],
+      "learning_objectives": [
+        "Extract a reusable function",
+        "Apply the Euclidean algorithm",
+        "Handle zero inputs"
+      ],
+      "statement": "Read two non-negative integers and print their greatest common divisor.",
+      "examples": [
+        {
+          "input": "48 18\n",
+          "output": "GCD: 6\n"
+        },
+        {
+          "input": "0 0\n",
+          "output": "GCD: 0\n"
+        }
+      ],
+      "constraints": [
+        "Inputs must fit in int",
+        "gcd(0, 0) is defined here as zero"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/03-functions/01-euclidean-gcd.cpp",
+      "validation": "Build and smoke test all catalog examples",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Inputs must fit in int",
+        "Constraint: gcd(0, 0) is defined here as zero"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-lambda-filter",
+      "title": "Cpp Lambda Filter",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "lambdas",
+        "std::copy_if",
+        "iterators"
+      ],
+      "prerequisites": [
+        "cpp-sort-vector"
+      ],
+      "learning_objectives": [
+        "Understand lambdas",
+        "Understand std::copy_if",
+        "Understand iterators"
+      ],
+      "statement": "Copy even values from a vector using a lambda predicate and a standard algorithm.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "The source vector remains unchanged.",
+        "The predicate captures no dangling references."
+      ],
+      "complexity": "O(n) time and O(k) output.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-map-word-count",
+      "title": "Cpp Map Word Count",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "std::map",
+        "associative containers",
+        "strings"
+      ],
+      "prerequisites": [
+        "cpp-sort-vector"
+      ],
+      "learning_objectives": [
+        "Understand std::map",
+        "Understand associative containers",
+        "Understand strings"
+      ],
+      "statement": "Count words in a sequence using std::map and print keys in sorted order.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "Words are counted case-sensitively.",
+        "Output order is lexicographic."
+      ],
+      "complexity": "O(n log u) time for n words and u unique words.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-point-class",
+      "title": "Model a point with a class",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "classes",
+        "constructors",
+        "const member functions",
+        "encapsulation"
+      ],
+      "prerequisites": [
+        "cpp-foundations-hello-world"
+      ],
+      "learning_objectives": [
+        "Initialize private data with a constructor",
+        "Call a const member function"
+      ],
+      "statement": "Create a Point at coordinates (3, 4) and print its squared distance from the origin.",
+      "examples": [
+        {
+          "input": "",
+          "output": "25\n"
+        }
+      ],
+      "constraints": [
+        "Store coordinates as private members"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/05-classes/01-point.cpp",
+      "validation": "Build and compare squared distance output",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Store coordinates as private members"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-reference-swap",
+      "title": "Cpp Reference Swap",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "references",
+        "functions",
+        "const correctness"
+      ],
+      "prerequisites": [
+        "cpp-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Understand references",
+        "Understand functions",
+        "Understand const correctness"
+      ],
+      "statement": "Write a function that swaps two integers through lvalue references.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "The function does not allocate.",
+        "A const reference example cannot modify its argument."
+      ],
+      "complexity": "O(1) time and O(1) space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-rule-of-zero-owner",
+      "title": "Cpp Rule Of Zero Owner",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "RAII",
+        "std::vector",
+        "rule of zero"
+      ],
+      "prerequisites": [
+        "cpp-point-class"
+      ],
+      "learning_objectives": [
+        "Understand RAII",
+        "Understand std::vector",
+        "Understand rule of zero"
+      ],
+      "statement": "Create a value type that owns a sequence of integers using std::vector and needs no custom destructor or copy operations.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "No raw owning pointer is used.",
+        "Copy and move behavior follow the member type."
+      ],
+      "complexity": "O(n) copy; O(1) move for vector storage.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-sort-vector",
+      "title": "Sort values with std::sort",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "std::vector",
+        "std::sort",
+        "iterators"
+      ],
+      "prerequisites": [
+        "cpp-stl-vector-iteration"
+      ],
+      "learning_objectives": [
+        "Call a standard algorithm with an iterator range",
+        "Observe that sorting changes the vector order"
+      ],
+      "statement": "Sort a vector of integers in ascending order with std::sort and print it.",
+      "examples": [
+        {
+          "input": "",
+          "output": "1 2 5 7 9\n"
+        }
+      ],
+      "constraints": [
+        "Use the C++ standard library algorithm"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/08-stl/02-sort-vector.cpp",
+      "validation": "Build and compare ascending sequence output",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Use the C++ standard library algorithm"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-span-sum",
+      "title": "Cpp Span Sum",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "std::span",
+        "non-owning views",
+        "ranges"
+      ],
+      "prerequisites": [
+        "cpp-stl-vector-iteration"
+      ],
+      "learning_objectives": [
+        "Understand std::span",
+        "Understand non-owning views",
+        "Understand ranges"
+      ],
+      "statement": "Sum integers passed as std::span<const int> from both an array and a vector.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "The function does not retain the span.",
+        "Empty spans return zero."
+      ],
+      "complexity": "O(n) time and O(1) space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-stl-vector-iteration",
+      "title": "Iterate over a vector",
+      "language": "C++",
+      "difficulty": "beginner",
+      "topics": [
+        "std::vector",
+        "range-based for",
+        "value semantics"
+      ],
+      "prerequisites": [
+        "cpp-control-sum-to-n"
+      ],
+      "learning_objectives": [
+        "Store a sequence in a standard container",
+        "Iterate without manual index management"
+      ],
+      "statement": "Sum the values in a fixed std::vector and print its size and sum.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Count: 4, sum: 20\n"
+        }
+      ],
+      "constraints": [
+        "Use std::vector and a range-based loop"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/08-stl/01-vector-sum.cpp",
+      "validation": "Build and smoke test the matching CMake target",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Use std::vector and a range-based loop"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "cpp-string-view-parse",
+      "title": "Cpp String View Parse",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "std::string_view",
+        "references",
+        "input validation"
+      ],
+      "prerequisites": [
+        "cpp-function-overloading"
+      ],
+      "learning_objectives": [
+        "Understand std::string_view",
+        "Understand references",
+        "Understand input validation"
+      ],
+      "statement": "Parse a non-owning string_view containing two comma-separated integers and return a success result plus values.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "The parser does not retain a view beyond the call.",
+        "Malformed and overflowing values are rejected."
+      ],
+      "complexity": "O(n) time and O(1) extra space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-template-maximum",
+      "title": "Find the maximum with a function template",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "function templates",
+        "const references",
+        "generic programming"
+      ],
+      "prerequisites": [
+        "cpp-function-overloading"
+      ],
+      "learning_objectives": [
+        "Define and instantiate a function template",
+        "Pass arguments by const reference",
+        "Use std::common_type_t for mixed argument types"
+      ],
+      "statement": "Write a maximum function template that compares two values and returns the larger value in their common type.",
+      "examples": [
+        {
+          "input": "",
+          "output": "7\n5\n4\n3\npear\n"
+        }
+      ],
+      "constraints": [
+        "Both argument types support operator<.",
+        "std::common_type_t exists for the argument types and can represent either selected value.",
+        "When values compare equal, either value may be returned."
+      ],
+      "acceptance_criteria": [
+        "The function is a function template and accepts both values by const reference.",
+        "The result type is std::common_type_t<Left, Right>.",
+        "The examples cover either argument being larger, equal values, mixed arithmetic types, and strings.",
+        "The program builds with C++20 and matches its documented output."
+      ],
+      "complexity": "O(1) comparisons; result conversion depends on the selected type.",
+      "references": [],
+      "status": "tested",
+      "source": "tracks/cpp/04-functions/03-function-template-maximum.cpp",
+      "validation": "Build target tracks_cpp_04-functions_03-function-template-maximum and run its CTest smoke test."
+    },
+    {
+      "id": "cpp-thread-safe-counter",
+      "title": "Cpp Thread Safe Counter",
+      "language": "C++",
+      "difficulty": "advanced",
+      "topics": [
+        "threads",
+        "std::atomic",
+        "concurrency"
+      ],
+      "prerequisites": [
+        "cpp-unique-resource"
+      ],
+      "learning_objectives": [
+        "Understand threads",
+        "Understand std::atomic",
+        "Understand concurrency"
+      ],
+      "statement": "Increment an atomic counter from multiple threads and join all workers before printing.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "All threads are joined.",
+        "The final result is deterministic."
+      ],
+      "complexity": "O(total increments) work.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-unique-ptr-tree",
+      "title": "Cpp Unique Ptr Tree",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "std::unique_ptr",
+        "RAII",
+        "trees"
+      ],
+      "prerequisites": [
+        "cpp-rule-of-zero-owner"
+      ],
+      "learning_objectives": [
+        "Understand std::unique_ptr",
+        "Understand RAII",
+        "Understand trees"
+      ],
+      "statement": "Represent a binary tree with unique_ptr children and compute its node count recursively.",
+      "examples": [],
+      "constraints": [
+        "Input and output formats are specified by the exercise statement.",
+        "The acceptance criteria define required boundary and ownership behavior."
+      ],
+      "acceptance_criteria": [
+        "Ownership is exclusive and cleanup is automatic.",
+        "Empty trees report zero."
+      ],
+      "complexity": "O(n) time and O(h) recursion space.",
+      "references": [],
+      "status": "planned",
+      "source": "",
+      "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-unique-resource",
+      "title": "Own a temporary file with RAII",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "RAII",
+        "unique ownership",
+        "destructors"
+      ],
+      "prerequisites": [
+        "cpp-rule-of-zero-owner"
+      ],
+      "learning_objectives": [
+        "Wrap a C file handle in a move-only C++ owner",
+        "Release a resource with a custom deleter",
+        "Handle resource creation and I/O failures"
+      ],
+      "statement": "Read all standard input into a temporary file, rewind it, and count its lines and bytes. Own the C file handle through a move-only RAII type.",
+      "examples": [
+        {
+          "input": "first\nsecond\n",
+          "output": "lines=2 bytes=13\n"
+        },
+        {
+          "input": "",
+          "output": "lines=0 bytes=0\n"
+        }
+      ],
+      "constraints": [
+        "Use std::tmpfile and close it automatically when its owner leaves scope.",
+        "Do not copy the owner; allow moving it.",
+        "Report temporary-file creation, write, rewind, and read failures."
+      ],
+      "acceptance_criteria": [
+        "The owner is non-copyable and movable.",
+        "The custom deleter calls fclose exactly once for a live handle.",
+        "The output counts newline bytes and all bytes read from standard input.",
+        "I/O failures produce an error message and a nonzero exit status."
+      ],
+      "complexity": "O(n) time and O(n) temporary-file storage.",
+      "references": [],
+      "status": "tested",
+      "source": "tracks/cpp/09-modern-cpp/02-unique-resource.cpp",
+      "validation": "Build the C++20 target and run catalog smoke cases for empty and multiline input."
+    },
+    {
+      "id": "cpp-vector2d-operator-overload",
+      "title": "Add two-dimensional vectors",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "classes",
+        "operator overloading",
+        "const references"
+      ],
+      "prerequisites": [
+        "cpp-point-class"
+      ],
+      "learning_objectives": [
+        "Represent a two-dimensional value with a class",
+        "Overload addition without modifying operands"
+      ],
+      "statement": "Add two Vector2D values and print the resulting coordinates.",
+      "examples": [
+        {
+          "input": "",
+          "output": "4 5\n"
+        }
+      ],
+      "constraints": [
+        "Addition returns a new vector",
+        "The operands remain unchanged"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/06-classes/02-vector2d.cpp",
+      "validation": "Build and compare vector addition output",
+      "acceptance_criteria": [
+        "The program builds with its declared C17 or C++20 target.",
+        "For valid examples, standard output matches the catalog exactly.",
+        "Constraint: Addition returns a new vector",
+        "Constraint: The operands remain unchanged"
+      ],
+      "complexity": null,
+      "references": []
+    },
+    {
+      "id": "c-structures-calendar-date",
+      "title": "Validate a calendar date with a struct and enum",
+      "language": "C",
+      "difficulty": "beginner",
+      "topics": [
+        "structures",
+        "enumerations",
+        "validation",
+        "calendar"
+      ],
+      "prerequisites": [
+        "c-function-min-max"
+      ],
+      "learning_objectives": [
+        "Group related fields in a struct and initialize them by name",
+        "Use an enum to make a finite set of values readable",
+        "Validate a struct invariant before using its fields"
+      ],
+      "statement": "Represent a calendar date with a struct and a named month enum. Implement a function that validates the year, month, and day, including the Gregorian leap-year rule, then report the validity of the supplied examples.",
+      "examples": [
+        {
+          "input": "",
+          "output": "2024-02-29: valid\n1900-02-29: invalid\n2000-02-29: valid\n2025-04-31: invalid\n"
+        }
+      ],
+      "constraints": [
+        "Years start at 1 and months use values 1 through 12",
+        "Leap years are divisible by 400, or by 4 but not by 100"
+      ],
+      "status": "tested",
+      "source": "tracks/c/06-structures/01-calendar-date.c",
+      "validation": "Build tracks_c_06-structures_01-calendar-date and test with ctest --test-dir build -R unit_calendar_date",
+      "acceptance_criteria": [
+        "Named enum values map to the twelve calendar months.",
+        "Invalid month, year, or day values are rejected.",
+        "Leap-year boundaries 1900 and 2000 are handled correctly.",
+        "The executable output matches the example."
+      ],
+      "complexity": "O(1) time and O(1) space.",
+      "references": []
+    }
+  ]
+}

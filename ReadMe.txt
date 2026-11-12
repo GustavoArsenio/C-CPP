@@ -1,1 +1,0 @@
-﻿Lista Academicas - Solicitadas pela UNASP - Universidade Adventista de São Paulo
