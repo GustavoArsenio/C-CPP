@@ -35,6 +35,15 @@ Priorities are based on the remaining requirements in the refactor brief.
 
 ## P1 — broaden engineering coverage
 
+- Migrate the historical card renderer into a portable C17 example. Use only
+  printable ASCII, format rank/suit through the canonical card enums, and avoid
+  terminal code-page assumptions. Acceptance: deterministic fixed-width card
+  output, exact golden tests for multiple ranks and suits, and rejection of
+  invalid enum values without out-of-bounds lookup. Reconcile the retained
+  `card-values.txt` and `card-suits.txt` fixtures with those tests.
+- Resolve the remaining legacy input-fixture associations, including
+  `Lista_2/Entrada.txt` and `C++/in.txt`: connect each to a named exercise and
+  expected result, or document why it is retained as historical-only data.
 - Add C/C++ paired examples for ownership, containers, algorithms, and error
   handling without duplicating canonical implementations.
 - Add data structures and algorithms with complexity discussions and boundary
