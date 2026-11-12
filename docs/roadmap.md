@@ -66,7 +66,9 @@ Priorities are based on the remaining requirements in the refactor brief.
 - The GCC analyzer and sanitizer CI jobs now build standard and optional
   POSIX/OpenSSL examples. GCC `-fanalyzer` covers C targets, including the
   tree/queue libraries and tests; ASan/UBSan instruments configured C and C++
-  targets. Add a Clang-Tidy CI run when its findings can be reviewed.
+  targets. Clang-Tidy CI is configured to report a low-noise
+  `clang-analyzer-*` baseline; review its diagnostics before expanding checks
+  or treating warnings as errors.
 - Add contribution and learning documentation in Portuguese and English.
 - The catalog is the authoritative backlog for planned and scaffolded
   exercises; run `python3 tools/validation/catalog.py` for current totals.

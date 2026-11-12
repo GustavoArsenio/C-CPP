@@ -48,7 +48,19 @@ git diff --check
 Use `cmake --preset sanitized` when GCC/Clang sanitizer support is available,
 or configure with `-DLEARNING_ENABLE_GCC_ANALYZER=ON` for GCC's C static
 analyzer. `-DLEARNING_ENABLE_CLANG_TIDY=ON` requires `clang-tidy` on PATH and
-analyzes both C and C++ targets.
+analyzes both C and C++ targets with the checked-in `clang-analyzer-*` profile.
+The Ubuntu CI job is configured to report this baseline without treating
+warnings as errors; review its diagnostics before expanding checks or making
+warnings blocking. To run the same profile locally:
+
+```sh
+cmake -S . -B build/clang-tidy -G Ninja \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
+  -DLEARNING_ENABLE_CLANG_TIDY=ON
+cmake --build build/clang-tidy --parallel
+```
+
 If a tool or platform feature is unavailable, report it and the affected
 checks. CI currently builds with GCC and Clang on Linux.
 

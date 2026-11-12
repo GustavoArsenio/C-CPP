@@ -48,6 +48,25 @@ jobs:
       - name: Run tests for GCC analyzer build
         run: ctest --test-dir build/gcc-analysis --output-on-failure
 
+  clang-tidy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Report Clang and Clang-Tidy versions
+        run: clang --version && clang-tidy --version
+      - name: Configure Clang-Tidy analyzer baseline
+        run: >-
+          cmake -S . -B build/clang-tidy -G Ninja
+          -DCMAKE_C_COMPILER=clang
+          -DCMAKE_CXX_COMPILER=clang++
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+          -DBUILD_TESTING=ON
+          -DLEARNING_ENABLE_CLANG_TIDY=ON
+      - name: Build default targets with Clang-Tidy
+        run: cmake --build build/clang-tidy --parallel
+      - name: Test Clang build
+        run: ctest --test-dir build/clang-tidy --output-on-failure
+
   sanitizers:
     runs-on: ubuntu-latest
     steps:

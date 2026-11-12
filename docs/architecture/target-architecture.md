@@ -78,6 +78,8 @@ Tests use CTest and a small dependency-free test harness where practical.
 Sanitizers and static analysis are opt-in build options because compiler and
 platform support varies. GCC's `-fanalyzer` option analyzes C targets;
 optional `clang-tidy` integration can analyze both languages when available.
+The Ubuntu CI job is configured for only `clang-analyzer-*` checks and reports
+warnings without promoting them to errors until the findings are reviewed.
 CI should cover at least GCC and Clang on Linux,
 build all default targets, run tests, and validate exercise metadata. Formatting
 uses checked-in `.clang-format` configuration compatible with the documented
