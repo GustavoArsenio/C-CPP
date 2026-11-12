@@ -52,12 +52,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Configure sanitizers
-        run: cmake -S . -B build -DLEARNING_ENABLE_SANITIZERS=ON
-      - name: Build
-        run: cmake --build build --parallel
-      - name: Test
-        run: ctest --test-dir build --output-on-failure
+      - name: Install OpenSSL development files
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev
+      - name: Configure C and C++ sanitizers with optional targets
+        run: >-
+          cmake -S . -B build/sanitizers -DBUILD_TESTING=ON
+          -DLEARNING_ENABLE_SANITIZERS=ON
+          -DLEARNING_BUILD_POSIX_NETWORKING=ON
+          -DLEARNING_BUILD_OPENSSL_EXAMPLES=ON
+      - name: Build sanitized examples and tests
+        run: cmake --build build/sanitizers --parallel
+      - name: Test sanitized examples and tests
+        run: ctest --test-dir build/sanitizers --output-on-failure
 
   optional-examples:
     runs-on: ubuntu-latest
