@@ -53,9 +53,11 @@ Priorities are based on the remaining requirements in the refactor brief.
   error-handling comparisons for APIs with different failure models.
 - Add data structures and algorithms with complexity discussions and boundary
   tests.
-- Expand the sorting benchmark with larger datasets, additional algorithms,
-  order-balanced runs, and reruns on native (non-WSL) machines. The current
-  harness already covers random, sorted, reverse, and duplicate-heavy inputs.
+- The sorting harness now supports multi-size sweeps and deterministic cyclic
+  run-order balancing for `qsort`, `std::sort`, and `std::stable_sort` across
+  random, sorted, reverse, and duplicate-heavy inputs. Run larger workloads
+  and collect a fresh result on native (non-WSL) machines; the checked-in WSL
+  result predates the balanced schedule.
 - Add sanitizer and static-analysis coverage for optional targets and project
   code.
 - Add contribution and learning documentation in Portuguese and English.
