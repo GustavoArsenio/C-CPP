@@ -36,6 +36,7 @@ Priorities are based on the remaining requirements in the refactor brief.
 ## P1 — broaden engineering coverage
 
 - The historical card renderer is migrated as a portable C17 library module and CLI. Golden and unit tests verify 12 rows of 19 columns, newline/NUL termination, all 40 enum combinations, and invalid lower/upper enum values with unchanged output. CLI catalog smoke cases cover valid, invalid, and missing input. The byte-preserved `card-values.txt` and `card-suits.txt` remain historical-only fixtures; the renderer uses canonical enums directly.
+- Paired C17/C++20 line-count lessons now share byte-wise LF semantics and boundary tests, while comparing `FILE *` cleanup with `std::ifstream` RAII. Read/close failure branches are implemented but not injected by the portable test harness.
 - Legacy fixture associations are recorded in the migration map: the 1–144
   values in `Lista_2/Entrada.txt` are a shared raw matrix payload for Lista 2
   ex10/ex13, while `C++/in.txt` remains historical-only because its old menu

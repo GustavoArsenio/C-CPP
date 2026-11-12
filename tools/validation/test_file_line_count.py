@@ -45,8 +45,31 @@ def main() -> int:
             raise SystemExit("empty path must fail with a diagnostic")
 
         overlong_path = run(args.executable, "x" * 1023 + "\n")
-        if overlong_path.returncode != 1 or "too long" not in overlong_path.stderr:
+        if (overlong_path.returncode != 1 or
+                "error: file path is too long" not in overlong_path.stderr):
             raise SystemExit("overlong path must fail with a diagnostic")
+
+        for length, ending in ((1021, "\n"), (1022, "\n"),
+                               (1021, "\r\n"), (1022, "\r\n"),
+                               (1022, "")):
+            boundary = run(args.executable, "x" * length + ending)
+            if (boundary.returncode != 1 or
+                    not boundary.stderr.startswith(
+                        "error: cannot open file") or boundary.stdout):
+                raise SystemExit(
+                    f"{length}-byte path with {ending!r} must reach open: "
+                    f"{boundary}"
+                )
+
+        for ending in ("\n", "\r\n", ""):
+            overlong = run(args.executable, "x" * 1023 + ending)
+            if (overlong.returncode != 1 or
+                    "error: file path is too long" not in overlong.stderr or
+                    overlong.stdout):
+                raise SystemExit(
+                    f"1023-byte path with {ending!r} must be rejected: "
+                    f"{overlong}"
+                )
 
     print("PASS file line count boundaries and errors")
     return 0

@@ -43,7 +43,7 @@ erase educational provenance.
 | `beginner/strings/01-dup.c`, `intermidiate/arrays/01-sum.c` | `tracks/c/04-arrays-strings/{strings,arrays}/` | MOVED; added missing stdio include; indexed in catalog. |
 | `intermidiate/memory/01-malloc.c`, `intermidiate/pointers/01-ptr.c` | `tracks/c/05-pointers-memory/{memory,pointers}/` | MOVED; indexed in the partial exercise catalog. |
 | `intermidiate/fileio/01-fileio.c` | `tracks/c/07-file-io/fileio/` | MOVED; indexed in the partial exercise catalog. |
-| New checked file line-count lesson | `tracks/c/07-file-io/line-count/01-count-lines.c` | ADDED as a C17 lesson; reads a path from standard input (LF, CRLF, or EOF terminated) and covers empty files, final unterminated lines, and open/read/close error handling. |
+| New paired file line-count lessons | `tracks/c/07-file-io/line-count/01-count-lines.c`, `tracks/cpp/09-modern-cpp/03-count-file-lines.cpp` | ADDED as C17 and C++20 lessons with one shared byte-wise LF contract, bounded path input, path terminator handling, empty/final unterminated files, checked counter overflow, and file cleanup/error handling. The shared harness covers readable files, open failures, and path boundaries; portable read/close failure injection is not included. |
 | `intermidiate/searching/01-search.c`, `intermidiate/sorting/01-qs.c` | `algorithms/{searching,sorting}/` | MOVED; added missing stdlib include; corrected description to identify standard `qsort`, not quicksort. |
 | `advanced/data-structures/01-btree.c` | `data-structures/trees/01-btree.c` | MOVED; now checks allocation and frees all nodes. |
 | `advanced/concurrency/05-queue.c` | `tracks/c/11-systems-programming/concurrency/05-queue.c` | MOVED and rewritten as a bounded blocking queue; build/run checked. |

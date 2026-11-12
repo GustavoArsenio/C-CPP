@@ -393,6 +393,11 @@ if(BUILD_TESTING)
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_file_line_count.py"
                          --executable
                          "$<TARGET_FILE:tracks_c_07-file-io_line-count_01-count-lines>")
+        add_test(NAME integration_cpp_file_line_count
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_file_line_count.py"
+                         --executable
+                         "$<TARGET_FILE:tracks_cpp_09-modern-cpp_03-count-file-lines>")
         get_property(learning_executables GLOBAL PROPERTY LEARNING_EXECUTABLES)
         foreach(target_name IN LISTS learning_executables)
             get_target_property(target_sources "${target_name}" SOURCES)
@@ -436,6 +441,9 @@ if(BUILD_TESTING)
         endforeach()
         set_tests_properties(
             smoke_tracks_c_07-file-io_line-count_01-count-lines
+            PROPERTIES WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+        set_tests_properties(
+            smoke_tracks_cpp_09-modern-cpp_03-count-file-lines
             PROPERTIES WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
     endif()
 endif()

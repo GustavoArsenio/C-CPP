@@ -523,7 +523,54 @@
       "references": [],
       "status": "tested",
       "source": "tracks/c/07-file-io/line-count/01-count-lines.c",
-      "validation": "Build the CMake target, run its smoke test and integration_file_line_count CTest."
+      "validation": "Build the CMake target, run its smoke test and integration_file_line_count CTest. Missing-file and path failures are exercised; OS-level read/close failures are not injected by the portable harness."
+    },
+    {
+      "id": "cpp-file-line-count",
+      "title": "Count lines with an input file stream",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "file I/O",
+        "RAII",
+        "EOF",
+        "error handling"
+      ],
+      "prerequisites": [
+        "cpp-unique-resource"
+      ],
+      "learning_objectives": [
+        "Use std::ifstream to manage a file resource with RAII",
+        "Check stream state after reading and explicitly closing a file",
+        "Count LF-delimited lines and a final unterminated line without overflow"
+      ],
+      "statement": "Read one file path from standard input and print the number of logical lines in that file. This C++20 counterpart to c-file-line-count uses std::ifstream in binary mode and the same byte-wise LF rules.",
+      "examples": [
+        {
+          "input": "tracks/c/07-file-io/line-count/fixtures/three-lines.txt\n",
+          "output": "3\n"
+        }
+      ],
+      "constraints": [
+        "The path is at most 1022 bytes and may end with LF, CRLF, or EOF.",
+        "Files are read as bytes; each LF terminates one logical line.",
+        "An empty file has zero lines; a nonempty final sequence without LF adds one line.",
+        "The count is printed as an unsigned decimal integer independent of locale."
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/09-modern-cpp/03-count-file-lines.cpp",
+      "validation": "Build the C++20 target; pass its catalog smoke test and integration_cpp_file_line_count CTest using the shared boundary harness. Missing-file and path failures are exercised; OS-level read/close failures are not injected by the portable harness.",
+      "acceptance_criteria": [
+        "Empty, newline-only, LF-terminated, and unterminated files are counted correctly.",
+        "LF, CRLF, and EOF-terminated path input are accepted; empty and overlong paths fail with stderr diagnostics and empty stdout.",
+        "Open, read, and close failures return status 1 with a stderr diagnostic and no useful stdout.",
+        "The file stream is closed on every exit path by RAII."
+      ],
+      "complexity": "O(n) time and O(1) extra space.",
+      "references": [
+        "tracks/c/07-file-io/line-count/01-count-lines.c",
+        "docs/language-comparisons/file-line-count.md"
+      ]
     },
     {
       "id": "c-fileio-echo-lines",
