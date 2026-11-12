@@ -3,11 +3,12 @@
 #include <vector>
 
 int main() {
-    std::vector<int> values{7, 2, 9, 1, 5};
+    std::vector<int> values{5, 3, 8, 1, 4};
     std::sort(values.begin(), values.end());
 
+    std::cout << "Sorted:";
     for (std::size_t index = 0; index < values.size(); ++index) {
-        std::cout << (index == 0 ? "" : " ") << values[index];
+        std::cout << ' ' << values[index];
     }
     std::cout << '\n';
 }

@@ -20,3 +20,6 @@ paths and verification status.
 
 For a file-I/O comparison with C, see
 [`file-line-count.md`](../language-comparisons/file-line-count.md).
+
+For a paired view of C `qsort` and C++ `std::sort`, see
+[`sorting.md`](../language-comparisons/sorting.md).

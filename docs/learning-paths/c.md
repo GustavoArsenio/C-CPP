@@ -17,3 +17,6 @@ that still needs implementation.
 
 The catalog is the canonical list. Do not infer that an empty curriculum area
 is complete merely because the directory structure exists.
+
+For a paired view of the C `qsort` interface and C++ `std::sort`, see
+[`sorting.md`](../language-comparisons/sorting.md).

@@ -3182,28 +3182,34 @@
       ],
       "learning_objectives": [
         "Provide a comparator compatible with qsort",
-        "Distinguish API contract from algorithm choice"
+        "Return comparison order without overflowing integer subtraction",
+        "Distinguish the qsort API contract from its implementation algorithm"
       ],
-      "statement": "Sort a small integer array with the standard library qsort function.",
+      "statement": "Sort the fixed integer array {5, 3, 8, 1, 4} with the C standard library qsort function and print the values in ascending order.",
       "examples": [
         {
           "input": "",
-          "output": "Sorted: 1 3 4 5 8 \n"
+          "output": "Sorted: 1 3 4 5 8\n"
         }
       ],
       "constraints": [
-        "Comparator must not overflow when comparing integers"
+        "The comparator returns a negative, zero, or positive result using relational comparisons, not subtraction.",
+        "Pass the element count and size of one array element to qsort."
       ],
+      "complexity": "C17 specifies no qsort comparison-complexity bound; algorithm and complexity depend on the C library implementation.",
       "status": "tested",
       "source": "algorithms/sorting/01-qs.c",
-      "validation": "Build target algorithms_sorting_01-qs",
+      "validation": "Run `cmake --build --preset default --target algorithms_sorting_01-qs` and `ctest --preset default --output-on-failure -R smoke_algorithms_sorting_01-qs`.",
       "acceptance_criteria": [
-        "The program builds with its declared C17 or C++20 target.",
-        "For valid examples, standard output matches the catalog exactly.",
-        "Constraint: Comparator must not overflow when comparing integers"
+        "The C17 target builds with the repository warning options.",
+        "The example output matches exactly, including spacing and final newline.",
+        "The comparator follows qsort's negative/zero/positive contract without integer subtraction.",
+        "The example makes no claim about qsort's internal algorithm or comparison complexity."
       ],
-      "complexity": null,
-      "references": []
+      "references": [
+        "docs/language-comparisons/sorting.md",
+        "benchmarks/README.md"
+      ]
     },
     {
       "id": "c-string-copy-bounded",
@@ -4320,28 +4326,32 @@
       ],
       "learning_objectives": [
         "Call a standard algorithm with an iterator range",
-        "Observe that sorting changes the vector order"
+        "Observe that sorting changes the vector order",
+        "Compare the type-safe iterator interface with C qsort"
       ],
-      "statement": "Sort a vector of integers in ascending order with std::sort and print it.",
+      "statement": "Sort the fixed vector {5, 3, 8, 1, 4} in ascending order with std::sort and print the result.",
       "examples": [
         {
           "input": "",
-          "output": "1 2 5 7 9\n"
+          "output": "Sorted: 1 3 4 5 8\n"
         }
       ],
       "constraints": [
-        "Use the C++ standard library algorithm"
+        "Use std::sort with the vector's iterator range."
       ],
+      "complexity": "O(n log n) comparisons, as required for std::sort in C++20.",
       "status": "tested",
       "source": "tracks/cpp/08-stl/02-sort-vector.cpp",
-      "validation": "Build and compare ascending sequence output",
+      "validation": "Run `cmake --build --preset default --target tracks_cpp_08-stl_02-sort-vector` and `ctest --preset default --output-on-failure -R smoke_tracks_cpp_08-stl_02-sort-vector`.",
       "acceptance_criteria": [
-        "The program builds with its declared C17 or C++20 target.",
-        "For valid examples, standard output matches the catalog exactly.",
-        "Constraint: Use the C++ standard library algorithm"
+        "The C++20 target builds with the repository warning options.",
+        "The example output matches the C example byte for byte.",
+        "The example calls std::sort with the half-open iterator range [begin, end)."
       ],
-      "complexity": null,
-      "references": []
+      "references": [
+        "docs/language-comparisons/sorting.md",
+        "benchmarks/README.md"
+      ]
     },
     {
       "id": "cpp-span-sum",
