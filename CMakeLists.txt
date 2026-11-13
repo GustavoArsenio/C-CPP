@@ -43,6 +43,8 @@ file(GLOB_RECURSE LEARNING_C_SOURCES CONFIGURE_DEPENDS
 add_library(int_stack STATIC data-structures/linear/int_stack.c)
 target_include_directories(int_stack PUBLIC
                            "${CMAKE_CURRENT_SOURCE_DIR}/data-structures/linear")
+add_library(string_counter STATIC data-structures/hash-based/string_counter.c)
+target_include_directories(string_counter PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 add_library(int_list STATIC data-structures/linear/int_list.c)
 target_include_directories(int_list PUBLIC
                            "${CMAKE_CURRENT_SOURCE_DIR}/data-structures/linear")
@@ -84,6 +86,7 @@ target_compile_definitions(matrix_operations PRIVATE MATRIX_OPERATIONS_NO_MAIN)
 target_include_directories(matrix_operations PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/tracks/c/10-algorithms/linear-algebra")
 if(MSVC)
+    target_compile_options(string_counter PRIVATE /W4)
     target_compile_options(int_vector PRIVATE /W4)
     target_compile_options(int_list PRIVATE /W4)
     target_compile_options(double_list PRIVATE /W4)
@@ -96,6 +99,7 @@ if(MSVC)
     target_compile_options(binary_search_tree PRIVATE /W4)
     target_compile_options(bounded_queue PRIVATE /W4)
 else()
+    target_compile_options(string_counter PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(int_vector PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(int_list PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(double_list PRIVATE -Wall -Wextra -Wpedantic)
@@ -109,6 +113,7 @@ else()
     target_compile_options(bounded_queue PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(string_counter PRIVATE -fanalyzer)
     target_compile_options(int_vector PRIVATE -fanalyzer)
     target_compile_options(binary_search_tree PRIVATE -fanalyzer)
     target_compile_options(bounded_queue PRIVATE -fanalyzer)
@@ -131,7 +136,9 @@ if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
 endif()
 
 foreach(source IN LISTS LEARNING_C_SOURCES)
-    if(source MATCHES "/data-structures/linear/(int_stack|int_list|char_stack|double_list|lista4_lists).c$" OR
+    if(source MATCHES "/data-structures/hash-based/string_counter.c$" OR
+       source MATCHES
+       "/data-structures/linear/(int_stack|int_list|char_stack|double_list|lista4_lists).c$" OR
        source MATCHES "/tracks/c/04-arrays-strings/arrays/int_vector.c$" OR
        source MATCHES "/data-structures/trees/binary_search_tree.c$" OR
        source MATCHES "/concurrency/bounded_queue.c$" OR
@@ -182,6 +189,12 @@ foreach(source IN LISTS LEARNING_C_SOURCES)
     endif()
     if(relative_source MATCHES "^data-structures/trees/01-btree[.]c$")
         target_link_libraries("${target_name}" PRIVATE binary_search_tree)
+    endif()
+    if(relative_source MATCHES
+       "^tracks/c/09-data-structures/hash-based/01-word-count[.]c$")
+        target_link_libraries("${target_name}" PRIVATE string_counter)
+        target_include_directories("${target_name}" PRIVATE
+                                   "${CMAKE_CURRENT_SOURCE_DIR}")
     endif()
     if(relative_source MATCHES "/concurrency/05-queue[.]c$")
         target_link_libraries("${target_name}" PRIVATE bounded_queue)
@@ -270,6 +283,19 @@ if(BUILD_TESTING)
                                -Wall -Wextra -Wpedantic)
     endif()
     add_test(NAME unit_cpp_unique_ptr_tree COMMAND test_cpp_unique_ptr_tree)
+
+    add_executable(test_string_counter tests/unit/test_string_counter.c)
+    target_link_libraries(test_string_counter PRIVATE string_counter)
+    if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        target_compile_options(test_string_counter PRIVATE -fanalyzer)
+    endif()
+    if(MSVC)
+        target_compile_options(test_string_counter PRIVATE /W4)
+    else()
+        target_compile_options(test_string_counter PRIVATE
+                               -Wall -Wextra -Wpedantic -Werror)
+    endif()
+    add_test(NAME unit_string_counter COMMAND test_string_counter)
 
     add_executable(test_int_vector tests/unit/test_int_vector.c)
     target_link_libraries(test_int_vector PRIVATE int_vector)

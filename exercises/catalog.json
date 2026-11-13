@@ -4406,31 +4406,46 @@
           "input": "-1\n",
           "output": "",
           "expected_exit_code": 1,
-          "checks": ["stdout_empty", "stderr_nonempty"]
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         },
         {
           "input": "10001\n",
           "output": "",
           "expected_exit_code": 1,
-          "checks": ["stdout_empty", "stderr_nonempty"]
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         },
         {
           "input": "",
           "output": "",
           "expected_exit_code": 1,
-          "checks": ["stdout_empty", "stderr_nonempty"]
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         },
         {
           "input": "3\n2 4\n",
           "output": "",
           "expected_exit_code": 1,
-          "checks": ["stdout_empty", "stderr_nonempty"]
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         },
         {
           "input": "2\n1 nope\n",
           "output": "",
           "expected_exit_code": 1,
-          "checks": ["stdout_empty", "stderr_nonempty"]
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         }
       ],
       "constraints": [
@@ -5136,6 +5151,83 @@
       ],
       "complexity": "O(1) time and O(1) space.",
       "references": []
+    },
+    {
+      "id": "c-hash-string-counter-word-count",
+      "title": "Count words with a C hash table",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "hash tables",
+        "open addressing",
+        "linear probing",
+        "strings"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Use open addressing to count exact strings",
+        "Compare C hash-table output ordering with C++ std::map"
+      ],
+      "statement": "Read whitespace-delimited tokens through EOF, count exact tokens with the reusable C string counter, and print each token and count in lexicographic order.",
+      "examples": [
+        {
+          "input": "pear apple banana apple",
+          "output": "apple 2\nbanana 1\npear 1\n"
+        },
+        {
+          "input": "apple Apple APPLE",
+          "output": "APPLE 1\nApple 1\napple 1\n"
+        },
+        {
+          "input": "word word, word. word,",
+          "output": "word 1\nword, 2\nword. 1\n"
+        },
+        {
+          "input": "\talpha\nalpha  beta\r\n",
+          "output": "alpha 2\nbeta 1\n"
+        },
+        {
+          "input": "",
+          "output": ""
+        },
+        {
+          "input": " \t\n",
+          "output": ""
+        },
+        {
+          "input": "final final",
+          "output": "final 2\n"
+        },
+        {
+          "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "output": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 1\n"
+        },
+        {
+          "input": "\u0000word",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": ["stdout_empty", "stderr_nonempty"]
+        }
+      ],
+      "constraints": [
+        "Tokens end at standard whitespace or EOF; no fixed token-length limit.",
+        "Preserve token bytes, case, and punctuation exactly; reject embedded NUL bytes because the public C API uses NUL-terminated keys.",
+        "The reusable table does not guarantee traversal order; the frontend sorts keys lexicographically.",
+        "Allocation and input errors report to stderr and exit nonzero."
+      ],
+      "acceptance_criteria": [
+        "Use data-structures/hash-based/string_counter.c for counting.",
+        "Use the read-only visitor and sort frontend references to match std::map lexicographic output.",
+        "Handle empty input, whitespace-only input, and EOF without a final newline.",
+        "Build the C17 target and pass unit_string_counter and its catalog smoke CTest."
+      ],
+      "complexity": "Expected O(n) counting time for n tokens, worst-case O(nu) with collisions for u distinct tokens; output ordering adds O(u log u) time and O(u) storage.",
+      "references": [],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/hash-based/01-word-count.c",
+      "validation": "cmake --preset default && cmake --build --preset default --target tracks_c_09-data-structures_hash-based_01-word-count test_string_counter && ctest --preset default -R \"unit_string_counter|smoke_tracks_c_09-data-structures_hash-based_01-word-count\""
     }
   ]
 }
