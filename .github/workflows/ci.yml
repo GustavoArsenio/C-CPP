@@ -23,13 +23,13 @@ jobs:
         run: ctest --test-dir build --output-on-failure
 
   formatting:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Install clang-format
-        run: sudo apt-get update && sudo apt-get install -y clang-format
+      - name: Install clang-format 18
+        run: sudo apt-get update && sudo apt-get install -y clang-format-18
       - name: Check formatting
-        run: clang-format --dry-run --Werror $(find tracks algorithms data-structures projects tests -type f \( -name '*.c' -o -name '*.cpp' \))
+        run: make format-check
 
   gcc-analysis:
     runs-on: ubuntu-latest

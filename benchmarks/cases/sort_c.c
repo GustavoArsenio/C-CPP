@@ -58,10 +58,10 @@ int main(int argc, char **argv) {
     }
     for (size_t index = 0; index < count; ++index) {
         seed = seed * UINT64_C(6364136223846793005) + 1;
-        int value = distribution == 3
-                        ? (int)(seed % 16)
-                        : (int)((seed >> 32) %
-                                (UINT64_C(2) * INT_MAX + 1)) - INT_MAX;
+        int value =
+            distribution == 3
+                ? (int)(seed % 16)
+                : (int)((seed >> 32) % (UINT64_C(2) * INT_MAX + 1)) - INT_MAX;
         if (distribution == 1) value = (int)index;
         if (distribution == 2) value = (int)(count - index);
         values[index] = value;
@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
     for (size_t index = 1; index < count; ++index) {
         if (values[index - 1] > values[index]) sorted = 0;
     }
-    printf("%" PRIu64 " %" PRIu64 " %d\n", elapsed,
-           checksum(values, count), sorted);
+    printf("%" PRIu64 " %" PRIu64 " %d\n", elapsed, checksum(values, count),
+           sorted);
     free(values);
 }
