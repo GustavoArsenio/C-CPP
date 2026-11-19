@@ -37,9 +37,9 @@ static uint64_t hash_key(const char *key) {
 
 /* Capacity is always a power of two. Linear probing checks string contents
  * after a hash match so collisions cannot merge distinct keys. */
-static struct probe_result find_slot(
-    const struct string_counter_entry *entries, size_t capacity,
-    const char *key, uint64_t hash) {
+static struct probe_result find_slot(const struct string_counter_entry *entries,
+                                     size_t capacity, const char *key,
+                                     uint64_t hash) {
     size_t index = (size_t)hash & (capacity - 1);
 
     for (size_t examined = 0; examined < capacity; ++examined) {

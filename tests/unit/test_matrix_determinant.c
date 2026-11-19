@@ -4,13 +4,13 @@
 
 #include "matrix-operations.h"
 
-#define CHECK(condition)                                                     \
-    do {                                                                      \
-        if (!(condition)) {                                                   \
-            fprintf(stderr, "check failed at %s:%d: %s\n", __FILE__,      \
-                    __LINE__, #condition);                                    \
-            exit(EXIT_FAILURE);                                              \
-        }                                                                     \
+#define CHECK(condition)                                                       \
+    do {                                                                       \
+        if (!(condition)) {                                                    \
+            fprintf(stderr, "check failed at %s:%d: %s\n", __FILE__, __LINE__, \
+                    #condition);                                               \
+            exit(EXIT_FAILURE);                                                \
+        }                                                                      \
     } while (0)
 
 static void expect_determinant(int size,

@@ -1,27 +1,30 @@
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "data-structures/hash-based/string_counter.h"
 
-#define CHECK(condition)                                                     \
-    do {                                                                      \
-        if (!(condition)) {                                                   \
-            fprintf(stderr, "check failed at %s:%d: %s\n", __FILE__,      \
-                    __LINE__, #condition);                                    \
-            exit(EXIT_FAILURE);                                              \
-        }                                                                     \
+#define CHECK(condition)                                                       \
+    do {                                                                       \
+        if (!(condition)) {                                                    \
+            fprintf(stderr, "check failed at %s:%d: %s\n", __FILE__, __LINE__, \
+                    #condition);                                               \
+            exit(EXIT_FAILURE);                                                \
+        }                                                                      \
     } while (0)
 
-static void expect_count(const struct string_counter *counter,
-                         const char *key, size_t expected) {
+static void expect_count(const struct string_counter *counter, const char *key,
+                         size_t expected) {
     size_t actual = SIZE_MAX;
     CHECK(string_counter_get(counter, key, &actual));
     CHECK(actual == expected);
 }
 
-struct visit_state { size_t seen; size_t total; };
+struct visit_state {
+    size_t seen;
+    size_t total;
+};
 static bool count_visit(const char *key, size_t count, void *context) {
     struct visit_state *state = context;
     CHECK(key != NULL);
@@ -31,7 +34,9 @@ static bool count_visit(const char *key, size_t count, void *context) {
     return true;
 }
 static bool stop_visit(const char *key, size_t count, void *context) {
-    (void)key; (void)count; (void)context;
+    (void)key;
+    (void)count;
+    (void)context;
     return false;
 }
 
