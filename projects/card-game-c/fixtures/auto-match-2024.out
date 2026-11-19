@@ -1,0 +1,45 @@
+seed=2024
+Policy: weakest card, no raises, accept at 11; iron hand awards one point; player 0 leads each hand and trick.
+hand=1 kind=normal vira=J/hearts manilha=K stake=1
+hand_winner=1 score=0-1
+hand=2 kind=normal vira=3/spades manilha=4 stake=1
+hand_winner=1 score=0-2
+hand=3 kind=normal vira=2/hearts manilha=3 stake=1
+hand_winner=0 score=1-2
+hand=4 kind=normal vira=5/clubs manilha=6 stake=1
+hand_winner=0 score=2-2
+hand=5 kind=normal vira=Q/hearts manilha=J stake=1
+hand_winner=0 score=3-2
+hand=6 kind=normal vira=K/clubs manilha=A stake=1
+hand_winner=0 score=4-2
+hand=7 kind=normal vira=7/clubs manilha=Q stake=1
+hand_winner=1 score=4-3
+hand=8 kind=normal vira=6/diamonds manilha=7 stake=1
+hand_winner=0 score=5-3
+hand=9 kind=normal vira=Q/clubs manilha=J stake=1
+hand_winner=0 score=6-3
+hand=10 kind=normal vira=A/diamonds manilha=2 stake=1
+hand_winner=0 score=7-3
+hand=11 kind=normal vira=K/diamonds manilha=A stake=1
+hand_winner=1 score=7-4
+hand=12 kind=normal vira=5/hearts manilha=6 stake=1
+hand_winner=1 score=7-5
+hand=13 kind=normal vira=2/diamonds manilha=3 stake=1
+hand_winner=1 score=7-6
+hand=14 kind=normal vira=2/spades manilha=3 stake=1
+hand_winner=1 score=7-7
+hand=15 kind=normal vira=Q/hearts manilha=J stake=1
+hand_winner=0 score=8-7
+hand=16 kind=normal vira=5/diamonds manilha=6 stake=1
+hand_winner=0 score=9-7
+hand=17 kind=normal vira=K/diamonds manilha=A stake=1
+hand_winner=0 score=10-7
+hand=18 kind=normal vira=4/spades manilha=5 stake=1
+hand_winner=1 score=10-8
+hand=19 kind=normal vira=6/hearts manilha=7 stake=1
+hand_winner=0 score=11-8
+hand=20 kind=normal vira=Q/clubs manilha=J stake=3
+hand_winner=1 score=11-11
+hand=21 kind=iron vira=4/diamonds manilha=5 stake=1
+hand_winner=0 score=12-11
+match_winner=0 final_score=12-11 hands=21

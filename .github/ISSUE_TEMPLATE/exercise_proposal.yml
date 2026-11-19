@@ -1,0 +1,21 @@
+name: Exercise proposal
+description: Propose an exercise with a defined learning outcome.
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Proposed title and language
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Learning objectives and prerequisites
+    validations:
+      required: true
+  - type: textarea
+    id: statement
+    attributes:
+      label: Problem statement, examples, and constraints
+    validations:
+      required: true
