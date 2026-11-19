@@ -37,7 +37,15 @@ results.
 
 ## Local validation
 
+Formatting requires Python 3, Git, and clang-format 18. On Ubuntu 24.04,
+install the formatter with `sudo apt-get install clang-format-18`. CI pins
+that Ubuntu release and formatter major version and runs the same
+`make format-check` command as local validation. The check covers tracked
+C/C++ sources and headers in `tracks`, `algorithms`, `data-structures`,
+`projects`, `tests`, `comparisons`, and `benchmarks`.
+
 ```sh
+make format-check
 cmake -S . -B build
 cmake --build build --parallel
 ctest --test-dir build --output-on-failure
@@ -45,10 +53,27 @@ python3 tools/validation/catalog.py
 git diff --check
 ```
 
+Use `make format` to apply the style before checking. If clang-format 18 has
+a different executable name, use `make format-check CLANG_FORMAT=clang-format`
+(or the same override with `make format`); other major versions are rejected.
+New source files must be added to Git's index to enter the formatting scope.
+
 Use `cmake --preset sanitized` when GCC/Clang sanitizer support is available,
 or configure with `-DLEARNING_ENABLE_GCC_ANALYZER=ON` for GCC's C static
 analyzer. `-DLEARNING_ENABLE_CLANG_TIDY=ON` requires `clang-tidy` on PATH and
-analyzes both C and C++ targets.
+analyzes both C and C++ targets with the checked-in `clang-analyzer-*` profile.
+The Ubuntu CI job is configured to report this baseline without treating
+warnings as errors; review its diagnostics before expanding checks or making
+warnings blocking. To run the same profile locally:
+
+```sh
+cmake -S . -B build/clang-tidy -G Ninja \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
+  -DLEARNING_ENABLE_CLANG_TIDY=ON
+cmake --build build/clang-tidy --parallel
+```
+
 If a tool or platform feature is unavailable, report it and the affected
 checks. CI currently builds with GCC and Clang on Linux.
 

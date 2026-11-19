@@ -5,48 +5,40 @@ from collections import Counter
 import json
 from pathlib import Path
 import sys
+from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[2]
 CATALOG = ROOT / "exercises" / "catalog.json"
 REQUIRED_FIELDS = {
-    "id",
-    "title",
-    "language",
-    "difficulty",
-    "topics",
-    "prerequisites",
-    "learning_objectives",
-    "statement",
-    "examples",
-    "constraints",
-    "status",
-    "source",
-    "validation",
-    "acceptance_criteria",
-    "complexity",
-    "references",
+    "id", "title", "language", "difficulty", "topics", "prerequisites",
+    "learning_objectives", "statement", "examples", "constraints", "status",
+    "source", "validation", "acceptance_criteria", "complexity", "references",
 }
 LANGUAGES = {"C", "C++"}
 DIFFICULTIES = {"beginner", "intermediate", "advanced"}
 STATUSES = {"planned", "scaffolded", "implemented", "tested", "reviewed"}
+EXAMPLE_CHECKS = {"stdout_empty", "stderr_nonempty", "unique_cards_per_player"}
+STRING_FIELDS = ("id", "title", "language", "difficulty", "statement",
+                 "status", "validation")
+ARRAY_STRING_FIELDS = ("topics", "prerequisites", "learning_objectives",
+                       "constraints", "references")
 
 
-def main() -> int:
-    try:
-        catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
-        print(f"catalog error: {error}", file=sys.stderr)
-        return 1
-
-    exercises = catalog.get("exercises")
-    if catalog.get("schema_version") != 1 or not isinstance(exercises, list):
-        print("catalog error: expected schema_version 1 and exercises array",
-              file=sys.stderr)
-        return 1
+def validate_catalog(data: Any, root: Path = ROOT) -> list[str]:
+    """Return deterministic diagnostics for malformed catalog data."""
+    if not isinstance(data, dict):
+        return ["catalog must be an object"]
+    version = data.get("schema_version")
+    exercises = data.get("exercises")
+    if type(version) is not int or version != 1:
+        return ["schema_version must be integer 1"]
+    if not isinstance(exercises, list):
+        return ["exercises must be an array"]
 
     errors: list[str] = []
     identifiers: set[str] = set()
+    root_path = Path(root).resolve()
     for index, exercise in enumerate(exercises):
         prefix = f"exercises[{index}]"
         if not isinstance(exercise, dict):
@@ -57,75 +49,120 @@ def main() -> int:
             errors.append(f"{prefix} missing fields: {', '.join(sorted(missing))}")
             continue
 
+        for key in STRING_FIELDS:
+            if not isinstance(exercise[key], str) or not exercise[key]:
+                errors.append(f"{prefix}.{key} must be a non-empty string")
         identifier = exercise["id"]
-        if not isinstance(identifier, str) or not identifier:
-            errors.append(f"{prefix}.id must be a non-empty string")
-        elif identifier in identifiers:
-            errors.append(f"duplicate exercise id: {identifier}")
-        else:
-            identifiers.add(identifier)
+        if isinstance(identifier, str) and identifier:
+            if identifier in identifiers:
+                errors.append(f"duplicate exercise id: {identifier}")
+            else:
+                identifiers.add(identifier)
 
-        if exercise["language"] not in LANGUAGES:
-            errors.append(f"{prefix}.language is unsupported")
-        if exercise["difficulty"] not in DIFFICULTIES:
-            errors.append(f"{prefix}.difficulty is unsupported")
-        if exercise["status"] not in STATUSES:
-            errors.append(f"{prefix}.status is unsupported")
+        for key, choices in (("language", LANGUAGES),
+                             ("difficulty", DIFFICULTIES),
+                             ("status", STATUSES)):
+            value = exercise[key]
+            if isinstance(value, str) and value not in choices:
+                errors.append(f"{prefix}.{key} is unsupported")
 
-        for key in ("topics", "prerequisites", "learning_objectives",
-                    "examples", "constraints"):
-            if not isinstance(exercise[key], list):
+        for key in ARRAY_STRING_FIELDS:
+            value = exercise[key]
+            if not isinstance(value, list):
                 errors.append(f"{prefix}.{key} must be an array")
-        if isinstance(exercise["examples"], list):
-            for example_index, example in enumerate(exercise["examples"]):
+            elif any(not isinstance(item, str) or not item for item in value):
+                errors.append(f"{prefix}.{key} must contain non-empty strings")
+
+        criteria = exercise["acceptance_criteria"]
+        if (not isinstance(criteria, list) or not criteria or
+                any(not isinstance(item, str) or not item for item in criteria)):
+            errors.append(
+                f"{prefix}.acceptance_criteria must contain non-empty strings")
+        source = exercise["source"]
+        status = exercise["status"]
+        # The existing catalog uses null for a few unstarted exercises.
+        # Accept that legacy spelling only where an empty source is allowed.
+        legacy_empty_source = (source is None and status in {"planned", "scaffolded"}
+                               if isinstance(status, str) else False)
+        if not isinstance(source, str) and not legacy_empty_source:
+            errors.append(f"{prefix}.source must be a string")
+        if (exercise["complexity"] is not None and
+                not isinstance(exercise["complexity"], str)):
+            errors.append(f"{prefix}.complexity must be a string or null")
+
+        if (status in {"implemented", "tested", "reviewed"}
+                if isinstance(status, str) else False) and not source:
+            errors.append(f"{prefix}.source is required for implemented work")
+        elif isinstance(source, str) and source:
+            try:
+                source_path = (root_path / source).resolve()
+                inside_root = source_path == root_path or root_path in source_path.parents
+            except (OSError, RuntimeError, ValueError):
+                inside_root = False
+                source_path = root_path
+            if not inside_root or not source_path.is_file():
+                errors.append(f"{prefix}.source does not exist inside repository")
+        elif (((isinstance(source, str) and source == "") or legacy_empty_source)
+              and isinstance(status, str)
+              and status not in {"planned", "scaffolded"}):
+            # The status-specific diagnostic above is sufficient for known
+            # implemented statuses; invalid statuses also require a source.
+            if status not in STATUSES:
+                errors.append(f"{prefix}.source must be non-empty for this status")
+
+        examples = exercise["examples"]
+        if not isinstance(examples, list):
+            errors.append(f"{prefix}.examples must be an array")
+        else:
+            for example_index, example in enumerate(examples):
                 example_prefix = f"{prefix}.examples[{example_index}]"
                 if not isinstance(example, dict):
                     errors.append(f"{example_prefix} must be an object")
                     continue
-                if not ("input" in example or "input_file" in example):
-                    errors.append(f"{example_prefix} needs input or input_file")
-                if not ("output" in example or "output_file" in example):
-                    errors.append(f"{example_prefix} needs output or output_file")
+                for inline_key, file_key in (("input", "input_file"),
+                                             ("output", "output_file")):
+                    has_inline = inline_key in example
+                    has_file = file_key in example
+                    if has_inline == has_file:
+                        errors.append(
+                            f"{example_prefix} needs exactly one of "
+                            f"{inline_key} or {file_key}")
+                    if has_inline and not isinstance(example[inline_key], str):
+                        errors.append(f"{example_prefix}.{inline_key} must be a string")
+                    if has_file and (not isinstance(example[file_key], str) or
+                                     not example[file_key]):
+                        errors.append(
+                            f"{example_prefix}.{file_key} must be a non-empty string")
                 if ("expected_exit_code" in example and
-                        not isinstance(example["expected_exit_code"], int)):
-                    errors.append(f"{example_prefix}.expected_exit_code must be an integer")
-        if not isinstance(exercise["statement"], str) or not exercise["statement"]:
-            errors.append(f"{prefix}.statement must be non-empty")
-        criteria = exercise["acceptance_criteria"]
-        if (not isinstance(criteria, list) or not criteria or
-                not all(isinstance(item, str) and item for item in criteria)):
-            errors.append(f"{prefix}.acceptance_criteria must contain text")
-        if (exercise["complexity"] is not None and
-                not isinstance(exercise["complexity"], str)):
-            errors.append(f"{prefix}.complexity must be text or null")
-        if not isinstance(exercise["references"], list):
-            errors.append(f"{prefix}.references must be an array")
-
-        source = exercise["source"]
-        if (exercise["status"] in {"implemented", "tested", "reviewed"} and
-                not source):
-            errors.append(f"{prefix}.source is required for implemented work")
-        if source:
-            source_path = (ROOT / source).resolve()
-            if ROOT not in source_path.parents or not source_path.is_file():
-                errors.append(f"{prefix}.source does not exist inside repository")
+                        (type(example["expected_exit_code"]) is not int)):
+                    errors.append(
+                        f"{example_prefix}.expected_exit_code must be an integer")
+                checks = example.get("checks")
+                if "checks" in example:
+                    if not isinstance(checks, list):
+                        errors.append(f"{example_prefix}.checks must be an array")
+                    elif any(not isinstance(check, str) or check not in EXAMPLE_CHECKS
+                             for check in checks):
+                        errors.append(f"{example_prefix}.checks contains unknown checks")
 
     for exercise in exercises:
         if not isinstance(exercise, dict):
             continue
-        for prerequisite in exercise.get("prerequisites", []):
-            if prerequisite not in identifiers:
+        prerequisites = exercise.get("prerequisites")
+        if not isinstance(prerequisites, list):
+            continue
+        identifier = exercise.get("id")
+        for prerequisite in prerequisites:
+            if (isinstance(prerequisite, str) and
+                    prerequisite not in identifiers):
                 errors.append(
-                    f"{exercise.get('id', '<unknown>')} has unknown prerequisite "
-                    f"{prerequisite}"
-                )
+                    f"{identifier if isinstance(identifier, str) else '<unknown>'} "
+                    f"has unknown prerequisite {prerequisite}")
+    return errors
 
-    if errors:
-        print("Catalog validation failed:", file=sys.stderr)
-        for error in errors:
-            print(f"- {error}", file=sys.stderr)
-        return 1
 
+def print_summary(exercises: list[dict[str, Any]]) -> None:
+    """Print the stable derived totals for a valid catalog."""
     print(f"Exercises: {len(exercises)}")
     for label, key in (("Language", "language"),
                        ("Difficulty", "difficulty"),
@@ -136,6 +173,22 @@ def main() -> int:
     topic_counts = Counter(topic for item in exercises for topic in item["topics"])
     print("Topics: " + ", ".join(
         f"{name}={topic_counts[name]}" for name in sorted(topic_counts)))
+
+
+def main() -> int:
+    try:
+        catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        print(f"catalog error: {error}", file=sys.stderr)
+        return 1
+
+    errors = validate_catalog(catalog, ROOT)
+    if errors:
+        print("catalog error: validation failed", file=sys.stderr)
+        for error in errors:
+            print(f"- {error}", file=sys.stderr)
+        return 1
+    print_summary(catalog["exercises"])
     return 0
 
 

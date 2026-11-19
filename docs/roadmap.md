@@ -8,8 +8,12 @@ Priorities are based on the remaining requirements in the refactor brief.
 - The bounded matrix collection now has a repeated interactive menu for add,
   appended sum/product, factorial, selected determinant/transpose, display,
   and exit. Determinant, addition, multiplication, transpose and factorial have
-  catalog examples, including exact determinant
-  output for 1x1 through 8x8 integer matrices. The Truco engine and
+  catalog examples. Determinants use exact integer arithmetic; an independent
+  arbitrary-precision oracle checks all sizes 1x1 through 8x8, including a
+  near-cancellation case where binary64 partial-pivoting elimination returns
+  zero for a determinant of one. The unit test now preserves that regression
+  even in Release builds, where standard `assert` checks are disabled. The
+  Truco engine and
   interactive frontend now implement face-down plays after trick one and
   opaque partner signals under documented policies. The seeded automatic and
   user-controlled matches share the tested hand, wager, and score-to-12 engine.
@@ -21,9 +25,12 @@ Priorities are based on the remaining requirements in the refactor brief.
   teaches function parameters, return status, output pointers, and separate
   header/source compilation. File line counting covers lifecycle, LF/CRLF/EOF
   path input, and unterminated final lines.
-- The C++ track has 13 tested lesson sources, including a generic maximum
-  function template, RAII, classes, overloads, `std::sort`, and exception-based
+- The C++ track has 19 tested lesson sources, including a generic maximum
+  function template, RAII, classes, overloads, `std::sort`, lambda-based
+  `std::copy_if`, Rule-of-Zero and `std::vector` ownership, and exception-based
   parsing. Advanced topics remain.
+- The C++ learning path now includes recursive binary-tree node counting with
+  move-only `std::unique_ptr` child ownership and a dedicated CTest unit test.
 - The binary search tree and bounded queue now have CTest unit coverage for
   ordering, duplicate insertion, empty/full states, FIFO draining, and close;
   queue tests avoid timing-dependent waits. Opaque stack/list APIs, Lista 4
@@ -37,20 +44,36 @@ Priorities are based on the remaining requirements in the refactor brief.
 
 - The historical card renderer is migrated as a portable C17 library module and CLI. Golden and unit tests verify 12 rows of 19 columns, newline/NUL termination, all 40 enum combinations, and invalid lower/upper enum values with unchanged output. CLI catalog smoke cases cover valid, invalid, and missing input. The byte-preserved `card-values.txt` and `card-suits.txt` remain historical-only fixtures; the renderer uses canonical enums directly.
 - Paired C17/C++20 line-count lessons now share byte-wise LF semantics and boundary tests, while comparing `FILE *` cleanup with `std::ifstream` RAII. Read/close failure branches are implemented but not injected by the portable test harness.
+- The C hash-based string counter and C++ `std::map` word-count lessons now share exact NUL-free text-token and lexicographic output behavior; the C table has owned keys, bounded linear probing, resize guarantees, and visitor unit coverage. Allocation failure is not injected.
 - The C `qsort` and C++ `std::sort` lessons now use the same dataset and byte-identical output, with API and complexity differences documented separately from benchmark observations.
+- The C `malloc`/`free` array lesson is now paired with a C++ `std::vector` Rule-of-Zero owner using the same data and output; allocation-failure handling is implemented, but that branch is not injected by the smoke suite.
 - Legacy fixture associations are recorded in the migration map: the 1–144
   values in `Lista_2/Entrada.txt` are a shared raw matrix payload for Lista 2
   ex10/ex13, while `C++/in.txt` remains historical-only because its old menu
   tokens do not satisfy the current one-based, unquoted-name protocol.
-- Add C/C++ paired examples for ownership, containers, and error handling
-  without duplicating canonical implementations; the sorting pair now exists.
+- Paired ownership and sorting examples now exist without custom algorithm
+  duplication.
+- A C opaque growable-vector API and a C++ `std::vector` lesson now share
+  input/output examples; C unit coverage checks API boundaries and capacity
+  growth. Allocator failure injection remains outside the portable suite.
+- Paired container examples now exist. A signed-integer parsing pair compares
+  C `errno`/end-pointer/status handling with C++ exceptions; add further
+  error-handling comparisons for APIs with different failure models.
 - Add data structures and algorithms with complexity discussions and boundary
   tests.
-- Expand the sorting benchmark with larger datasets, additional algorithms,
-  order-balanced runs, and reruns on native (non-WSL) machines. The current
-  harness already covers random, sorted, reverse, and duplicate-heavy inputs.
-- Add sanitizer and static-analysis coverage for optional targets and project
-  code.
+- The sorting harness now supports multi-size sweeps and deterministic cyclic
+  run-order balancing for `qsort`, `std::sort`, and `std::stable_sort` across
+  random, sorted, reverse, and duplicate-heavy inputs. Run larger workloads
+  and collect a fresh result on native (non-WSL) machines; the checked-in WSL
+  result predates the balanced schedule. JSON now also reports per-round
+  `qsort`/C++ timing ratios with zero-denominator handling and descriptive
+  medians; no significance or performance claim is inferred from them.
+- The GCC analyzer and sanitizer CI jobs now build standard and optional
+  POSIX/OpenSSL examples. GCC `-fanalyzer` covers C targets, including the
+  tree/queue libraries and tests; ASan/UBSan instruments configured C and C++
+  targets. Clang-Tidy CI is configured to report a low-noise
+  `clang-analyzer-*` baseline; review its diagnostics before expanding checks
+  or treating warnings as errors.
 - Add contribution and learning documentation in Portuguese and English.
 - The catalog is the authoritative backlog for planned and scaffolded
   exercises; run `python3 tools/validation/catalog.py` for current totals.

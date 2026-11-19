@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <chrono>
+#include <climits>
 #include <cstdint>
 #include <cstdlib>
 #include <iostream>
-#include <climits>
 #include <string>
 #include <vector>
 
@@ -31,10 +31,11 @@ int main(int argc, char **argv) {
     std::vector<int> values(count);
     for (int &value : values) {
         seed = seed * UINT64_C(6364136223846793005) + 1;
-        value = distribution == "duplicates"
-                    ? static_cast<int>(seed % 16)
-                    : static_cast<int>((seed >> 32) %
-                                        (UINT64_C(2) * INT_MAX + 1)) - INT_MAX;
+        value =
+            distribution == "duplicates"
+                ? static_cast<int>(seed % 16)
+                : static_cast<int>((seed >> 32) % (UINT64_C(2) * INT_MAX + 1)) -
+                      INT_MAX;
     }
     const std::string algorithm(argv[4]);
     if (distribution == "sorted") {

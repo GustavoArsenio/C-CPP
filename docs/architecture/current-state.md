@@ -89,7 +89,7 @@ matrix, linked-list, regression, and card projects require focused review and
 should not be compiled as a single translation unit.
 
 No C++ implementation exists in the historical source inventory. The migrated
-tree has a separate C++20 track with 13 tested lesson sources; it continues to
+tree has a separate C++20 track with 19 tested lesson sources; it continues to
 expand independently rather than relabeling historical C examples.
 
 ## Initial architectural recommendation
@@ -127,10 +127,10 @@ reproduce its original renderer. It has automatic and user-controlled matches,
 with explicit policies for rules omitted by the assignment. The C++ track has
 lessons across six topics; unit coverage exercises the linked stacks and Truco
 state machine. Several legacy fixtures and the historical card renderer still
-need explicit disposition. A reproducible sorting comparison covers four
-distributions and records environment metadata, but the suite still lacks
-larger datasets, additional algorithms, and native non-WSL measurements. CI checks
-GCC/Clang builds, optional OpenSSL/POSIX examples, smoke tests, formatting,
+need explicit disposition. The sorting harness covers four distributions,
+supports multiple dataset sizes, and balances implementation order; the
+checked-in WSL result predates that schedule, and native non-WSL measurements
+remain pending. CI checks GCC/Clang builds, optional OpenSSL/POSIX examples, smoke tests, formatting,
 GCC analysis, and sanitizers. Locally, LeakSanitizer requires
 `ASAN_OPTIONS=detect_leaks=0` because the sandbox runs under ptrace; address
 and undefined-behavior checks pass with that setting. See

@@ -20,7 +20,8 @@ struct queue {
 /* Initialize once; destroy only after all users have stopped. */
 int queue_init(struct queue *queue);
 void queue_destroy(struct queue *queue);
-/* Operations block while full/empty; return 0 after close or for bad pointers. */
+/* Operations block while full/empty; return 0 after close or for bad pointers.
+ */
 int enqueue(struct queue *queue, int value);
 int dequeue(struct queue *queue, int *value);
 void queue_close(struct queue *queue);

@@ -134,9 +134,6 @@
         {
           "input": "1\n1\n1\n",
           "output": "",
-          "checks": [
-            "unique_cards_per_player"
-          ],
           "expected_exit_code": 1
         }
       ],
@@ -762,6 +759,114 @@
       "status": "tested",
       "source": "tracks/c/03-functions/01-min-max.c",
       "validation": "cmake --build build --target tracks_c_03-functions_01-min-max test_int_min_max && ctest --test-dir build -R \"unit_int_min_max|smoke_tracks_c_03-functions_01-min-max\" --output-on-failure"
+    },
+    {
+      "id": "c-function-parse-integer",
+      "title": "Parse a signed decimal integer with strtoimax",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "input validation",
+        "errno",
+        "strtoimax",
+        "range checking",
+        "error handling"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Validate a signed decimal grammar before conversion",
+        "Use errno and the end pointer to detect conversion failures",
+        "Return explicit parse statuses for invalid and out-of-range values"
+      ],
+      "statement": "Read one bounded line and parse a signed decimal int. Distinguish invalid syntax from a value outside the range of int.",
+      "examples": [
+        {
+          "input": "-42\n",
+          "output": "value=-42\n"
+        },
+        {
+          "input": "+42\n",
+          "output": "value=42\n"
+        },
+        {
+          "input": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n",
+          "output": "value=1\n"
+        },
+        {
+          "input": "-7",
+          "output": "value=-7\n"
+        },
+        {
+          "input": "\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "+\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "12x\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": " 42\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "42 \n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "\u000042\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "999999999999999999999999999999\n",
+          "output": "error: integer out of range\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        }
+      ],
+      "constraints": [
+        "Read one line of at most 128 bytes, excluding the newline; consume and reject a longer line.",
+        "Accept an optional ASCII sign followed by one or more ASCII decimal digits; reject whitespace and suffixes.",
+        "EOF before any bytes, an empty line, or an embedded NUL is invalid; a valid final line need not end in newline.",
+        "A syntactically valid value outside the host int range is an out-of-range error.",
+        "Invalid syntax prints error: invalid integer and exits 1; range errors print error: integer out of range and exit 1."
+      ],
+      "acceptance_criteria": [
+        "The C17 program builds with repository warning options and uses only standard C facilities.",
+        "Input lines of exactly 128 bytes are evaluated; lines of 129 bytes are fully consumed and rejected.",
+        "Grammar validation runs before strtoimax; errno is reset and ERANGE is checked.",
+        "The end pointer must consume the entire line, and the parsed intmax_t is checked against INT_MIN and INT_MAX before conversion.",
+        "All catalog cases produce the exact stdout and exit code; parse failures do not write to stderr.",
+        "EOF-terminated valid input and both invalid-syntax and out-of-range paths are covered."
+      ],
+      "complexity": "O(n) time for a line of n bytes and O(1) auxiliary space.",
+      "references": [
+        "tracks/cpp/09-modern-cpp/01-parse-integer.cpp",
+        "docs/language-comparisons/error-handling.md"
+      ],
+      "status": "tested",
+      "source": "tracks/c/03-functions/02-parse-integer.c",
+      "validation": "Build tracks_c_03-functions_02-parse-integer and pass its catalog-driven CTest smoke cases."
     },
     {
       "id": "c-function-pointer-map",
@@ -2848,7 +2953,7 @@
       ],
       "status": "tested",
       "source": "tracks/c/10-algorithms/linear-algebra/01-matrix-operations.c",
-      "validation": "Build and compare determinant examples; unit tests cover exact 1x1–8x8 results, signed 32-bit edge values, dense full-range input, invalid API arguments, and unchanged output on failure.",
+      "validation": "Build and compare catalog examples; the unit test covers API boundaries and the integration test compares exact output for every size 1x1–8x8 with an independent arbitrary-precision integer oracle, including dense full-range and near-cancellation inputs.",
       "acceptance_criteria": [
         "Operation 5 computes determinants for square matrices of valid dimensions",
         "The output is exact for every supported matrix and does not use floating point",
@@ -2856,9 +2961,9 @@
         "Invalid dimensions or incomplete input exit with status 1",
         "The public determinant helper rejects null pointers and dimensions outside 1 through 8 without changing output."
       ],
-      "complexity": "O(n! * n) arithmetic operations and O(n) auxiliary storage; each exact accumulator uses a fixed nine 32-bit limbs",
+      "complexity": "O(n! * n^2) arithmetic operations because permutation parity is counted per term; O(n) recursion/permutation storage and fixed nine-limb exact accumulators",
       "references": [
-        "C++/algebra.c (historical determinant; algorithm details unspecified)"
+        "C++/algebra.c (historical recursive cofactor expansion returned int; supported dimensions and overflow limits were unspecified)"
       ]
     },
     {
@@ -2907,6 +3012,7 @@
       "difficulty": "intermediate",
       "topics": [
         "malloc",
+        "ownership",
         "allocation failure",
         "free"
       ],
@@ -2915,11 +3021,11 @@
         "c-foundations-basic-types"
       ],
       "learning_objectives": [
-        "Allocate dynamic storage",
-        "Check allocation",
-        "Release owned memory"
+        "Allocate storage for a fixed number of integers",
+        "Check allocation before accessing the returned pointer",
+        "Release the owned allocation exactly once with free"
       ],
-      "statement": "Allocate five integers, initialize them, sum them, and release the allocation.",
+      "statement": "Allocate five integers with malloc, initialize them to 1 through 5, print their sum, and release the allocation.",
       "examples": [
         {
           "input": "",
@@ -2927,57 +3033,129 @@
         }
       ],
       "constraints": [
-        "Allocation size must be expressed using sizeof"
+        "Use sizeof *values to calculate the allocation size.",
+        "Return status 1 with a stderr diagnostic if allocation fails."
       ],
       "status": "tested",
       "source": "tracks/c/05-pointers-memory/memory/01-malloc.c",
-      "validation": "Build target tracks_c_05-pointers-memory_memory_01-malloc",
+      "validation": "Build target tracks_c_05-pointers-memory_memory_01-malloc and pass its CTest smoke test. Allocation-failure injection is not part of the portable test.",
       "acceptance_criteria": [
-        "The program builds with its declared C17 or C++20 target.",
-        "For valid examples, standard output matches the catalog exactly.",
-        "Constraint: Allocation size must be expressed using sizeof"
+        "The C17 target builds with the repository warning options.",
+        "For the fixed five values, stdout is exactly `Sum = 15\\n`.",
+        "Allocation is checked before dereference and the successful allocation is freed once.",
+        "Allocation failure returns status 1 with a stderr diagnostic and no stdout."
       ],
-      "complexity": null,
-      "references": []
+      "complexity": "O(n) time and O(n) space for n integers.",
+      "references": [
+        "docs/language-comparisons/ownership.md"
+      ]
     },
     {
       "id": "c-modular-vector-api",
-      "title": "C Modular Vector Api",
+      "title": "Build a modular growable integer vector",
       "language": "C",
       "difficulty": "intermediate",
       "topics": [
         "headers",
         "modular programming",
-        "opaque types"
+        "opaque types",
+        "dynamic arrays",
+        "capacity growth"
       ],
       "prerequisites": [
         "c-lista3-linked-stack"
       ],
       "learning_objectives": [
-        "Understand headers",
-        "Understand modular programming",
-        "Understand opaque types"
+        "Use an opaque handle across separate header and implementation files",
+        "Grow storage geometrically while checking allocation-size overflow",
+        "Define ownership and error behavior for append, access, removal, and destruction"
       ],
-      "statement": "Create a growable integer-vector API in separate header and implementation files.",
+      "statement": "Implement an opaque integer-vector API in separate header and implementation files. Read a count and that many integers, append them, then print the count and values in insertion order.",
       "examples": [
         {
-          "input": "4 3 1 4 1\n",
-          "output": "3 1 4 1\n"
+          "input": "6 3 1 4 1 -2 9\n",
+          "output": "Count: 6, values: 3 1 4 1 -2 9\n"
+        },
+        {
+          "input": "0\n",
+          "output": "Count: 0, values:\n"
+        },
+        {
+          "input": "3 8 5\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "-1\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "999999999999999999999999999999999999999999999999\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "1 999999999999999999999999999999999999999999999999\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "3abc\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "1 5abc\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
         }
       ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "The handle is opaque; callers can access elements only through the API.",
+        "The caller destroys a successfully created vector exactly once.",
+        "Failed append leaves existing elements unchanged.",
+        "The CLI rejects malformed integer tokens, negative counts, out-of-range decimal counts or values, and missing values with status 1, a diagnostic, and no stdout."
       ],
       "acceptance_criteria": [
-        "The header compiles from a separate translation unit.",
-        "Capacity growth checks allocation and size overflow."
+        "The public header compiles from both the CLI and a separate unit-test translation unit.",
+        "Append grows capacity geometrically, checks multiplication and doubling overflow, and preserves the old allocation if realloc fails.",
+        "Access rejects out-of-range indices; pop rejects empty vectors and null output pointers.",
+        "Unit tests cover null handles, empty state, growth across multiple capacities, insertion order, indexed access, pop, and destruction.",
+        "CLI output matches the C++ vector example for nonempty and empty input."
       ],
       "complexity": "Amortized O(1) append; O(n) storage.",
-      "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "references": [
+        "docs/language-comparisons/containers.md",
+        "tracks/cpp/08-stl/03-dynamic-vector.cpp"
+      ],
+      "status": "tested",
+      "source": "tracks/c/04-arrays-strings/arrays/02-dynamic-int-vector.c",
+      "validation": "Build targets tracks_c_04-arrays-strings_arrays_02-dynamic-int-vector and test_int_vector; pass unit_int_vector and smoke_tracks_c_04-arrays-strings_arrays_02-dynamic-int-vector."
     },
     {
       "id": "c-opaque-counter-adt",
@@ -3921,30 +4099,74 @@
     },
     {
       "id": "cpp-exception-parse",
-      "title": "Cpp Exception Parse",
+      "title": "Parse a signed decimal integer with exceptions",
       "language": "C++",
       "difficulty": "intermediate",
       "topics": [
         "exceptions",
         "input validation",
-        "std::string"
+        "std::string",
+        "range checking",
+        "error handling"
       ],
       "prerequisites": [
         "cpp-string-view-parse"
       ],
       "learning_objectives": [
-        "Distinguish malformed input from an integer outside the int range",
+        "Validate signed decimal syntax before conversion",
         "Use std::stoi and verify complete input consumption",
-        "Catch exceptions at the program boundary"
+        "Distinguish invalid_argument from out_of_range at the program boundary"
       ],
-      "statement": "Read one line, parse a base-10 int, and report malformed input and range errors distinctly.",
+      "statement": "Read one bounded line and parse a signed decimal int. Distinguish invalid syntax from a value outside the range of int.",
       "examples": [
         {
           "input": "-42\n",
           "output": "value=-42\n"
         },
         {
+          "input": "+42\n",
+          "output": "value=42\n"
+        },
+        {
+          "input": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n",
+          "output": "value=1\n"
+        },
+        {
+          "input": "-7",
+          "output": "value=-7\n"
+        },
+        {
+          "input": "\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "+\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
           "input": "12x\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": " 42\n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "42 \n",
+          "output": "error: invalid integer\n",
+          "expected_exit_code": 1
+        },
+        {
+          "input": "\u000042\n",
           "output": "error: invalid integer\n",
           "expected_exit_code": 1
         },
@@ -3954,27 +4176,35 @@
           "expected_exit_code": 1
         },
         {
-          "input": "\n",
+          "input": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001\n",
           "output": "error: invalid integer\n",
           "expected_exit_code": 1
         }
       ],
       "constraints": [
-        "Read exactly one line as the input string.",
-        "Accept an optional sign followed by at least one base-10 digit.",
-        "Reject leading/trailing whitespace, trailing characters, and empty input."
+        "Read one line of at most 128 bytes, excluding the newline; consume and reject a longer line.",
+        "Accept an optional ASCII sign followed by one or more ASCII decimal digits; reject whitespace and suffixes.",
+        "EOF before any bytes, an empty line, or an embedded NUL is invalid; a valid final line need not end in newline.",
+        "A syntactically valid value outside the host int range is an out-of-range error.",
+        "Invalid syntax prints error: invalid integer and exits 1; range errors print error: integer out of range and exit 1."
       ],
       "acceptance_criteria": [
-        "Successful parsing consumes the entire line.",
-        "Malformed input reports error: invalid integer and exits with status 1.",
-        "Out-of-range input reports error: integer out of range and exits with status 1.",
-        "The program catches both standard parsing exception types."
+        "The C++20 target builds with the repository warning options.",
+        "The input reader stores at most 128 bytes while consuming an entire line, including overlong input.",
+        "Successful parsing consumes the entire line; malformed input reports error: invalid integer and exits 1.",
+        "Out-of-range input reports error: integer out of range and exits 1.",
+        "The program catches std::invalid_argument and std::out_of_range from std::stoi.",
+        "Allocation failure while storing input reports on stderr and exits 1 without stdout.",
+        "All shared catalog cases produce byte-identical output and exit status to the C implementation."
       ],
-      "complexity": "O(n) time and O(1) extra space.",
-      "references": [],
+      "complexity": "O(n) time and O(min(n, 128)) storage for a line of n bytes.",
+      "references": [
+        "tracks/c/03-functions/02-parse-integer.c",
+        "docs/language-comparisons/error-handling.md"
+      ],
       "status": "tested",
       "source": "tracks/cpp/09-modern-cpp/01-parse-integer.cpp",
-      "validation": "Build the C++20 target and run catalog smoke cases for valid, malformed, empty, and out-of-range input."
+      "validation": "Build tracks_cpp_09-modern-cpp_01-parse-integer and pass its catalog-driven CTest smoke cases."
     },
     {
       "id": "cpp-foundations-basic-types",
@@ -4154,21 +4384,88 @@
         "Understand std::copy_if",
         "Understand iterators"
       ],
-      "statement": "Copy even values from a vector using a lambda predicate and a standard algorithm.",
-      "examples": [],
+      "statement": "Read a count n followed by n signed integers. Copy the even values to a separate vector using std::copy_if and a capture-free lambda, then print them in input order on one line prefixed by `Even:`. Print `Even:` alone when no values qualify.",
+      "examples": [
+        {
+          "input": "0\n",
+          "output": "Even:\n"
+        },
+        {
+          "input": "6\n-3 -2 0 7 8 8\n",
+          "output": "Even: -2 0 8 8\n"
+        },
+        {
+          "input": "4\n1 3 5 7\n",
+          "output": "Even:\n"
+        },
+        {
+          "input": "3\n2 4 6\n",
+          "output": "Even: 2 4 6\n"
+        },
+        {
+          "input": "-1\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "10001\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "3\n2 4\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "2\n1 nope\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        }
+      ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "The first input value is n, with 0 <= n <= 10000.",
+        "Exactly n signed int values follow; all values must be representable as int.",
+        "Invalid, missing, or out-of-range input writes an error to stderr and exits with status 1."
       ],
       "acceptance_criteria": [
-        "The source vector remains unchanged.",
-        "The predicate captures no dangling references."
+        "Use std::copy_if with a capture-free lambda that selects values divisible by two.",
+        "Append selected values to a separate vector; do not modify the source vector.",
+        "Preserve input order and duplicate even values, including negative even values.",
+        "Print exactly one `Even:` line, including when the selected vector is empty.",
+        "Reject missing values and counts outside the inclusive range 0 through 10000.",
+        "Return status 0 for valid input and status 1 with a useful stderr message for invalid input."
       ],
-      "complexity": "O(n) time and O(k) output.",
+      "complexity": "O(n) time and O(n + k) storage including the source vector, where k values are even.",
       "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "status": "tested",
+      "source": "tracks/cpp/08-stl/05-lambda-filter.cpp",
+      "validation": "cmake --preset default && cmake --build --preset default --target tracks_cpp_08-stl_05-lambda-filter && ctest --preset default -R '^smoke_tracks_cpp_08-stl_05-lambda-filter$'"
     },
     {
       "id": "cpp-map-word-count",
@@ -4188,21 +4485,50 @@
         "Understand associative containers",
         "Understand strings"
       ],
-      "statement": "Count words in a sequence using std::map and print keys in sorted order.",
-      "examples": [],
+      "statement": "Read whitespace-delimited tokens through end-of-file, count each exact token with std::map<std::string, std::size_t>, and print each token and its count on one line. Preserve case and punctuation; the map determines lexicographic output order.",
+      "examples": [
+        {
+          "input": "pear apple banana apple",
+          "output": "apple 2\nbanana 1\npear 1\n"
+        },
+        {
+          "input": "apple Apple APPLE",
+          "output": "APPLE 1\nApple 1\napple 1\n"
+        },
+        {
+          "input": "word word, word. word,",
+          "output": "word 1\nword, 2\nword. 1\n"
+        },
+        {
+          "input": "\talpha\nalpha  beta\r\n",
+          "output": "alpha 2\nbeta 1\n"
+        },
+        {
+          "input": "",
+          "output": ""
+        },
+        {
+          "input": " \t\n",
+          "output": ""
+        }
+      ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "Read std::string values with std::cin >> word until end-of-file.",
+        "Whitespace separates tokens; preserve each token literally, including case and punctuation.",
+        "Print one `word count` line per distinct token, with a newline after each line.",
+        "Empty or whitespace-only input produces no output."
       ],
       "acceptance_criteria": [
-        "Words are counted case-sensitively.",
-        "Output order is lexicographic."
+        "Use std::map<std::string, std::size_t> for counting; do not sort entries afterward.",
+        "Token matching is exact and case-sensitive, and punctuation remains part of each token.",
+        "Print entries in the map’s lexicographic key order, exactly matching the examples.",
+        "Whitespace tokenization handles tabs, line endings, repeated spaces, and EOF without a final newline."
       ],
       "complexity": "O(n log u) time for n words and u unique words.",
       "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "status": "tested",
+      "source": "tracks/cpp/08-stl/04-map-word-count.cpp",
+      "validation": "cmake --preset default && cmake --build --preset default --target tracks_cpp_08-stl_04-map-word-count && ctest --preset default -R '^smoke_tracks_cpp_08-stl_04-map-word-count$'"
     },
     {
       "id": "cpp-point-class",
@@ -4279,37 +4605,50 @@
     },
     {
       "id": "cpp-rule-of-zero-owner",
-      "title": "Cpp Rule Of Zero Owner",
+      "title": "Own an integer sequence with the Rule of Zero",
       "language": "C++",
       "difficulty": "intermediate",
       "topics": [
         "RAII",
         "std::vector",
-        "rule of zero"
+        "rule of zero",
+        "ownership"
       ],
       "prerequisites": [
-        "cpp-point-class"
+        "cpp-stl-vector-iteration"
       ],
       "learning_objectives": [
-        "Understand RAII",
-        "Understand std::vector",
-        "Understand rule of zero"
+        "Represent owned integer storage as a std::vector member",
+        "Observe independent copying and ownership-preserving moves from compiler-generated special members",
+        "Sum the owned values with a standard algorithm"
       ],
-      "statement": "Create a value type that owns a sequence of integers using std::vector and needs no custom destructor or copy operations.",
-      "examples": [],
+      "statement": "Define a small aggregate value type containing std::vector<int>, initialize it with 1 through 5, and print the sum. Do not write custom destructor, copy, or move operations.",
+      "examples": [
+        {
+          "input": "",
+          "output": "Sum = 15\n"
+        }
+      ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "Use std::vector to own the integer storage; do not use raw owning pointers.",
+        "Catch std::bad_alloc and return status 1 with a stderr diagnostic."
       ],
       "acceptance_criteria": [
-        "No raw owning pointer is used.",
-        "Copy and move behavior follow the member type."
+        "The C++20 target builds with the repository warning options.",
+        "For the fixed five values, stdout is exactly `Sum = 15\\n`, matching the C example.",
+        "The aggregate has no custom destructor, copy constructor, or move constructor.",
+        "Changing a copied vector does not change the original; moving the copy preserves its value.",
+        "std::vector releases its storage automatically when the value leaves scope.",
+        "Allocation failure returns status 1 with a stderr diagnostic and no stdout."
       ],
-      "complexity": "O(n) copy; O(1) move for vector storage.",
-      "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "complexity": "O(n) time for the copy and sum; O(n) storage. The vector move constructor transfers the stored sequence in constant time.",
+      "references": [
+        "tracks/c/05-pointers-memory/memory/01-malloc.c",
+        "docs/language-comparisons/ownership.md"
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/09-modern-cpp/04-vector-ownership.cpp",
+      "validation": "Build target tracks_cpp_09-modern-cpp_04-vector-ownership and pass its CTest smoke test. Allocation-failure injection is not part of the portable test."
     },
     {
       "id": "cpp-sort-vector",
@@ -4386,6 +4725,111 @@
       "status": "planned",
       "source": "",
       "validation": "Implement the stated behavior and add executable boundary tests."
+    },
+    {
+      "id": "cpp-stl-dynamic-vector",
+      "title": "Build a sequence with std::vector",
+      "language": "C++",
+      "difficulty": "intermediate",
+      "topics": [
+        "std::vector",
+        "dynamic arrays",
+        "capacity growth",
+        "exceptions"
+      ],
+      "prerequisites": [
+        "cpp-stl-vector-iteration"
+      ],
+      "learning_objectives": [
+        "Append input values to a standard dynamic array",
+        "Read a vector through range-based iteration",
+        "Recognize vector allocation and length failures"
+      ],
+      "statement": "Read a count and that many integers, append them to std::vector<int>, then print the count and values in insertion order.",
+      "examples": [
+        {
+          "input": "6 3 1 4 1 -2 9\n",
+          "output": "Count: 6, values: 3 1 4 1 -2 9\n"
+        },
+        {
+          "input": "0\n",
+          "output": "Count: 0, values:\n"
+        },
+        {
+          "input": "3 8 5\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "-1\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "999999999999999999999999999999999999999999999999\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "1 999999999999999999999999999999999999999999999999\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "3abc\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        },
+        {
+          "input": "1 5abc\n",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": [
+            "stdout_empty",
+            "stderr_nonempty"
+          ]
+        }
+      ],
+      "constraints": [
+        "Use std::vector<int> and push_back; do not manually manage storage.",
+        "Reject malformed integer tokens, negative counts, out-of-range decimals, and incomplete input with status 1, a diagnostic, and no stdout.",
+        "Catch allocation and maximum-size failures from vector growth."
+      ],
+      "status": "tested",
+      "source": "tracks/cpp/08-stl/03-dynamic-vector.cpp",
+      "validation": "Build tracks_cpp_08-stl_03-dynamic-vector and pass its catalog-driven CTest smoke test.",
+      "acceptance_criteria": [
+        "The C++20 target builds with repository warning options.",
+        "The nonempty example preserves insertion order and exactly matches the C output.",
+        "Zero values produce a valid empty sequence output.",
+        "Malformed tokens, negative counts, and missing values return status 1 with stderr diagnostics and empty stdout.",
+        "std::vector owns and releases its storage through RAII."
+      ],
+      "complexity": "Amortized O(1) append and O(n) traversal; O(n) storage.",
+      "references": [
+        "docs/language-comparisons/containers.md",
+        "tracks/c/04-arrays-strings/arrays/02-dynamic-int-vector.c"
+      ]
     },
     {
       "id": "cpp-stl-vector-iteration",
@@ -4537,7 +4981,7 @@
     },
     {
       "id": "cpp-unique-ptr-tree",
-      "title": "Cpp Unique Ptr Tree",
+      "title": "Count nodes in a unique_ptr binary tree",
       "language": "C++",
       "difficulty": "intermediate",
       "topics": [
@@ -4551,23 +4995,34 @@
       "learning_objectives": [
         "Understand std::unique_ptr",
         "Understand RAII",
-        "Understand trees"
+        "Understand binary trees",
+        "Count nodes recursively without taking ownership of the root"
       ],
-      "statement": "Represent a binary tree with unique_ptr children and compute its node count recursively.",
-      "examples": [],
+      "statement": "Build a complete binary tree with seven integer-valued nodes using exclusive std::unique_ptr ownership, then print its node count. The reusable learning::trees::count_nodes API accepts a borrowed const root pointer.",
+      "examples": [
+        {
+          "input": "",
+          "output": "7\n"
+        }
+      ],
       "constraints": [
-        "Input and output formats are specified by the exercise statement.",
-        "The acceptance criteria define required boundary and ownership behavior."
+        "The lesson takes no input and prints exactly one line.",
+        "Each node stores an int and owns its children with std::unique_ptr.",
+        "count_nodes receives a borrowed const BinaryTreeNode pointer.",
+        "Counting and unique_ptr destruction use stack space proportional to tree height; extremely deep trees may exhaust the stack."
       ],
       "acceptance_criteria": [
-        "Ownership is exclusive and cleanup is automatic.",
-        "Empty trees report zero."
+        "A null root returns zero and a leaf returns one.",
+        "Left-only, right-only, balanced, and irregular trees are counted correctly.",
+        "The node type is move-only and moving a root preserves its count.",
+        "Destroying the root releases all child ownership through RAII.",
+        "The lesson prints exactly 7 followed by a newline."
       ],
       "complexity": "O(n) time and O(h) recursion space.",
       "references": [],
-      "status": "planned",
-      "source": "",
-      "validation": "Implement the stated behavior and add executable boundary tests."
+      "status": "tested",
+      "source": "tracks/cpp/09-modern-cpp/05-unique-ptr-tree.cpp",
+      "validation": "cmake --preset default; cmake --build --preset default --target tracks_cpp_09-modern-cpp_05-unique-ptr-tree test_cpp_unique_ptr_tree; ctest --test-dir build/default --output-on-failure -R 'unit_cpp_unique_ptr_tree|smoke_tracks_cpp_09-modern-cpp_05-unique-ptr-tree'; python3 tools/validation/catalog.py"
     },
     {
       "id": "cpp-unique-resource",
@@ -4696,6 +5151,83 @@
       ],
       "complexity": "O(1) time and O(1) space.",
       "references": []
+    },
+    {
+      "id": "c-hash-string-counter-word-count",
+      "title": "Count words with a C hash table",
+      "language": "C",
+      "difficulty": "intermediate",
+      "topics": [
+        "hash tables",
+        "open addressing",
+        "linear probing",
+        "strings"
+      ],
+      "prerequisites": [
+        "c-foundations-basic-types"
+      ],
+      "learning_objectives": [
+        "Use open addressing to count exact strings",
+        "Compare C hash-table output ordering with C++ std::map"
+      ],
+      "statement": "Read whitespace-delimited tokens through EOF, count exact tokens with the reusable C string counter, and print each token and count in lexicographic order.",
+      "examples": [
+        {
+          "input": "pear apple banana apple",
+          "output": "apple 2\nbanana 1\npear 1\n"
+        },
+        {
+          "input": "apple Apple APPLE",
+          "output": "APPLE 1\nApple 1\napple 1\n"
+        },
+        {
+          "input": "word word, word. word,",
+          "output": "word 1\nword, 2\nword. 1\n"
+        },
+        {
+          "input": "\talpha\nalpha  beta\r\n",
+          "output": "alpha 2\nbeta 1\n"
+        },
+        {
+          "input": "",
+          "output": ""
+        },
+        {
+          "input": " \t\n",
+          "output": ""
+        },
+        {
+          "input": "final final",
+          "output": "final 2\n"
+        },
+        {
+          "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "output": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 1\n"
+        },
+        {
+          "input": "\u0000word",
+          "output": "",
+          "expected_exit_code": 1,
+          "checks": ["stdout_empty", "stderr_nonempty"]
+        }
+      ],
+      "constraints": [
+        "Tokens end at standard whitespace or EOF; no fixed token-length limit.",
+        "Preserve token bytes, case, and punctuation exactly; reject embedded NUL bytes because the public C API uses NUL-terminated keys.",
+        "The reusable table does not guarantee traversal order; the frontend sorts keys lexicographically.",
+        "Allocation and input errors report to stderr and exit nonzero."
+      ],
+      "acceptance_criteria": [
+        "Use data-structures/hash-based/string_counter.c for counting.",
+        "Use the read-only visitor and sort frontend references to match std::map lexicographic output.",
+        "Handle empty input, whitespace-only input, and EOF without a final newline.",
+        "Build the C17 target and pass unit_string_counter and its catalog smoke CTest."
+      ],
+      "complexity": "Expected O(n) counting time for n tokens, worst-case O(nu) with collisions for u distinct tokens; output ordering adds O(u log u) time and O(u) storage.",
+      "references": [],
+      "status": "tested",
+      "source": "tracks/c/09-data-structures/hash-based/01-word-count.c",
+      "validation": "cmake --preset default && cmake --build --preset default --target tracks_c_09-data-structures_hash-based_01-word-count test_string_counter && ctest --preset default -R \"unit_string_counter|smoke_tracks_c_09-data-structures_hash-based_01-word-count\""
     }
   ]
 }

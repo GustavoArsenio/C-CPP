@@ -43,6 +43,8 @@ file(GLOB_RECURSE LEARNING_C_SOURCES CONFIGURE_DEPENDS
 add_library(int_stack STATIC data-structures/linear/int_stack.c)
 target_include_directories(int_stack PUBLIC
                            "${CMAKE_CURRENT_SOURCE_DIR}/data-structures/linear")
+add_library(string_counter STATIC data-structures/hash-based/string_counter.c)
+target_include_directories(string_counter PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 add_library(int_list STATIC data-structures/linear/int_list.c)
 target_include_directories(int_list PUBLIC
                            "${CMAKE_CURRENT_SOURCE_DIR}/data-structures/linear")
@@ -70,6 +72,10 @@ target_link_libraries(bounded_queue PUBLIC Threads::Threads)
 add_library(calendar_date STATIC tracks/c/06-structures/calendar_date.c)
 target_include_directories(calendar_date PUBLIC
                            "${CMAKE_CURRENT_SOURCE_DIR}/tracks/c/06-structures")
+add_library(int_vector STATIC
+    tracks/c/04-arrays-strings/arrays/int_vector.c)
+target_include_directories(int_vector PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/tracks/c/04-arrays-strings/arrays")
 add_library(truco STATIC projects/card-game-c/truco.c
                          projects/card-game-c/card_renderer.c)
 target_include_directories(truco PUBLIC
@@ -80,6 +86,8 @@ target_compile_definitions(matrix_operations PRIVATE MATRIX_OPERATIONS_NO_MAIN)
 target_include_directories(matrix_operations PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/tracks/c/10-algorithms/linear-algebra")
 if(MSVC)
+    target_compile_options(string_counter PRIVATE /W4)
+    target_compile_options(int_vector PRIVATE /W4)
     target_compile_options(int_list PRIVATE /W4)
     target_compile_options(double_list PRIVATE /W4)
     target_compile_options(lista4_lists PRIVATE /W4)
@@ -91,6 +99,8 @@ if(MSVC)
     target_compile_options(binary_search_tree PRIVATE /W4)
     target_compile_options(bounded_queue PRIVATE /W4)
 else()
+    target_compile_options(string_counter PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(int_vector PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(int_list PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(double_list PRIVATE -Wall -Wextra -Wpedantic)
     target_compile_options(lista4_lists PRIVATE -Wall -Wextra -Wpedantic)
@@ -103,6 +113,10 @@ else()
     target_compile_options(bounded_queue PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(string_counter PRIVATE -fanalyzer)
+    target_compile_options(int_vector PRIVATE -fanalyzer)
+    target_compile_options(binary_search_tree PRIVATE -fanalyzer)
+    target_compile_options(bounded_queue PRIVATE -fanalyzer)
     target_compile_options(int_list PRIVATE -fanalyzer)
     target_compile_options(double_list PRIVATE -fanalyzer)
     target_compile_options(lista4_lists PRIVATE -fanalyzer)
@@ -122,7 +136,10 @@ if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
 endif()
 
 foreach(source IN LISTS LEARNING_C_SOURCES)
-    if(source MATCHES "/data-structures/linear/(int_stack|int_list|char_stack|double_list|lista4_lists).c$" OR
+    if(source MATCHES "/data-structures/hash-based/string_counter.c$" OR
+       source MATCHES
+       "/data-structures/linear/(int_stack|int_list|char_stack|double_list|lista4_lists).c$" OR
+       source MATCHES "/tracks/c/04-arrays-strings/arrays/int_vector.c$" OR
        source MATCHES "/data-structures/trees/binary_search_tree.c$" OR
        source MATCHES "/concurrency/bounded_queue.c$" OR
        source MATCHES "/algorithms/statistics/int_min_max.c$" OR
@@ -153,6 +170,10 @@ foreach(source IN LISTS LEARNING_C_SOURCES)
     if(source MATCHES "/tracks/c/10-algorithms/linear-algebra/02-matrix-menu[.]c$")
         target_link_libraries("${target_name}" PRIVATE matrix_operations)
     endif()
+    if(relative_source MATCHES
+       "^tracks/c/04-arrays-strings/arrays/02-dynamic-int-vector[.]c$")
+        target_link_libraries("${target_name}" PRIVATE int_vector)
+    endif()
     set_property(GLOBAL APPEND PROPERTY LEARNING_EXECUTABLES "${target_name}")
     if(MSVC)
         target_compile_options("${target_name}" PRIVATE /W4)
@@ -168,6 +189,12 @@ foreach(source IN LISTS LEARNING_C_SOURCES)
     endif()
     if(relative_source MATCHES "^data-structures/trees/01-btree[.]c$")
         target_link_libraries("${target_name}" PRIVATE binary_search_tree)
+    endif()
+    if(relative_source MATCHES
+       "^tracks/c/09-data-structures/hash-based/01-word-count[.]c$")
+        target_link_libraries("${target_name}" PRIVATE string_counter)
+        target_include_directories("${target_name}" PRIVATE
+                                   "${CMAKE_CURRENT_SOURCE_DIR}")
     endif()
     if(relative_source MATCHES "/concurrency/05-queue[.]c$")
         target_link_libraries("${target_name}" PRIVATE bounded_queue)
@@ -229,6 +256,11 @@ foreach(source IN LISTS LEARNING_CXX_SOURCES)
     string(REPLACE "/" "_" target_name "${relative_source}")
     string(REPLACE ".cpp" "" target_name "${target_name}")
     add_executable("${target_name}" "${source}")
+    if(relative_source MATCHES
+       "^tracks/cpp/09-modern-cpp/05-unique-ptr-tree[.]cpp$")
+        target_include_directories("${target_name}" PRIVATE
+            "${CMAKE_CURRENT_SOURCE_DIR}")
+    endif()
     set_property(GLOBAL APPEND PROPERTY LEARNING_EXECUTABLES "${target_name}")
     if(MSVC)
         target_compile_options("${target_name}" PRIVATE /W4)
@@ -240,13 +272,57 @@ endforeach()
 
 include(CTest)
 if(BUILD_TESTING)
+    add_executable(test_cpp_unique_ptr_tree
+                   tests/unit/test_cpp_unique_ptr_tree.cpp)
+    target_include_directories(test_cpp_unique_ptr_tree PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}")
+    if(MSVC)
+        target_compile_options(test_cpp_unique_ptr_tree PRIVATE /W4)
+    else()
+        target_compile_options(test_cpp_unique_ptr_tree PRIVATE
+                               -Wall -Wextra -Wpedantic)
+    endif()
+    add_test(NAME unit_cpp_unique_ptr_tree COMMAND test_cpp_unique_ptr_tree)
+
+    add_executable(test_string_counter tests/unit/test_string_counter.c)
+    target_link_libraries(test_string_counter PRIVATE string_counter)
+    if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        target_compile_options(test_string_counter PRIVATE -fanalyzer)
+    endif()
+    if(MSVC)
+        target_compile_options(test_string_counter PRIVATE /W4)
+    else()
+        target_compile_options(test_string_counter PRIVATE
+                               -Wall -Wextra -Wpedantic -Werror)
+    endif()
+    add_test(NAME unit_string_counter COMMAND test_string_counter)
+
+    add_executable(test_int_vector tests/unit/test_int_vector.c)
+    target_link_libraries(test_int_vector PRIVATE int_vector)
+    if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        target_compile_options(test_int_vector PRIVATE -fanalyzer)
+    endif()
+    if(MSVC)
+        target_compile_options(test_int_vector PRIVATE /W4 /UNDEBUG)
+    else()
+        target_compile_options(test_int_vector PRIVATE
+                               -Wall -Wextra -Wpedantic -UNDEBUG)
+    endif()
+    add_test(NAME unit_int_vector COMMAND test_int_vector)
+
     add_executable(test_binary_search_tree
                    tests/unit/test_binary_search_tree.c)
     target_link_libraries(test_binary_search_tree PRIVATE binary_search_tree)
+    if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        target_compile_options(test_binary_search_tree PRIVATE -fanalyzer)
+    endif()
     add_test(NAME unit_binary_search_tree COMMAND test_binary_search_tree)
 
     add_executable(test_bounded_queue tests/unit/test_bounded_queue.c)
     target_link_libraries(test_bounded_queue PRIVATE bounded_queue)
+    if(LEARNING_ENABLE_GCC_ANALYZER AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        target_compile_options(test_bounded_queue PRIVATE -fanalyzer)
+    endif()
     add_test(NAME unit_bounded_queue COMMAND test_bounded_queue)
 
     add_executable(test_truco tests/unit/test_truco.c)
@@ -376,6 +452,9 @@ if(BUILD_TESTING)
 
     find_package(Python3 COMPONENTS Interpreter QUIET)
     if(Python3_Interpreter_FOUND)
+        add_test(NAME sorting_benchmark_harness_tests
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/benchmarking/test_compare_sort.py")
         add_test(NAME sorting_benchmark_correctness
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/benchmarking/compare_sort.py"
@@ -383,6 +462,19 @@ if(BUILD_TESTING)
         add_test(NAME exercise_catalog
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/catalog.py")
+        add_test(NAME exercise_catalog_validation_tests
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_catalog.py")
+        add_test(NAME smoke_example_validation_tests
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_smoke_example.py")
+        add_test(NAME integration_matrix_determinant_exact
+                 COMMAND "${Python3_EXECUTABLE}"
+                         "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/test_matrix_determinant_exact.py"
+                         --executable
+                         "$<TARGET_FILE:tracks_c_10-algorithms_linear-algebra_02-matrix-menu>")
+        set_tests_properties(integration_matrix_determinant_exact
+                             PROPERTIES TIMEOUT 15)
         add_test(NAME smoke_card_renderer
                  COMMAND "${Python3_EXECUTABLE}"
                          "${CMAKE_CURRENT_SOURCE_DIR}/tools/validation/smoke_example.py"
